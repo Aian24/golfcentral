@@ -66,32 +66,111 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
           <div className="lg:col-span-8 flex flex-col justify-between">
             <div className="relative group w-full h-[400px] sm:h-[480px] md:h-[540px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
               {/* Image / Video Layer */}
-              <Image
-                src={leadArticle.coverImage}
-                alt={leadArticle.title}
-                fill
-                priority
-                className="object-cover object-center transform group-hover:scale-102 transition-transform duration-700 ease-out"
-                sizes="(max-width: 1024px) 100vw, 70vw"
-              />
+              {isPlayingVideo ? (
+                <div className="relative w-full h-full">
+                  <video
+                    src="/videos/tour_whispering_pines.mp4"
+                    autoPlay
+                    loop
+                    playsInline
+                    muted={isMuted}
+                    className="w-full h-full object-cover"
+                  />
 
-              {/* Gradient Scrim for crystal clear readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#061710] via-[#061710]/40 to-transparent" />
+                  {/* Gradient Scrim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#061710] via-[#061710]/30 to-black/30 pointer-events-none" />
 
-              {/* Top Bar on Hero Image */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
-                <span className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-semibold border border-white/20">
-                  {leadArticle.category}
-                </span>
+                  {/* Controls on playing hero video */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-30">
+                    <span className="px-3 py-1.5 rounded-full bg-[#0A251A]/85 backdrop-blur-md text-[#D4B568] text-xs font-bold border border-[#BFA054]/40 flex items-center space-x-1.5 shadow-lg">
+                      <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                      <span>Live Golf Course Tour • Whispering Pines Hole 3</span>
+                    </span>
 
-                <button
-                  onClick={onOpenVideoModal}
-                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-[#D4B568] text-xs font-medium border border-[#BFA054]/40 hover:bg-[#BFA054] hover:text-[#061710] transition-colors"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Play Video Tour</span>
-                </button>
-              </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsMuted(!isMuted);
+                        }}
+                        className="p-2 rounded-full bg-black/70 backdrop-blur-md text-white hover:text-[#D4B568] border border-white/20 transition-colors"
+                        title={isMuted ? "Unmute Tour Audio" : "Mute Audio"}
+                      >
+                        {isMuted ? (
+                          <VolumeX className="w-3.5 h-3.5 text-white/70" />
+                        ) : (
+                          <Volume2 className="w-3.5 h-3.5 text-[#D4B568]" />
+                        )}
+                      </button>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsPlayingVideo(false);
+                        }}
+                        className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white hover:text-[#D4B568] border border-white/20 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+                        title="Pause video preview"
+                      >
+                        <Pause className="w-3 h-3 fill-current" />
+                        <span>Pause</span>
+                      </button>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpenVideoModal();
+                        }}
+                        className="px-3 py-1.5 rounded-full bg-[#BFA054] text-[#061710] hover:bg-[#D4B568] text-xs font-bold flex items-center space-x-1.5 transition-colors shadow-lg"
+                        title="Open full cinematic theatre reel"
+                      >
+                        <Film className="w-3.5 h-3.5" />
+                        <span>All 3 Tours</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Image
+                    src={leadArticle.coverImage}
+                    alt={leadArticle.title}
+                    fill
+                    priority
+                    className="object-cover object-center transform group-hover:scale-102 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 1024px) 100vw, 70vw"
+                  />
+
+                  {/* Gradient Scrim for crystal clear readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#061710] via-[#061710]/40 to-transparent pointer-events-none" />
+
+                  {/* Top Bar on Hero Image */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
+                    <span className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-semibold border border-white/20">
+                      {leadArticle.category}
+                    </span>
+
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => setIsPlayingVideo(true)}
+                        className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-[#D4B568] text-xs font-medium border border-[#BFA054]/40 hover:bg-[#BFA054] hover:text-[#061710] transition-all"
+                        title="Play video tour directly in banner"
+                      >
+                        <Play className="w-3.5 h-3.5 fill-current" />
+                        <span>Play Video Tour</span>
+                      </button>
+
+                      <button
+                        onClick={onOpenVideoModal}
+                        className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-xs font-medium border border-white/20 hover:bg-white/20 transition-all"
+                        title="Open full theatre reel modal"
+                      >
+                        <Film className="w-3.5 h-3.5 text-[#BFA054]" />
+                        <span>Theatre Reel</span>
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
 
               {/* Bottom Modern Title & Content Card */}
               <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10 z-20 space-y-3">

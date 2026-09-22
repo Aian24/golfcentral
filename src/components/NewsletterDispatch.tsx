@@ -2,44 +2,43 @@
 
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
-import { Mail, Check, Sparkles, FileText, ArrowRight } from "lucide-react";
+import { Mail, Check, FileText, ArrowRight } from "lucide-react";
+import { SITE_INFO } from "@/data/editorialData";
 
 export const NewsletterDispatch: React.FC = () => {
   const [email, setEmail] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([
+    "Digital Issue Alerts",
     "Course Architecture",
-    "Turfgrass Science",
-    "Luxury Travel",
   ]);
   const [submitted, setSubmitted] = useState(false);
 
   const topics = [
+    "Digital Issue Alerts",
     "Course Architecture",
-    "Turfgrass Science",
-    "Luxury Travel",
-    "Clubhouse Lifestyle",
-    "Military Honors",
+    "Agronomy & Superintendent Dispatch",
+    "Resort Travel & Stay-and-Play",
+    "Charity Tournaments & Military Golf",
   ];
 
   const toggleTopic = (topic: string) => {
-    setSelectedTopics((prev) =>
-      prev.includes(topic)
-        ? prev.filter((t) => t !== topic)
-        : [...prev, topic]
-    );
+    if (selectedTopics.includes(topic)) {
+      setSelectedTopics(selectedTopics.filter((t) => t !== topic));
+    } else {
+      setSelectedTopics([...selectedTopics, topic]);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) return;
+    if (!email) return;
 
-    // Trigger celebratory luxury confetti
     try {
       confetti({
         particleCount: 70,
         spread: 60,
-        origin: { y: 0.8 },
-        colors: ["#C5A059", "#0A1F18", "#FBF9F5", "#D8B26E"],
+        origin: { y: 0.7 },
+        colors: ["#C5A059", "#0A1F18", "#FFFFFF", "#D8B26E"],
       });
     } catch {
       // fallback if canvas-confetti is not loaded
@@ -58,7 +57,7 @@ export const NewsletterDispatch: React.FC = () => {
           {/* Left Column: The Dispatch Pitch (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="flex items-center space-x-2 text-xs tracking-widest text-[#D4B568] uppercase font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-[#BFA054]" />
+              <Mail className="w-3.5 h-3.5 text-[#BFA054]" />
               <span>THE FAIRWAY DISPATCH // PRIVATE EDITORIAL SUBSCRIPTION</span>
             </div>
 

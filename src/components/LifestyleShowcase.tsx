@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowRight, Sparkles, Wine, Watch, Compass } from "lucide-react";
+import { ArrowRight, Wine, Watch, Compass } from "lucide-react";
 import { Article } from "@/data/editorialData";
 
 interface LifestyleShowcaseProps {
@@ -21,7 +21,7 @@ export const LifestyleShowcase: React.FC<LifestyleShowcaseProps> = ({
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-[#BFA054]/30 pb-6 gap-4">
           <div>
             <div className="flex items-center space-x-2 text-xs tracking-widest text-[#BFA054] uppercase mb-1 font-semibold">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Compass className="w-3.5 h-3.5" />
               <span>THE 19TH HOLE // LUXURY STYLE &amp; HERITAGE GEAR</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase text-[#0A1F18] tracking-tight">

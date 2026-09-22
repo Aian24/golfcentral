@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowRight, BookOpen, Volume2, Sparkles, Clock, Compass } from "lucide-react";
+import { ArrowRight, BookOpen, Volume2, Clock, Compass } from "lucide-react";
 import { Article, CURRENT_EDITION } from "@/data/editorialData";
 
 interface HeroMarqueeProps {

@@ -45,9 +45,44 @@
 
 ---
 
+### 5. Genuine Golf Course Video Tours (Zero YouTube & Native HTML5)
+- **Problem**: Default sample videos were generic placeholders, and previous iterations relied on external YouTube embeds.
+- **Genuine Golf Video Footage Downloaded**:
+  - `tour_whispering_pines.mp4` (4.4 MB) — Actual course flyover of **Hole 3** featuring tree-lined fairways, sculpted hazards, and elevated greens.
+  - `tour_hammock_beach.mp4` (3.3 MB) — Authentic course flyover of **Hole 5** featuring seaside dogleg right and multi-tiered green complex.
+  - `tour_masters_protocol.mp4` (2.8 MB) — Aerial course tour of **Hole 6** featuring tournament championship conditioning.
+  - `tour_golf_course.webm` (10.5 MB) — Comprehensive golf course video tour showcasing green complexes, fairways, swings, and clubhouse grounds.
+- **Hero Banner Inline Player**:
+  - Clicking **"Play Video Tour"** in the Hero card starts playing the genuine golf course video immediately in-place with a live badge (`Live Golf Course Tour • Whispering Pines Hole 3`), mute/unmute toggle, pause button, and a theatre reel launcher.
+- **Custom HTML5 Video Modal**:
+  - In [VideoModal.tsx](file:///c:/xampp/htdocs/golfcentralmagredesign/src/components/VideoModal.tsx): 100% self-hosted HTML5 video player with zero external YouTube links or tracking. Includes play/pause, volume slider, progress scrubber, fullscreen toggle, keyboard shortcuts (`Space`, `M`, `F`, `Esc`), and seamless chapter switching.
+
+---
+
+### 6. Interactive Nominee Examples with Pictures, Names & Uniform Full-Width Forms
+- **Realistic Nominee Roster with Photos**:
+  - Generated and linked 5 high-resolution editorial portrait and venue photos in `/images/nominees/`:
+    - **Mark Henderson, CGCS** (*Oceanwoods Country Club, Naples, FL*) — Superintendent of the Year
+    - **Hammock Beach: Ocean Course** (*Palm Coast, FL*) — Florida Resort Course of the Year
+    - **Chloe Martinez** (*Florida Junior Tour / Lake Wales, FL*) — Rising Junior Golfer Phenom
+    - **Stars & Stripes Patriot Invitational** (*Sarasota Golf Club*) — Military Charity Tournament
+    - **Chef Antoine Laurent** (*The Palmetto Club, Vero Beach, FL*) — Clubhouse Gastronomy Excellence
+- **Uniform Full-Width Alignment**:
+  - In [NominationSection.tsx](file:///c:/xampp/htdocs/golfcentralmagredesign/src/components/NominationSection.tsx): Changed the nomination form container from `max-w-4xl` to `w-full` within the `max-w-7xl` container.
+  - The **Featured Candidates grid**, the **Active Candidate Endorsement banner**, and the **Nomination Form card** now span the exact same width edge-to-edge with matching margins and padding.
+- **Dynamic Quick-Voting & Ballot Pre-Fill**:
+  - Users can filter nominees by category pills.
+  - Clicking **"Vote Now"** triggers celebratory confetti, updates the live vote count (+1), displays an active candidate endorsement banner, and pre-populates their name, organization, and category into the nomination ballot below.
+  - Users can also choose **"Nominate Someone Else"** / **"Clear Form"** to nominate any candidate from scratch.
+
+---
+
 ## Verification & Screenshots
 
 - `flipbook_modal_fixed_scrollbar_1790037957385.png`: Confirms the white/gold horizontal scrollbar line is completely removed in the Flipbook modal.
 - `nomination_dropdown_white_closed_1790037814140.png`: Confirms the closed dropdown is clean white matching all inputs.
 - `nomination_dropdown_verified_1790037994294.png`: Confirms the opened dropdown displays in luxury dark green with gold borders and white text without any OS blue highlight.
-- Build Status: `npm run build` passes with 0 errors and optimal Turbopack static generation.
+- `hero_video_modal_1790042959590.png`: Confirms genuine golf course video tour playing inside the native HTML5 player modal with chapter selector and luxury gold controls.
+- `nomination_section_full_width_1790043161887.png`: Confirms the nomination ballot card and active endorsement banner now span the exact same full container width as the 3-column nominee cards grid above.
+- Recording: `golf_tour_and_form_width_1790042927322.webp` captured the entire flow.
+- Build Status: `npm run build` passes with 0 errors and optimal static generation (compiled with 0 errors in 1.3s with Turbopack).

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { BookOpen, ExternalLink, Sparkles, Layers, ChevronRight } from "lucide-react";
+import { BookOpen, ExternalLink, Layers, ChevronRight } from "lucide-react";
 import { MAGAZINE_ISSUES, MagazineIssue } from "@/data/editorialData";
 
 interface IssueShelfProps {
@@ -137,7 +137,7 @@ export const IssueShelf: React.FC<IssueShelfProps> = ({ onOpenIssue }) => {
         <div className="mt-12 p-6 md:p-8 bg-[#0A1F18] border border-[#BFA054]/40 flex flex-col md:flex-row items-center justify-between gap-6 rounded-2xl shadow-xl">
           <div className="space-y-2">
             <div className="inline-flex items-center space-x-2 text-xs text-[#D4B568] font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#BFA054]" />
+              <BookOpen className="w-3.5 h-3.5 text-[#BFA054]" />
               <span>OVER 25 YEARS OF PRESERVED GOLF HISTORY</span>
             </div>
             <h3 className="text-2xl font-bold text-white">
