@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
+import { FairwayFlyoverExperience } from "@/components/FairwayFlyoverExperience";
 import { HeroVideoMarquee } from "@/components/HeroVideoMarquee";
 import { FilterableStoryGrid } from "@/components/FilterableStoryGrid";
 import { TurfAgronomyFeature } from "@/components/TurfAgronomyFeature";
@@ -138,13 +139,29 @@ export default function Home() {
       <main className="flex-1">
         {/* Home & Editorial Content */}
         <div id="home">
-          <HeroVideoMarquee
-            leadArticle={leadArticle}
-            trendingArticles={trendingArticles}
-            onReadArticle={(art) => setSelectedArticle(art)}
+          {/* AI Fairway Flyover Scrollytelling Experience */}
+          <FairwayFlyoverExperience
+            onExploreMagazine={() => {
+              const el = document.getElementById("magazine-hero");
+              if (el) {
+                const navbarHeight = 70;
+                const targetPosition =
+                  el.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                window.scrollTo({ top: targetPosition, behavior: "smooth" });
+              }
+            }}
             onOpenIssue={(num = 6) => setSelectedIssueNumber(num)}
-            onOpenVideoModal={() => setIsVideoOpen(true)}
           />
+
+          <div id="magazine-hero">
+            <HeroVideoMarquee
+              leadArticle={leadArticle}
+              trendingArticles={trendingArticles}
+              onReadArticle={(art) => setSelectedArticle(art)}
+              onOpenIssue={(num = 6) => setSelectedIssueNumber(num)}
+              onOpenVideoModal={() => setIsVideoOpen(true)}
+            />
+          </div>
 
           {/* Filterable Editorial Journal Grid */}
           <div id="journal">
