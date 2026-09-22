@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-forest-950: #061710;
+  --color-forest-900: #0a251a;
+  --color-forest-800: #0f3627;
+  --color-forest-700: #174b37;
+  --color-forest-600: #1f644a;
+  --color-forest-500: #2b8463;
+
+  --color-champagne-600: #9e7f3d;
+  --color-champagne-500: #bfa054;
+  --color-champagne-400: #d4b568;
+  --color-champagne-300: #e4cc88;
+  --color-champagne-100: #faf3e0;
+
+  --color-surface-50: #ffffff;
+  --color-surface-100: #f8f9fa;
+  --color-surface-200: #f1f3f5;
+  --color-surface-300: #e9ecef;
+
+  --color-charcoal-900: #111827;
+  --color-charcoal-800: #1f2937;
+  --color-charcoal-700: #374151;
+  --color-charcoal-600: #4b5563;
+  --color-charcoal-500: #6b7280;
+  --color-charcoal-400: #9ca3af;
+}
+
+:root {
+  --background: #f8f9fa;
+  --foreground: #111827;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force pointer cursor on all interactive elements */
+button,
+[role="button"],
+a,
+select,
+summary,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed !important;
+}
+
+/* Modern clean scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bfa054;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9e7f3d;
+}
+
+/* Hide scrollbar utility for clean modern UI */
+.scrollbar-none::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.scrollbar-none,
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Global Select styling for modern luxury green dropdowns */
+select {
+  background-color: #0A251A !important;
+  color: #ffffff !important;
+}
+
+select option {
+  background-color: #0A251A !important;
+  color: #ffffff !important;
+  padding: 8px 12px;
+}
+
+select option:checked {
+  background-color: #061710 !important;
+  color: #D4B568 !important;
+}
+
+/* Prevent browser default blue outlines */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+}
+
+/* Chrome autofill styling for crisp white inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: #111827 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Smooth Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Modern Card Hover Elevation */
+.modern-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.modern-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -8px rgba(10, 37, 26, 0.08);
+}
