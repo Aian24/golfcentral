@@ -124,7 +124,7 @@ export const AdvertisingSection: React.FC = () => {
         </div>
 
         {/* Inquiry Form & Real Image */}
-        <div className="bg-[#0A251A] text-white rounded-3xl p-8 sm:p-10 md:p-12 shadow-xl border border-white/10">
+        <div className="bg-[#0A251A] text-white rounded-3xl p-5 sm:p-8 md:p-12 shadow-xl border border-white/10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
               <div className="relative h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-white/10">

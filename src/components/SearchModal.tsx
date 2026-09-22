@@ -62,14 +62,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       {/* Same Modal Structure as Flipbook Edition */}
       <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0A1F18] text-white shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden rounded-2xl font-sans">
         {/* Top Control Bar (Identical to Flipbook Modal) */}
-        <div className="bg-[#06150F] border-b border-[#BFA054]/30 px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0">
-          <div className="flex items-center space-x-3">
-            <Search className="w-5 h-5 text-[#BFA054]" />
-            <div>
-              <div className="text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold">
+        <div className="bg-[#06150F] border-b border-[#BFA054]/30 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between shrink-0 gap-2">
+          <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden">
+            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#BFA054] shrink-0" />
+            <div className="overflow-hidden">
+              <div className="text-[9px] sm:text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold truncate">
                 SEARCH GOLF CENTRAL ARCHIVES // DIGITAL INDEX
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white leading-none">
+              <h3 className="text-xs sm:text-base font-bold text-white leading-none truncate">
                 Story, Resort, Architecture &amp; Agronomy Search
               </h3>
             </div>
@@ -77,24 +77,24 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors shrink-0"
             title="Close search (Esc)"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Input & Search Area */}
-        <div className="p-4 sm:p-6 space-y-4 shrink-0 bg-[#0A1F18] border-b border-white/10">
+        <div className="p-3 sm:p-6 space-y-3 sm:space-y-4 shrink-0 bg-[#0A1F18] border-b border-white/10">
           <div className="relative flex items-center">
-            <Search className="w-4 h-4 text-[#BFA054] absolute left-4" />
+            <Search className="w-4 h-4 text-[#BFA054] absolute left-3.5 sm:left-4" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search stories, course architects, agronomy, luxury resorts..."
-              className="w-full h-12 pl-11 pr-20 rounded-xl bg-white border-2 border-[#BFA054]/50 hover:border-[#BFA054] focus:border-[#D4B568] focus:ring-2 focus:ring-[#BFA054]/30 text-[#111827] placeholder-gray-400 text-sm outline-none transition-all font-medium shadow-xs"
+              placeholder="Search stories, resorts, agronomy..."
+              className="w-full h-11 sm:h-12 pl-10 sm:pl-11 pr-16 sm:pr-20 rounded-xl bg-white border-2 border-[#BFA054]/50 hover:border-[#BFA054] focus:border-[#D4B568] focus:ring-2 focus:ring-[#BFA054]/30 text-[#111827] placeholder-gray-400 text-xs sm:text-sm outline-none transition-all font-medium shadow-xs"
             />
             {query && (
               <button

@@ -127,26 +127,26 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
   return (
     <>
       {/* Floating Trigger Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="flex items-center space-x-2.5 px-4 py-3 bg-[#0A251A] hover:bg-[#174B37] text-white rounded-full shadow-2xl border border-[#BFA054]/40 transition-all transform hover:scale-105 group"
+            className="flex items-center space-x-2 sm:space-x-2.5 px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0A251A] hover:bg-[#174B37] text-white rounded-full shadow-2xl border border-[#BFA054]/40 transition-all transform hover:scale-105 group"
             title="Ask Golf Central AI Concierge"
           >
             <div className="relative">
               <span className="w-2.5 h-2.5 rounded-full bg-[#BFA054] absolute -top-0.5 -right-0.5 animate-ping"></span>
               <span className="w-2.5 h-2.5 rounded-full bg-[#BFA054] absolute -top-0.5 -right-0.5"></span>
-              <Bot className="w-5 h-5 text-[#D4B568]" />
+              <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4B568]" />
             </div>
-            <span className="text-xs font-bold tracking-wide">Golf Central AI</span>
+            <span className="text-[11px] sm:text-xs font-bold tracking-wide">Golf Central AI</span>
           </button>
         )}
       </div>
 
       {/* Floating Modern Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[92vw] sm:w-[420px] h-[560px] max-h-[85vh] bg-[#0A1F18] text-white rounded-2xl shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden animate-fadeIn font-sans">
+        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[420px] h-[520px] sm:h-[560px] max-h-[86vh] bg-[#0A1F18] text-white rounded-2xl shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden animate-fadeIn font-sans">
           {/* Header (Matching Flipbook Modal Top Bar) */}
           <div className="bg-[#06150F] border-b border-[#BFA054]/30 p-4 flex items-center justify-between shrink-0">
             <div className="flex items-center space-x-3">

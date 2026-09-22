@@ -22,7 +22,7 @@ export const StaffSection: React.FC = () => {
         </div>
 
         {/* Founder & Publisher Spotlight */}
-        <div className="bg-[#0A251A] text-white rounded-3xl p-8 sm:p-10 md:p-12 shadow-xl border border-white/10 mb-12">
+        <div className="bg-[#0A251A] text-white rounded-3xl p-5 sm:p-8 md:p-12 shadow-xl border border-white/10 mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#BFA054] text-[#0A251A] text-xs font-bold uppercase tracking-wider">

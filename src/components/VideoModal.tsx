@@ -201,39 +201,39 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-2 sm:p-4 md:p-6 animate-fadeIn font-sans">
       <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#071912] text-white shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden rounded-2xl">
         {/* Top Control Bar */}
-        <div className="bg-[#05130D] border-b border-[#BFA054]/30 px-4 sm:px-6 py-3.5 flex items-center justify-between text-white shrink-0">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-[#BFA054]/20 border border-[#BFA054]/40 flex items-center justify-center text-[#D4B568]">
-              <Film className="w-4 h-4" />
+        <div className="bg-[#05130D] border-b border-[#BFA054]/30 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between text-white shrink-0 gap-2">
+          <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#BFA054]/20 border border-[#BFA054]/40 flex items-center justify-center text-[#D4B568] shrink-0">
+              <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-[10px] text-[#D4B568] uppercase tracking-widest font-bold">
-                  GOLF CENTRAL CINEMATIC VIDEO TOUR // VOLUME 27
+            <div className="overflow-hidden">
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
+                <span className="text-[9px] sm:text-[10px] text-[#D4B568] uppercase tracking-wider font-bold truncate">
+                  VIDEO TOUR // VOL 27
                 </span>
-                <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#BFA054] text-[#061710]">
+                <span className="px-1.5 py-0.2 rounded text-[8px] sm:text-[9px] font-bold bg-[#BFA054] text-[#061710] shrink-0">
                   {current.tag}
                 </span>
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white leading-tight">
+              <h3 className="text-xs sm:text-base font-bold text-white leading-tight truncate">
                 {current.title}
               </h3>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 shrink-0">
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
               title="Close video (Esc)"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
 
         {/* Video Player & Spread Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col items-center justify-between space-y-4">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-between space-y-3 sm:space-y-4">
           {/* Main Video Viewport */}
           <div
             ref={playerContainerRef}
@@ -260,23 +260,23 @@ export const VideoModal: React.FC<VideoModalProps> = ({
             {/* Central Play/Pause Watermark Button when paused */}
             {!isPlaying && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#BFA054]/90 text-[#061710] flex items-center justify-center shadow-2xl transform scale-100 animate-pulse">
-                  <Play className="w-8 h-8 sm:w-10 sm:h-10 fill-current ml-1" />
+                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#BFA054]/90 text-[#061710] flex items-center justify-center shadow-2xl transform scale-100 animate-pulse">
+                  <Play className="w-7 h-7 sm:w-10 sm:h-10 fill-current ml-1" />
                 </div>
               </div>
             )}
 
             {/* Top course info overlay */}
             <div
-              className={`absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none transition-opacity duration-300 ${
+              className={`absolute top-2.5 sm:top-4 left-2.5 sm:left-4 right-2.5 sm:right-4 flex items-center justify-between pointer-events-none transition-opacity duration-300 ${
                 showControls ? "opacity-100" : "opacity-0"
               }`}
             >
-              <div className="px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-[#BFA054]/30 text-xs">
+              <div className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-[#BFA054]/30 text-[11px] sm:text-xs truncate max-w-[70%]">
                 <span className="font-semibold text-white">{current.course}</span>
-                <span className="text-white/60 text-[11px] ml-1.5">• {current.location}</span>
+                <span className="text-white/60 text-[10px] sm:text-[11px] ml-1.5 hidden sm:inline">• {current.location}</span>
               </div>
-              <div className="px-2.5 py-1 rounded bg-[#BFA054]/90 text-[#061710] text-[10px] font-bold tracking-wider uppercase">
+              <div className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-[#BFA054]/90 text-[#061710] text-[9px] sm:text-[10px] font-bold tracking-wider uppercase">
                 HD 60FPS
               </div>
             </div>
@@ -284,12 +284,12 @@ export const VideoModal: React.FC<VideoModalProps> = ({
             {/* Bottom Luxury Custom Player Controls */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className={`absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black via-black/80 to-transparent transition-opacity duration-300 ${
+              className={`absolute bottom-0 left-0 right-0 p-2.5 sm:p-4 bg-gradient-to-t from-black via-black/80 to-transparent transition-opacity duration-300 ${
                 showControls ? "opacity-100" : "opacity-0"
               }`}
             >
               {/* Scrubber Bar */}
-              <div className="relative mb-2.5 flex items-center group/scrubber">
+              <div className="relative mb-2 flex items-center group/scrubber">
                 <input
                   type="range"
                   min={0}
@@ -306,16 +306,16 @@ export const VideoModal: React.FC<VideoModalProps> = ({
 
               {/* Control Buttons Strip */}
               <div className="flex items-center justify-between text-white text-xs">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <button
                     onClick={togglePlay}
-                    className="p-1.5 rounded-lg bg-[#BFA054] text-[#061710] hover:bg-[#D4B568] transition-colors"
+                    className="p-1 sm:p-1.5 rounded-lg bg-[#BFA054] text-[#061710] hover:bg-[#D4B568] transition-colors"
                     title={isPlaying ? "Pause (Space)" : "Play (Space)"}
                   >
                     {isPlaying ? (
-                      <Pause className="w-4 h-4 fill-current" />
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                     ) : (
-                      <Play className="w-4 h-4 fill-current ml-0.5" />
+                      <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current ml-0.5" />
                     )}
                   </button>
 
@@ -330,19 +330,19 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                     className="p-1 text-white/70 hover:text-white transition-colors"
                     title="Replay from start"
                   >
-                    <RotateCcw className="w-4 h-4" />
+                    <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-1 sm:space-x-2">
                     <button
                       onClick={toggleMute}
                       className="text-white/80 hover:text-white transition-colors"
                       title={isMuted ? "Unmute (M)" : "Mute (M)"}
                     >
                       {isMuted || volume === 0 ? (
-                        <VolumeX className="w-4 h-4 text-red-400" />
+                        <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
                       ) : (
-                        <Volume2 className="w-4 h-4 text-[#D4B568]" />
+                        <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4B568]" />
                       )}
                     </button>
                     <input
@@ -352,17 +352,17 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                       step={0.05}
                       value={isMuted ? 0 : volume}
                       onChange={handleVolumeChange}
-                      className="w-16 sm:w-20 h-1 bg-white/30 rounded appearance-none cursor-pointer accent-[#BFA054]"
+                      className="w-12 sm:w-20 h-1 bg-white/30 rounded appearance-none cursor-pointer accent-[#BFA054]"
                     />
                   </div>
 
-                  <span className="text-[11px] text-white/70 font-mono hidden sm:inline">
+                  <span className="text-[10px] sm:text-[11px] text-white/70 font-mono hidden sm:inline">
                     {formatTime(currentTime)} / {formatTime(duration)}
                   </span>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <span className="text-[11px] text-[#D4B568] font-medium hidden md:inline">
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <span className="text-[10px] sm:text-[11px] text-[#D4B568] font-medium hidden md:inline">
                     Native HTML5 • Zero External Links
                   </span>
                   <button
@@ -371,9 +371,9 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                     title={isFullscreen ? "Exit Fullscreen (F)" : "Fullscreen (F)"}
                   >
                     {isFullscreen ? (
-                      <Minimize className="w-4 h-4" />
+                      <Minimize className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     ) : (
-                      <Maximize className="w-4 h-4" />
+                      <Maximize className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     )}
                   </button>
                 </div>

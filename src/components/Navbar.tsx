@@ -50,10 +50,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Left: Official Brand & 25 Years Badge */}
             <div
               onClick={() => onNavigateTab("home")}
-              className="flex items-center space-x-3 cursor-pointer select-none shrink-0 group"
+              className="flex items-center space-x-2 sm:space-x-3 cursor-pointer select-none shrink-0 group"
             >
               {/* Crisp Official Logo Container */}
-              <div className="relative h-11 sm:h-12 w-40 sm:w-48">
+              <div className="relative h-9 sm:h-12 w-32 sm:w-48">
                 <Image
                   src={SITE_INFO.officialLogo}
                   alt="Golf Central Magazine"
@@ -64,7 +64,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
 
               {/* Official 25th Anniversary Badge */}
-              <div className="relative h-10 w-10 shrink-0">
+              <div className="relative h-8 w-8 sm:h-10 sm:w-10 shrink-0">
                 <Image
                   src={SITE_INFO.official25YearsBadge}
                   alt="25th Anniversary"
@@ -98,10 +98,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Right: Search & Action Buttons with Identical Heights (h-10 / 40px) */}
-            <div className="flex items-center space-x-2.5 shrink-0">
+            <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
               <button
                 onClick={onOpenSearch}
-                className="h-10 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center space-x-2 transition-colors border border-white/15 whitespace-nowrap cursor-pointer"
+                className="h-9 sm:h-10 px-2.5 sm:px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center space-x-2 transition-colors border border-white/15 whitespace-nowrap cursor-pointer"
                 title="Search stories and archives"
               >
                 <Search className="w-4 h-4 text-[#BFA054]" />
@@ -110,16 +110,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 onClick={() => onOpenIssue(6)}
-                className="h-10 px-4 rounded-xl bg-[#BFA054] hover:bg-[#9E7F3D] text-[#0A251A] font-bold text-xs uppercase tracking-wider flex items-center space-x-1.5 transition-all transform hover:-translate-y-0.5 shadow-md whitespace-nowrap cursor-pointer"
+                className="hidden sm:flex h-9 sm:h-10 px-4 rounded-xl bg-[#BFA054] hover:bg-[#9E7F3D] text-[#0A251A] font-bold text-xs uppercase tracking-wider items-center space-x-1.5 transition-all transform hover:-translate-y-0.5 shadow-md whitespace-nowrap cursor-pointer"
               >
                 <span>Read Issue 6</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
 
-              {/* Mobile Menu Hamburger (Identical h-10) */}
+              {/* Mobile Menu Hamburger (Identical h-9/h-10) */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="lg:hidden h-10 w-10 rounded-xl bg-white/10 text-white hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+                className="lg:hidden h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white/10 text-white hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Open Navigation Menu"
               >
                 <Menu className="w-5 h-5" />

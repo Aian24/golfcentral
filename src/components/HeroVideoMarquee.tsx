@@ -30,14 +30,14 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Sub-Header Ticker (relocated from top) */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 p-3 rounded-2xl bg-white/5 border border-white/10 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 mb-5 sm:mb-6 p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 text-[11px] sm:text-xs">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-white/90">
             <span className="font-bold text-[#BFA054]">Volume 27 • Issue 6</span>
             <span className="text-white/30 hidden sm:inline">|</span>
             <span className="text-white/80 hidden md:inline">{SITE_INFO.tagline}</span>
           </div>
 
-          <div className="flex items-center space-x-3 text-xs">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
             <a href={`tel:${SITE_INFO.phone}`} className="text-white/80 hover:text-white transition-colors">
               {SITE_INFO.phone}
             </a>
@@ -61,10 +61,10 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
         </div>
 
         {/* Main Grid: Modern Split Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
           {/* Main Visual Frame (8 cols) */}
           <div className="lg:col-span-8 flex flex-col justify-between">
-            <div className="relative group w-full h-[400px] sm:h-[480px] md:h-[540px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
+            <div className="relative group w-full h-[440px] sm:h-[480px] md:h-[540px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
               {/* Image / Video Layer */}
               {isPlayingVideo ? (
                 <div className="relative w-full h-full">
@@ -81,19 +81,20 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-[#061710] via-[#061710]/30 to-black/30 pointer-events-none" />
 
                   {/* Controls on playing hero video */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-30">
-                    <span className="px-3 py-1.5 rounded-full bg-[#0A251A]/85 backdrop-blur-md text-[#D4B568] text-xs font-bold border border-[#BFA054]/40 flex items-center space-x-1.5 shadow-lg">
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between z-30 gap-2">
+                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#0A251A]/85 backdrop-blur-md text-[#D4B568] text-[10px] sm:text-xs font-bold border border-[#BFA054]/40 flex items-center space-x-1.5 shadow-lg shrink-0">
                       <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                      <span>Live Golf Course Tour • Whispering Pines Hole 3</span>
+                      <span className="hidden sm:inline">Live Golf Course Tour • Whispering Pines Hole 3</span>
+                      <span className="sm:hidden">Live Golf Tour</span>
                     </span>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setIsMuted(!isMuted);
                         }}
-                        className="p-2 rounded-full bg-black/70 backdrop-blur-md text-white hover:text-[#D4B568] border border-white/20 transition-colors"
+                        className="p-1.5 sm:p-2 rounded-full bg-black/70 backdrop-blur-md text-white hover:text-[#D4B568] border border-white/20 transition-colors"
                         title={isMuted ? "Unmute Tour Audio" : "Mute Audio"}
                       >
                         {isMuted ? (
@@ -108,7 +109,7 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
                           e.stopPropagation();
                           setIsPlayingVideo(false);
                         }}
-                        className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white hover:text-[#D4B568] border border-white/20 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+                        className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white hover:text-[#D4B568] border border-white/20 text-[11px] sm:text-xs font-semibold flex items-center space-x-1 transition-colors"
                         title="Pause video preview"
                       >
                         <Pause className="w-3 h-3 fill-current" />
@@ -120,11 +121,11 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
                           e.stopPropagation();
                           onOpenVideoModal();
                         }}
-                        className="px-3 py-1.5 rounded-full bg-[#BFA054] text-[#061710] hover:bg-[#D4B568] text-xs font-bold flex items-center space-x-1.5 transition-colors shadow-lg"
+                        className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#BFA054] text-[#061710] hover:bg-[#D4B568] text-[11px] sm:text-xs font-bold flex items-center space-x-1 transition-colors shadow-lg"
                         title="Open full cinematic theatre reel"
                       >
                         <Film className="w-3.5 h-3.5" />
-                        <span>All 3 Tours</span>
+                        <span>3 Tours</span>
                       </button>
                     </div>
                   </div>
@@ -144,15 +145,15 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-[#061710] via-[#061710]/40 to-transparent pointer-events-none" />
 
                   {/* Top Bar on Hero Image */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
-                    <span className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-semibold border border-white/20">
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between z-20">
+                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-semibold border border-white/20">
                       {leadArticle.category}
                     </span>
 
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => setIsPlayingVideo(true)}
-                        className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-[#D4B568] text-xs font-medium border border-[#BFA054]/40 hover:bg-[#BFA054] hover:text-[#061710] transition-all"
+                        className="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/70 backdrop-blur-md text-[#D4B568] text-[11px] sm:text-xs font-medium border border-[#BFA054]/40 hover:bg-[#BFA054] hover:text-[#061710] transition-all"
                         title="Play video tour directly in banner"
                       >
                         <Play className="w-3.5 h-3.5 fill-current" />
@@ -173,8 +174,8 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
               )}
 
               {/* Bottom Modern Title & Content Card */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10 z-20 space-y-3">
-                <div className="flex items-center space-x-3 text-xs text-white/80">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 md:p-10 z-20 space-y-2 sm:space-y-3">
+                <div className="flex items-center space-x-2 sm:space-x-3 text-[11px] sm:text-xs text-white/80">
                   <span className="flex items-center space-x-1">
                     <Clock className="w-3.5 h-3.5 text-[#BFA054]" />
                     <span>{leadArticle.readTime}</span>
@@ -185,20 +186,20 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
 
                 <h2
                   onClick={() => onReadArticle(leadArticle)}
-                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight sm:leading-snug hover:text-[#D4B568] transition-colors cursor-pointer"
+                  className="text-xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight sm:leading-snug hover:text-[#D4B568] transition-colors cursor-pointer line-clamp-2"
                 >
                   {leadArticle.title}
                 </h2>
 
-                <p className="text-sm sm:text-base text-white/80 font-normal line-clamp-2 max-w-2xl">
+                <p className="text-xs sm:text-base text-white/80 font-normal line-clamp-2 max-w-2xl">
                   {leadArticle.excerpt}
                 </p>
 
                 {/* Modern CTA Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 pt-1 sm:pt-2">
                   <button
                     onClick={() => onReadArticle(leadArticle)}
-                    className="px-6 py-3 rounded-xl bg-[#BFA054] hover:bg-[#9E7F3D] text-[#061710] font-bold text-sm flex items-center space-x-2 transition-all transform hover:-translate-y-0.5 shadow-lg"
+                    className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-[#BFA054] hover:bg-[#9E7F3D] text-[#061710] font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition-all transform hover:-translate-y-0.5 shadow-lg"
                   >
                     <span>Read Full Story</span>
                     <ArrowRight className="w-4 h-4" />
@@ -206,7 +207,7 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
 
                   <button
                     onClick={() => onOpenIssue(6)}
-                    className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 text-sm font-medium flex items-center space-x-2 transition-colors"
+                    className="w-full sm:w-auto px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 text-xs sm:text-sm font-medium flex items-center justify-center space-x-2 transition-colors"
                   >
                     <BookOpen className="w-4 h-4 text-[#D4B568]" />
                     <span>Open Flipbook Edition</span>

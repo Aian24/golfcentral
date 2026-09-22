@@ -54,60 +54,60 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
       {/* Same Modal Structure as Flipbook Edition */}
       <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0A1F18] text-white shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden rounded-2xl font-sans">
         {/* Top Control Bar (Identical to Flipbook Modal) */}
-        <div className="bg-[#06150F] border-b border-[#BFA054]/30 px-4 sm:px-6 py-3 flex items-center justify-between shrink-0">
-          <div className="flex items-center space-x-3">
-            <BookOpen className="w-5 h-5 text-[#BFA054]" />
-            <div>
-              <div className="text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold">
+        <div className="bg-[#06150F] border-b border-[#BFA054]/30 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shrink-0 gap-2">
+          <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden">
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-[#BFA054] shrink-0" />
+            <div className="overflow-hidden">
+              <div className="text-[9px] sm:text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold truncate">
                 DIGITAL ARTICLE READER // {article.category}
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white leading-none line-clamp-1">
+              <h3 className="text-xs sm:text-base font-bold text-white leading-none truncate">
                 {article.title}
               </h3>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
             <button
               onClick={() => setIsBookmarked(!isBookmarked)}
-              className={`p-2 rounded-xl transition-colors ${
+              className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
                 isBookmarked
                   ? "bg-[#BFA054] text-[#0A1F18]"
                   : "bg-white/10 hover:bg-white/20 text-white"
               }`}
               title="Bookmark story"
             >
-              <Bookmark className="w-4 h-4 fill-current" />
+              <Bookmark className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
             </button>
 
             <button
               onClick={handleCopyLink}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
               title="Share article link"
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+              {copied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             </button>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors ml-1"
+              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors ml-0.5"
               title="Close reader (Esc)"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-8 md:p-10 space-y-8">
-          <div className="max-w-3xl mx-auto space-y-6">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-8 md:p-10 space-y-6 sm:space-y-8">
+          <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6">
             {/* Header Meta */}
-            <div className="space-y-3">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-[#D4B568] text-xs font-semibold uppercase tracking-wider">
+            <div className="space-y-2.5 sm:space-y-3">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-[#D4B568] text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
                 <span>{article.departmentTag}</span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight tracking-tight">
+              <h1 className="text-xl sm:text-3xl md:text-4xl font-bold text-white leading-tight tracking-tight">
                 {article.title}
               </h1>
 

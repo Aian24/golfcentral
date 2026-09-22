@@ -255,12 +255,12 @@ export const NominationSection: React.FC = () => {
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none w-full md:w-auto">
               {FILTER_TABS.map((tab) => (
                 <button
                   key={tab.value}
                   onClick={() => setSelectedFilter(tab.value)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                     selectedFilter === tab.value
                       ? "bg-[#0A251A] text-[#D4B568] shadow-sm"
                       : "bg-white text-gray-600 hover:text-[#0A251A] hover:bg-gray-100 border border-gray-200"
@@ -438,7 +438,7 @@ export const NominationSection: React.FC = () => {
           )}
 
           {/* Form Card - Full width matching cards grid above */}
-          <div className="w-full bg-white rounded-3xl p-8 sm:p-10 md:p-12 border border-gray-200 shadow-sm">
+          <div className="w-full bg-white rounded-3xl p-4 sm:p-8 md:p-12 border border-gray-200 shadow-sm">
             {submitted ? (
               <div className="text-center py-12 space-y-4 animate-fadeIn">
                 <CheckCircle className="w-16 h-16 text-[#BFA054] mx-auto" />

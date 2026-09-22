@@ -48,7 +48,7 @@ export const ContactSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left: Exact Contact Cards & Headquarters (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#0A251A] text-white rounded-3xl p-8 shadow-xl space-y-6">
+            <div className="bg-[#0A251A] text-white rounded-3xl p-5 sm:p-8 shadow-xl space-y-6">
               <h3 className="text-xl font-bold text-white border-b border-white/10 pb-4">
                 Headquarters Information
               </h3>
@@ -113,7 +113,7 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Right: Interactive Contact Form (7 cols) */}
-          <div className="lg:col-span-7 bg-[#F8F9FA] rounded-3xl p-8 sm:p-10 border border-gray-200 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-[#F8F9FA] rounded-3xl p-5 sm:p-8 md:p-10 border border-gray-200 shadow-sm flex flex-col justify-between">
             {submitted ? (
               <div className="my-auto text-center py-12 space-y-4 animate-fadeIn">
                 <CheckCircle className="w-16 h-16 text-[#BFA054] mx-auto" />
