@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, Bot, User, Sparkles, BookOpen, ArrowRight, CornerDownLeft } from "lucide-react";
+import { MessageSquare, X, Send, BookOpen, ArrowRight, CornerDownLeft, HelpCircle } from "lucide-react";
 import { SITE_INFO, STAFF_MEMBERS, EXACT_ISSUES, ADVERTISING_PACKAGES, ARTICLES } from "@/data/editorialData";
 
 interface Message {
@@ -34,7 +34,7 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
     {
       id: "welcome-1",
       sender: "ai",
-      text: "Hello! I'm your Golf Central AI Concierge. I can guide you through Volume 27, Florida championship courses, turfgrass agronomy, staff contacts, and advertising opportunities. What would you like to explore?",
+      text: "Hello! Welcome to the Golf Central Magazine Reader Concierge. I can assist you with Volume 27 digital issues, Florida course architecture, superintendent agronomy, editorial staff contacts, or advertising specifications. How may I assist you today?",
       timestamp: "Just now",
     },
   ]);
@@ -131,41 +131,37 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="flex items-center space-x-2 sm:space-x-2.5 px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0A251A] hover:bg-[#174B37] text-white rounded-full shadow-2xl border border-[#BFA054]/40 transition-all transform hover:scale-105 group"
-            title="Ask Golf Central AI Concierge"
+            className="flex items-center space-x-2 sm:space-x-2.5 px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#0F3D2A] hover:bg-[#134E36] text-white rounded-full shadow-2xl border border-[#C59B27]/40 transition-all transform hover:scale-105 group cursor-pointer"
+            title="Ask Golf Central Concierge"
           >
-            <div className="relative">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#BFA054] absolute -top-0.5 -right-0.5 animate-ping"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-[#BFA054] absolute -top-0.5 -right-0.5"></span>
-              <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4B568]" />
-            </div>
-            <span className="text-[11px] sm:text-xs font-bold tracking-wide">Golf Central AI</span>
+            <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-[#D8B045]" />
+            <span className="text-[11px] sm:text-xs font-bold tracking-wide">Reader Concierge</span>
           </button>
         )}
       </div>
 
       {/* Floating Modern Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[420px] h-[520px] sm:h-[560px] max-h-[86vh] bg-[#0A1F18] text-white rounded-2xl shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden animate-fadeIn font-sans">
-          {/* Header (Matching Flipbook Modal Top Bar) */}
-          <div className="bg-[#06150F] border-b border-[#BFA054]/30 p-4 flex items-center justify-between shrink-0">
+        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[420px] h-[520px] sm:h-[560px] max-h-[86vh] bg-[#0F3D2A] text-white rounded-2xl shadow-2xl border border-[#C59B27]/40 flex flex-col justify-between overflow-hidden animate-fadeIn font-sans">
+          {/* Header */}
+          <div className="bg-[#0B291D] border-b border-[#C59B27]/30 p-4 flex items-center justify-between shrink-0">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-xl bg-white/10 text-[#BFA054]">
-                <Bot className="w-5 h-5" />
+              <div className="p-2 rounded-xl bg-white/10 text-[#D8B045]">
+                <MessageSquare className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold">
-                  GOLF CENTRAL AI CONCIERGE // 24/7 ASSIST
+                <div className="text-[10px] text-[#D8B045] uppercase tracking-wider font-semibold">
+                  GOLF CENTRAL CONCIERGE // EDITORIAL DESK
                 </div>
                 <h3 className="text-sm font-bold text-white leading-none">
-                  Golf Central AI Intelligence
+                  Reader &amp; Editorial Concierge
                 </h3>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
               title="Close assistant"
             >
               <X className="w-4 h-4" />
@@ -173,7 +169,7 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
           </div>
 
           {/* Chat Messages Log */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0A1F18] text-xs">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0F3D2A] text-xs">
             {messages.map((m) => (
               <div
                 key={m.id}
@@ -184,8 +180,8 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
                 <div
                   className={`max-w-[85%] p-3.5 rounded-2xl leading-relaxed ${
                     m.sender === "user"
-                      ? "bg-[#BFA054] text-[#0A1F18] font-semibold rounded-br-none shadow-md"
-                      : "bg-[#06150F] text-white/90 border border-[#BFA054]/30 shadow-md rounded-bl-none"
+                      ? "bg-[#C59B27] text-[#0B291D] font-semibold rounded-br-none shadow-md"
+                      : "bg-[#0B291D] text-white/90 border border-white/10 shadow-md rounded-bl-none"
                   }`}
                 >
                   <p>{m.text}</p>
@@ -193,7 +189,7 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
                   {m.quickAction && (
                     <button
                       onClick={() => handleActionClick(m.quickAction!)}
-                      className="mt-2.5 px-3 py-1.5 bg-[#BFA054] text-[#0A1F18] font-bold text-[11px] rounded-lg flex items-center space-x-1 hover:bg-[#9E7F3D] transition-colors shadow-sm"
+                      className="mt-2.5 px-3 py-1.5 bg-[#C59B27] text-[#0B291D] font-bold text-[11px] rounded-lg flex items-center space-x-1 hover:bg-[#D8B045] transition-colors shadow-sm cursor-pointer"
                     >
                       <span>{m.quickAction.label}</span>
                       <ArrowRight className="w-3 h-3" />
@@ -205,22 +201,22 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
             ))}
 
             {isTyping && (
-              <div className="flex items-center space-x-1.5 p-3 bg-[#06150F] border border-[#BFA054]/30 rounded-2xl rounded-bl-none w-20 text-[#D4B568]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#BFA054] animate-bounce"></span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#BFA054] animate-bounce [animation-delay:0.2s]"></span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#BFA054] animate-bounce [animation-delay:0.4s]"></span>
+              <div className="flex items-center space-x-1.5 p-3 bg-[#0B291D] border border-white/10 rounded-2xl rounded-bl-none w-20 text-[#D8B045]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C59B27] animate-bounce"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C59B27] animate-bounce [animation-delay:0.2s]"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C59B27] animate-bounce [animation-delay:0.4s]"></span>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
           {/* Quick Prompt Chips */}
-          <div className="px-3 py-2 bg-[#06150F] border-t border-[#BFA054]/20 flex items-center space-x-2 overflow-x-auto text-[11px] scrollbar-none shrink-0">
+          <div className="px-3 py-2 bg-[#0B291D] border-t border-white/10 flex items-center space-x-2 overflow-x-auto text-[11px] scrollbar-none shrink-0">
             {quickPrompts.map((prompt, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(prompt)}
-                className="shrink-0 px-2.5 py-1 rounded-full bg-[#0A1F18] hover:bg-[#BFA054] hover:text-[#0A1F18] border border-[#BFA054]/30 text-[#D4B568] transition-colors font-medium"
+                className="shrink-0 px-2.5 py-1 rounded-full bg-[#134E36] hover:bg-[#C59B27] hover:text-[#0B291D] border border-[#C59B27]/30 text-[#D8B045] transition-colors font-medium cursor-pointer"
               >
                 {prompt}
               </button>
@@ -228,19 +224,19 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
           </div>
 
           {/* Input Box */}
-          <div className="p-3 bg-[#06150F] border-t border-[#BFA054]/30 flex items-center space-x-2 shrink-0">
+          <div className="p-3 bg-[#0B291D] border-t border-white/10 flex items-center space-x-2 shrink-0">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              placeholder="Ask Golf Central AI a question..."
-              className="flex-1 px-3.5 py-2.5 rounded-xl bg-white border-2 border-[#BFA054]/40 hover:border-[#BFA054] focus:border-[#D4B568] focus:ring-2 focus:ring-[#BFA054]/30 text-xs text-[#111827] placeholder-gray-400 outline-none transition-all font-medium shadow-xs"
+              placeholder="Ask a question about Golf Central..."
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-white border-2 border-[#C59B27]/40 hover:border-[#C59B27] focus:border-[#D8B045] focus:ring-2 focus:ring-[#C59B27]/30 text-xs text-[#0F172A] placeholder-gray-400 outline-none transition-all font-medium shadow-xs"
             />
             <button
               onClick={() => handleSend()}
               disabled={!input.trim()}
-              className="p-2.5 rounded-xl bg-[#BFA054] text-[#0A1F18] hover:bg-[#9E7F3D] disabled:opacity-40 transition-colors shrink-0"
+              className="p-2.5 rounded-xl bg-[#C59B27] text-[#0B291D] hover:bg-[#D8B045] disabled:opacity-40 transition-colors shrink-0 cursor-pointer"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -250,3 +246,4 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({
     </>
   );
 };
+

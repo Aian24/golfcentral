@@ -103,50 +103,35 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, isPlaying, isMuted]);
+  }, [isOpen, isPlaying, isMuted, isFullscreen]);
 
-  // Auto-play when chapter changes
+  // Fullscreen change listener
   useEffect(() => {
-    if (videoRef.current && isOpen) {
-      videoRef.current.currentTime = 0;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => setIsPlaying(true))
-          .catch(() => setIsPlaying(false));
-      }
-    }
-  }, [selectedVideo, isOpen]);
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
-  // Hide controls after inactivity
-  const handleMouseMove = () => {
-    setShowControls(true);
-    if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
-    controlsTimeoutRef.current = setTimeout(() => {
-      if (isPlaying) setShowControls(false);
-    }, 2800);
-  };
+  const current = videoChapters[selectedVideo];
 
   const togglePlay = () => {
     if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsPlaying(true);
-    } else {
+    if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
+    } else {
+      videoRef.current.play();
+      setIsPlaying(true);
     }
   };
 
   const toggleMute = () => {
     if (!videoRef.current) return;
-    const nextMuted = !isMuted;
-    videoRef.current.muted = nextMuted;
-    setIsMuted(nextMuted);
-    if (!nextMuted && volume === 0) {
-      setVolume(0.5);
-      videoRef.current.volume = 0.5;
-    }
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,13 +144,6 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     }
   };
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-      setDuration(videoRef.current.duration || 0);
-    }
-  };
-
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const seekTime = parseFloat(e.target.value);
     if (videoRef.current) {
@@ -174,44 +152,60 @@ export const VideoModal: React.FC<VideoModalProps> = ({
     }
   };
 
-  const toggleFullscreen = () => {
-    if (!playerContainerRef.current) return;
-    if (!document.fullscreenElement) {
-      playerContainerRef.current.requestFullscreen?.();
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.();
-      setIsFullscreen(false);
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+      setDuration(videoRef.current.duration || 0);
     }
   };
 
-  const formatTime = (seconds: number) => {
-    if (isNaN(seconds)) return "00:00";
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  const toggleFullscreen = () => {
+    if (!playerContainerRef.current) return;
+    if (!document.fullscreenElement) {
+      playerContainerRef.current.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
+
+  const handleMouseMove = () => {
+    setShowControls(true);
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+    controlsTimeoutRef.current = setTimeout(() => {
+      if (isPlaying) {
+        setShowControls(false);
+      }
+    }, 2500);
+  };
+
+  const formatTime = (secs: number) => {
+    if (isNaN(secs)) return "0:00";
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
   };
 
   if (!isOpen) return null;
 
-  const current = videoChapters[selectedVideo];
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-2 sm:p-4 md:p-6 animate-fadeIn font-sans">
-      <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#071912] text-white shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden rounded-2xl">
+      <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0F3D2A] text-white shadow-2xl border border-[#C59B27]/40 flex flex-col justify-between overflow-hidden rounded-2xl">
         {/* Top Control Bar */}
-        <div className="bg-[#05130D] border-b border-[#BFA054]/30 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between text-white shrink-0 gap-2">
+        <div className="bg-[#0B291D] border-b border-[#C59B27]/30 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between text-white shrink-0 gap-2">
           <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#BFA054]/20 border border-[#BFA054]/40 flex items-center justify-center text-[#D4B568] shrink-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#C59B27]/20 border border-[#C59B27]/40 flex items-center justify-center text-[#D8B045] shrink-0">
               <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
             <div className="overflow-hidden">
               <div className="flex items-center space-x-1.5 sm:space-x-2">
-                <span className="text-[9px] sm:text-[10px] text-[#D4B568] uppercase tracking-wider font-bold truncate">
+                <span className="text-[9px] sm:text-[10px] text-[#D8B045] uppercase tracking-wider font-bold truncate">
                   VIDEO TOUR // VOL 27
                 </span>
-                <span className="px-1.5 py-0.2 rounded text-[8px] sm:text-[9px] font-bold bg-[#BFA054] text-[#061710] shrink-0">
+                <span className="px-1.5 py-0.2 rounded text-[8px] sm:text-[9px] font-bold bg-[#C59B27] text-[#0B291D] shrink-0">
                   {current.tag}
                 </span>
               </div>
@@ -224,7 +218,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
           <div className="flex items-center space-x-2 shrink-0">
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
               title="Close video (Esc)"
             >
               <X className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -239,7 +233,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
             ref={playerContainerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => isPlaying && setShowControls(false)}
-            className="w-full max-w-4xl aspect-video bg-black rounded-xl overflow-hidden border border-[#BFA054]/40 shadow-2xl relative group cursor-pointer"
+            className="w-full max-w-4xl aspect-video bg-black rounded-xl overflow-hidden border border-[#C59B27]/40 shadow-2xl relative group cursor-pointer"
             onClick={togglePlay}
           >
             <video
@@ -260,7 +254,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
             {/* Central Play/Pause Watermark Button when paused */}
             {!isPlaying && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#BFA054]/90 text-[#061710] flex items-center justify-center shadow-2xl transform scale-100 animate-pulse">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#C59B27]/90 text-[#0B291D] flex items-center justify-center shadow-2xl transform scale-100 animate-pulse">
                   <Play className="w-7 h-7 sm:w-10 sm:h-10 fill-current ml-1" />
                 </div>
               </div>
@@ -272,16 +266,16 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 showControls ? "opacity-100" : "opacity-0"
               }`}
             >
-              <div className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-[#BFA054]/30 text-[11px] sm:text-xs truncate max-w-[70%]">
+              <div className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-black/70 backdrop-blur-md border border-[#C59B27]/30 text-[11px] sm:text-xs truncate max-w-[70%]">
                 <span className="font-semibold text-white">{current.course}</span>
                 <span className="text-white/60 text-[10px] sm:text-[11px] ml-1.5 hidden sm:inline">• {current.location}</span>
               </div>
-              <div className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-[#BFA054]/90 text-[#061710] text-[9px] sm:text-[10px] font-bold tracking-wider uppercase">
+              <div className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-[#C59B27]/90 text-[#0B291D] text-[9px] sm:text-[10px] font-bold tracking-wider uppercase">
                 HD 60FPS
               </div>
             </div>
 
-            {/* Bottom Luxury Custom Player Controls */}
+            {/* Bottom Custom Player Controls */}
             <div
               onClick={(e) => e.stopPropagation()}
               className={`absolute bottom-0 left-0 right-0 p-2.5 sm:p-4 bg-gradient-to-t from-black via-black/80 to-transparent transition-opacity duration-300 ${
@@ -297,9 +291,9 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                   step={0.1}
                   value={currentTime}
                   onChange={handleSeek}
-                  className="w-full h-1.5 bg-white/25 rounded-lg appearance-none cursor-pointer accent-[#BFA054] hover:h-2 transition-all"
+                  className="w-full h-1.5 bg-white/25 rounded-lg appearance-none cursor-pointer accent-[#C59B27] hover:h-2 transition-all"
                   style={{
-                    background: `linear-gradient(to right, #BFA054 ${progressPercent}%, rgba(255,255,255,0.2) ${progressPercent}%)`,
+                    background: `linear-gradient(to right, #C59B27 ${progressPercent}%, rgba(255,255,255,0.2) ${progressPercent}%)`,
                   }}
                 />
               </div>
@@ -309,7 +303,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 <div className="flex items-center space-x-2 sm:space-x-3">
                   <button
                     onClick={togglePlay}
-                    className="p-1 sm:p-1.5 rounded-lg bg-[#BFA054] text-[#061710] hover:bg-[#D4B568] transition-colors"
+                    className="p-1 sm:p-1.5 rounded-lg bg-[#C59B27] text-[#0B291D] hover:bg-[#D8B045] transition-colors cursor-pointer"
                     title={isPlaying ? "Pause (Space)" : "Play (Space)"}
                   >
                     {isPlaying ? (
@@ -327,7 +321,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                         setIsPlaying(true);
                       }
                     }}
-                    className="p-1 text-white/70 hover:text-white transition-colors"
+                    className="p-1 text-white/70 hover:text-white transition-colors cursor-pointer"
                     title="Replay from start"
                   >
                     <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -336,13 +330,13 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                   <div className="flex items-center space-x-1 sm:space-x-2">
                     <button
                       onClick={toggleMute}
-                      className="text-white/80 hover:text-white transition-colors"
+                      className="text-white/80 hover:text-white transition-colors cursor-pointer"
                       title={isMuted ? "Unmute (M)" : "Mute (M)"}
                     >
                       {isMuted || volume === 0 ? (
                         <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-400" />
                       ) : (
-                        <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4B568]" />
+                        <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D8B045]" />
                       )}
                     </button>
                     <input
@@ -352,7 +346,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                       step={0.05}
                       value={isMuted ? 0 : volume}
                       onChange={handleVolumeChange}
-                      className="w-12 sm:w-20 h-1 bg-white/30 rounded appearance-none cursor-pointer accent-[#BFA054]"
+                      className="w-12 sm:w-20 h-1 bg-white/30 rounded appearance-none cursor-pointer accent-[#C59B27]"
                     />
                   </div>
 
@@ -362,12 +356,12 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 </div>
 
                 <div className="flex items-center space-x-2 sm:space-x-3">
-                  <span className="text-[10px] sm:text-[11px] text-[#D4B568] font-medium hidden md:inline">
+                  <span className="text-[10px] sm:text-[11px] text-[#D8B045] font-medium hidden md:inline">
                     Native HTML5 • Zero External Links
                   </span>
                   <button
                     onClick={toggleFullscreen}
-                    className="p-1 text-white/80 hover:text-white transition-colors"
+                    className="p-1 text-white/80 hover:text-white transition-colors cursor-pointer"
                     title={isFullscreen ? "Exit Fullscreen (F)" : "Fullscreen (F)"}
                   >
                     {isFullscreen ? (
@@ -383,9 +377,9 @@ export const VideoModal: React.FC<VideoModalProps> = ({
 
           {/* Chapters Strip */}
           <div className="w-full max-w-4xl space-y-2 pt-2">
-            <div className="text-[11px] font-bold text-[#D4B568] uppercase tracking-wider flex items-center justify-between">
+            <div className="text-[11px] font-bold text-[#D8B045] uppercase tracking-wider flex items-center justify-between">
               <span>Select Course Video Tour (Click to Play):</span>
-              <span className="text-[10px] text-white/50 font-normal">
+              <span className="text-[10px] text-white/60 font-normal">
                 {selectedVideo + 1} of {videoChapters.length} Tours
               </span>
             </div>
@@ -400,10 +394,10 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                       setSelectedVideo(idx);
                       setIsPlaying(true);
                     }}
-                    className={`p-3 rounded-xl text-left text-xs transition-all border relative overflow-hidden group flex flex-col justify-between ${
+                    className={`p-3 rounded-xl text-left text-xs transition-all border relative overflow-hidden group flex flex-col justify-between cursor-pointer ${
                       isSelected
-                        ? "bg-[#0E3324] border-[#BFA054] shadow-lg ring-2 ring-[#BFA054]/50"
-                        : "bg-[#05130D] border-white/10 hover:border-[#BFA054]/50 text-white/80 hover:text-white"
+                        ? "bg-[#134E36] border-[#C59B27] shadow-lg ring-2 ring-[#C59B27]/50"
+                        : "bg-[#0B291D] border-white/10 hover:border-[#C59B27]/50 text-white/80 hover:text-white"
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
@@ -411,7 +405,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                         <div
                           className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 text-[10px] font-bold ${
                             isSelected
-                              ? "bg-[#BFA054] text-[#061710]"
+                              ? "bg-[#C59B27] text-[#0B291D]"
                               : "bg-white/10 text-white/70"
                           }`}
                         >
@@ -423,7 +417,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                         </div>
                         <span
                           className={`font-bold line-clamp-1 text-xs ${
-                            isSelected ? "text-[#D4B568]" : "text-white"
+                            isSelected ? "text-[#D8B045]" : "text-white"
                           }`}
                         >
                           {ch.title}
@@ -438,10 +432,10 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                       {ch.description}
                     </p>
 
-                    <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-white/10 text-[#D4B568]/80 font-medium">
+                    <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-white/10 text-[#D8B045]/90 font-medium">
                       <span>{ch.course}</span>
                       {isSelected ? (
-                        <span className="flex items-center space-x-1 text-[#D4B568] font-bold">
+                        <span className="flex items-center space-x-1 text-[#D8B045] font-bold">
                           <CheckCircle2 className="w-3 h-3" />
                           <span>Now Playing</span>
                         </span>
@@ -459,11 +453,11 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         </div>
 
         {/* Bottom Control Bar */}
-        <div className="bg-[#05130D] border-t border-[#BFA054]/30 px-6 py-3 text-xs text-white/60 flex items-center justify-between font-sans shrink-0">
+        <div className="bg-[#0B291D] border-t border-[#C59B27]/30 px-6 py-3 text-xs text-white/60 flex items-center justify-between font-sans shrink-0">
           <span>Golf Central Video Tours • Florida Sanctuary Series</span>
           <button
             onClick={onClose}
-            className="text-[#D4B568] hover:text-white transition-colors font-semibold"
+            className="text-[#D8B045] hover:text-white transition-colors font-semibold cursor-pointer"
           >
             Close Tour Reel [Esc]
           </button>

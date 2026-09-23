@@ -68,7 +68,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
   return (
     <div ref={dropdownRef} className="relative w-full select-none" id={id}>
-      {/* Dropdown Trigger Button - White background when closed, green when opened */}
+      {/* Dropdown Trigger Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -76,8 +76,8 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
         aria-expanded={isOpen}
         className={`w-full px-4 py-3 pr-10 rounded-xl text-xs font-medium outline-none transition-all flex items-center justify-between shadow-xs text-left cursor-pointer border-2 ${
           isOpen
-            ? "bg-[#0A251A] text-white border-[#BFA054] shadow-md"
-            : "bg-white text-[#111827] border-[#0A251A]/20 hover:border-[#0A251A]/40 focus:border-[#0A251A] focus:ring-2 focus:ring-[#0A251A]/20"
+            ? "bg-[#0F3D2A] text-white border-[#C59B27] shadow-md"
+            : "bg-white text-[#0F172A] border-[#134E36]/20 hover:border-[#134E36]/40 focus:border-[#134E36] focus:ring-2 focus:ring-[#134E36]/20"
         } ${className}`}
       >
         <span className="truncate font-medium">
@@ -86,15 +86,15 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
         <ChevronDown
           className={`w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-200 ${
             isOpen
-              ? "rotate-180 text-[#D4B568]"
-              : "rotate-0 text-[#0A251A]"
+              ? "rotate-180 text-[#D8B045]"
+              : "rotate-0 text-[#134E36]"
           }`}
         />
       </button>
 
-      {/* Dropdown Menu Popup - Luxury GREEN background with gold accents and ZERO OS blue */}
+      {/* Dropdown Menu Popup */}
       {isOpen && (
-        <div className="absolute z-50 left-0 right-0 mt-1.5 py-1.5 rounded-xl bg-[#0A251A] border-2 border-[#BFA054]/60 shadow-[0_16px_40px_rgba(0,0,0,0.4)] overflow-hidden backdrop-blur-md animate-fadeIn">
+        <div className="absolute z-50 left-0 right-0 mt-1.5 py-1.5 rounded-xl bg-[#0F3D2A] border-2 border-[#C59B27]/60 shadow-[0_16px_40px_rgba(0,0,0,0.3)] overflow-hidden backdrop-blur-md animate-fadeIn">
           <div className="max-h-60 overflow-y-auto divide-y divide-white/5">
             {normalizedOptions.map((opt) => {
               const isSelected = opt.value === value;
@@ -107,13 +107,13 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
                   }}
                   className={`px-4 py-3 text-xs flex items-center justify-between cursor-pointer transition-colors ${
                     isSelected
-                      ? "bg-[#061710] text-[#D4B568] font-bold"
-                      : "text-white/90 hover:bg-[#061710] hover:text-[#D4B568]"
+                      ? "bg-[#134E36] text-[#D8B045] font-bold"
+                      : "text-white/90 hover:bg-[#134E36] hover:text-[#D8B045]"
                   }`}
                 >
                   <span className="truncate pr-2">{opt.label}</span>
                   {isSelected && (
-                    <Check className="w-4 h-4 text-[#D4B568] shrink-0" />
+                    <Check className="w-4 h-4 text-[#D8B045] shrink-0" />
                   )}
                 </div>
               );

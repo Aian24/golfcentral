@@ -5,35 +5,50 @@
   --font-serif: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  --color-forest-950: #061710;
-  --color-forest-900: #0a251a;
-  --color-forest-800: #0f3627;
-  --color-forest-700: #174b37;
-  --color-forest-600: #1f644a;
-  --color-forest-500: #2b8463;
+  /* Refined Augusta Fairway Greens - lighter & vibrant than previous dark swamp */
+  --color-forest-950: #0B291D;
+  --color-forest-900: #0F3D2A;
+  --color-forest-800: #134E36;
+  --color-forest-700: #176043;
+  --color-forest-600: #1E7954;
+  --color-forest-500: #29976A;
+  --color-forest-200: #C2E7D3;
+  --color-forest-100: #EBF7EE;
+  --color-forest-50: #F3FAF5;
 
-  --color-champagne-600: #9e7f3d;
-  --color-champagne-500: #bfa054;
-  --color-champagne-400: #d4b568;
-  --color-champagne-300: #e4cc88;
-  --color-champagne-100: #faf3e0;
+  /* Warm Complementary Champagne Golds */
+  --color-champagne-600: #A8832A;
+  --color-champagne-500: #C59B27;
+  --color-champagne-400: #D8B045;
+  --color-champagne-300: #E8C86D;
+  --color-champagne-200: #F3DE9F;
+  --color-champagne-100: #FAF4E5;
+  --color-champagne-50: #FDFBF6;
 
+  /* Warm Sandstone & Clean Linen Neutrals */
   --color-surface-50: #ffffff;
-  --color-surface-100: #f8f9fa;
-  --color-surface-200: #f1f3f5;
-  --color-surface-300: #e9ecef;
+  --color-surface-100: #FAF8F5;
+  --color-surface-200: #F3EFEA;
+  --color-surface-300: #EAE3D9;
+  --color-surface-400: #D8CFC2;
 
-  --color-charcoal-900: #111827;
-  --color-charcoal-800: #1f2937;
-  --color-charcoal-700: #374151;
-  --color-charcoal-600: #4b5563;
-  --color-charcoal-500: #6b7280;
-  --color-charcoal-400: #9ca3af;
+  /* Modern Navy Slate Typography */
+  --color-charcoal-900: #0F172A;
+  --color-charcoal-800: #1E293B;
+  --color-charcoal-700: #334155;
+  --color-charcoal-600: #475569;
+  --color-charcoal-500: #64748B;
+  --color-charcoal-400: #94A3B8;
+  --color-charcoal-300: #CBD5E1;
 }
 
 :root {
-  --background: #f8f9fa;
-  --foreground: #111827;
+  --background: #FAF8F5;
+  --foreground: #0F172A;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -76,12 +91,12 @@ input:disabled {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #bfa054;
+  background: #C59B27;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9e7f3d;
+  background: #A8832A;
 }
 
 /* Hide scrollbar utility for clean modern UI */
@@ -98,21 +113,39 @@ input:disabled {
   scrollbar-width: none !important;
 }
 
-/* Global Select styling for modern luxury green dropdowns */
+/* 3D Flip Card Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Global Select styling for modern fairway green dropdowns */
 select {
-  background-color: #0A251A !important;
+  background-color: #0F3D2A !important;
   color: #ffffff !important;
 }
 
 select option {
-  background-color: #0A251A !important;
+  background-color: #0F3D2A !important;
   color: #ffffff !important;
   padding: 8px 12px;
 }
 
 select option:checked {
-  background-color: #061710 !important;
-  color: #D4B568 !important;
+  background-color: #134E36 !important;
+  color: #D8B045 !important;
 }
 
 /* Prevent browser default blue outlines */
@@ -127,7 +160,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 textarea:-webkit-autofill {
-  -webkit-text-fill-color: #111827 !important;
+  -webkit-text-fill-color: #0F172A !important;
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
   box-shadow: 0 0 0px 1000px #ffffff inset !important;
   transition: background-color 5000s ease-in-out 0s;
@@ -156,5 +189,5 @@ textarea:-webkit-autofill {
 
 .modern-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 32px -8px rgba(10, 37, 26, 0.08);
+  box-shadow: 0 16px 32px -8px rgba(15, 61, 42, 0.08);
 }

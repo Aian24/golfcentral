@@ -51,14 +51,14 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-2 sm:p-4 md:p-6 animate-fadeIn">
-      {/* Same Modal Structure as Flipbook Edition */}
-      <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0A1F18] text-white shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden rounded-2xl font-sans">
-        {/* Top Control Bar (Identical to Flipbook Modal) */}
-        <div className="bg-[#06150F] border-b border-[#BFA054]/30 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shrink-0 gap-2">
+      {/* Modal Container */}
+      <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0F3D2A] text-white shadow-2xl border border-[#C59B27]/40 flex flex-col justify-between overflow-hidden rounded-2xl font-sans">
+        {/* Top Control Bar */}
+        <div className="bg-[#0B291D] border-b border-[#C59B27]/30 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shrink-0 gap-2">
           <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden">
-            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-[#BFA054] shrink-0" />
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-[#C59B27] shrink-0" />
             <div className="overflow-hidden">
-              <div className="text-[9px] sm:text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold truncate">
+              <div className="text-[9px] sm:text-[10px] text-[#D8B045] uppercase tracking-wider font-semibold truncate">
                 DIGITAL ARTICLE READER // {article.category}
               </div>
               <h3 className="text-xs sm:text-base font-bold text-white leading-none truncate">
@@ -70,9 +70,9 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
           <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
             <button
               onClick={() => setIsBookmarked(!isBookmarked)}
-              className={`p-1.5 sm:p-2 rounded-xl transition-colors ${
+              className={`p-1.5 sm:p-2 rounded-xl transition-colors cursor-pointer ${
                 isBookmarked
-                  ? "bg-[#BFA054] text-[#0A1F18]"
+                  ? "bg-[#C59B27] text-[#0B291D]"
                   : "bg-white/10 hover:bg-white/20 text-white"
               }`}
               title="Bookmark story"
@@ -82,7 +82,7 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
 
             <button
               onClick={handleCopyLink}
-              className="p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
               title="Share article link"
             >
               {copied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
@@ -90,7 +90,7 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors ml-0.5"
+              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors ml-0.5 cursor-pointer"
               title="Close reader (Esc)"
             >
               <X className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -103,7 +103,7 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
           <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6">
             {/* Header Meta */}
             <div className="space-y-2.5 sm:space-y-3">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-[#D4B568] text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-[#D8B045] text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
                 <span>{article.departmentTag}</span>
               </div>
 
@@ -111,25 +111,25 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
                 {article.title}
               </h1>
 
-              <p className="text-base sm:text-lg text-white/80 font-normal leading-relaxed">
+              <p className="text-base sm:text-lg text-white/85 font-normal leading-relaxed">
                 {article.subtitle}
               </p>
 
-              <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-white/60">
+              <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-white/70">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-[#BFA054] text-[#0A1F18] font-bold flex items-center justify-center text-xs">
+                  <div className="w-8 h-8 rounded-full bg-[#C59B27] text-[#0B291D] font-bold flex items-center justify-center text-xs">
                     {article.author.name.charAt(0)}
                   </div>
                   <div>
                     <span className="font-bold text-white block">{article.author.name}</span>
-                    <span className="text-white/60 text-[11px]">{article.author.role}</span>
+                    <span className="text-white/70 text-[11px]">{article.author.role}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-3">
                   <span>{article.publishedDate}</span>
                   <span>•</span>
-                  <span className="flex items-center space-x-1 text-[#D4B568]">
+                  <span className="flex items-center space-x-1 text-[#D8B045]">
                     <Clock className="w-3.5 h-3.5" />
                     <span>{article.readTime}</span>
                   </span>
@@ -139,34 +139,34 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
 
             {/* Audio Narration Bar */}
             {article.audioDuration && (
-              <div className="p-4 bg-[#06150F] rounded-2xl border border-[#BFA054]/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+              <div className="p-4 bg-[#0B291D] rounded-2xl border border-[#C59B27]/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
                 <div className="flex items-center space-x-3 w-full sm:w-auto">
                   <button
                     onClick={() => setIsPlayingAudio(!isPlayingAudio)}
-                    className="p-3 bg-[#BFA054] hover:bg-[#9E7F3D] text-[#0A1F18] rounded-full transition-colors shrink-0"
+                    className="p-3 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] rounded-full transition-colors shrink-0 cursor-pointer shadow"
                   >
                     {isPlayingAudio ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                   </button>
                   <div>
-                    <div className="text-xs text-[#D4B568] font-bold uppercase flex items-center space-x-1.5">
+                    <div className="text-xs text-[#D8B045] font-bold uppercase flex items-center space-x-1.5">
                       <Volume2 className="w-3.5 h-3.5" />
                       <span>Listen to Narration</span>
                     </div>
-                    <div className="text-xs text-white/70">
+                    <div className="text-xs text-white/80">
                       {isPlayingAudio ? "Playing audio..." : `Duration: ${article.audioDuration}`}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-2 self-end sm:self-center text-xs">
-                  <span className="text-white/40">SPEED:</span>
+                  <span className="text-white/50">SPEED:</span>
                   {(["1x", "1.25x", "1.5x"] as const).map((spd) => (
                     <button
                       key={spd}
                       onClick={() => setAudioSpeed(spd)}
-                      className={`px-2 py-0.5 rounded-lg text-xs font-semibold ${
+                      className={`px-2 py-0.5 rounded-lg text-xs font-semibold cursor-pointer ${
                         audioSpeed === spd
-                          ? "bg-[#BFA054] text-[#0A1F18]"
+                          ? "bg-[#C59B27] text-[#0B291D]"
                           : "bg-white/10 text-white/70 hover:bg-white/20"
                       }`}
                     >
@@ -188,7 +188,7 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
                   sizes="(max-width: 1024px) 100vw, 800px"
                 />
               </div>
-              <p className="text-xs text-white/60 italic text-center sm:text-left">
+              <p className="text-xs text-white/70 italic text-center sm:text-left">
                 {article.imageCaption}
               </p>
             </div>
@@ -202,11 +202,11 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
               ))}
 
               {article.content.pullQuote && (
-                <div className="p-6 rounded-2xl bg-[#06150F] border-l-4 border-[#BFA054] border-y border-r border-white/10 my-6 space-y-2">
+                <div className="p-6 rounded-2xl bg-[#0B291D] border-l-4 border-[#C59B27] border-y border-r border-white/10 my-6 space-y-2">
                   <p className="text-base sm:text-lg italic text-white font-medium">
                     &ldquo;{article.content.pullQuote.quote}&rdquo;
                   </p>
-                  <p className="text-xs text-[#D4B568] font-bold uppercase tracking-wider">
+                  <p className="text-xs text-[#D8B045] font-bold uppercase tracking-wider">
                     — {article.content.pullQuote.attribution}
                   </p>
                 </div>
@@ -224,11 +224,11 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
             </div>
 
             {/* Jump to Issue Flipbook Banner */}
-            <div className="p-6 bg-[#06150F] rounded-2xl border border-[#BFA054]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="p-6 bg-[#0B291D] rounded-2xl border border-[#C59B27]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
-                <BookOpen className="w-6 h-6 text-[#BFA054] shrink-0" />
+                <BookOpen className="w-6 h-6 text-[#C59B27] shrink-0" />
                 <div>
-                  <div className="text-xs text-[#D4B568] font-semibold uppercase">
+                  <div className="text-xs text-[#D8B045] font-semibold uppercase">
                     Featured in Volume 27 Issue 6
                   </div>
                   <div className="text-sm font-bold text-white">
@@ -241,7 +241,7 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
                   onClose();
                   onOpenIssue(6);
                 }}
-                className="px-5 py-2.5 bg-[#BFA054] hover:bg-[#9E7F3D] text-[#0A1F18] font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shrink-0"
+                className="px-5 py-2.5 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shrink-0 cursor-pointer shadow"
               >
                 Open Flipbook Edition
               </button>
@@ -257,15 +257,15 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
                   <div
                     key={rel.id}
                     onClick={() => onSelectArticle(rel)}
-                    className="p-4 rounded-xl bg-[#06150F] border border-white/10 hover:border-[#BFA054] cursor-pointer transition-all hover:shadow-md space-y-2"
+                    className="p-4 rounded-xl bg-[#0B291D] border border-white/10 hover:border-[#C59B27] cursor-pointer transition-all hover:shadow-md space-y-2"
                   >
-                    <div className="text-[10px] font-bold text-[#D4B568] uppercase">
+                    <div className="text-[10px] font-bold text-[#D8B045] uppercase">
                       {rel.category}
                     </div>
-                    <h5 className="text-xs sm:text-sm font-bold text-white hover:text-[#D4B568] transition-colors line-clamp-2">
+                    <h5 className="text-xs sm:text-sm font-bold text-white hover:text-[#D8B045] transition-colors line-clamp-2">
                       {rel.title}
                     </h5>
-                    <div className="text-[11px] text-white/50">{rel.readTime}</div>
+                    <div className="text-[11px] text-white/60">{rel.readTime}</div>
                   </div>
                 ))}
               </div>
@@ -273,10 +273,10 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
           </div>
         </div>
 
-        {/* Bottom Bar (Identical to Flipbook Modal) */}
-        <div className="bg-[#06150F] border-t border-[#BFA054]/30 px-6 py-3 flex items-center justify-between text-xs text-white/60 shrink-0">
+        {/* Bottom Bar */}
+        <div className="bg-[#0B291D] border-t border-[#C59B27]/30 px-6 py-3 flex items-center justify-between text-xs text-white/60 shrink-0">
           <span>Golf Central Magazine • Published in Lake Wales, FL Since 1999</span>
-          <button onClick={onClose} className="hover:text-[#D4B568] font-semibold">
+          <button onClick={onClose} className="hover:text-[#D8B045] font-semibold cursor-pointer">
             Close Reader [Esc]
           </button>
         </div>

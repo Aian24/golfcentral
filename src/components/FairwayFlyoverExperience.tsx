@@ -255,10 +255,10 @@ export const FairwayFlyoverExperience: React.FC<FairwayFlyoverExperienceProps> =
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="absolute inset-0 z-50 bg-[#061710] flex flex-col items-center justify-center p-6 text-center"
+              className="absolute inset-0 z-50 bg-[#0F3D2A] flex flex-col items-center justify-center p-6 text-center"
             >
-              <div className="w-12 h-12 rounded-full border-2 border-[#BFA054]/20 border-t-[#BFA054] animate-spin mb-4" />
-              <div className="text-sm font-semibold tracking-wider text-[#D4B568] uppercase font-mono">
+              <div className="w-12 h-12 rounded-full border-2 border-[#C59B27]/20 border-t-[#C59B27] animate-spin mb-4" />
+              <div className="text-sm font-semibold tracking-wider text-[#D8B045] uppercase font-mono">
                 Loading Cinematic Experience ({loadPercentage}%)
               </div>
             </motion.div>
@@ -279,7 +279,7 @@ export const FairwayFlyoverExperience: React.FC<FairwayFlyoverExperienceProps> =
               <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.95)] leading-tight">
                 {activeBeat.headline}
               </h2>
-              <p className="text-xs sm:text-base md:text-lg text-[#E5C97A] font-semibold tracking-widest uppercase mt-2.5 sm:mt-3 drop-shadow-[0_3px_12px_rgba(0,0,0,0.95)]">
+              <p className="text-xs sm:text-base md:text-lg text-[#D8B045] font-semibold tracking-widest uppercase mt-2.5 sm:mt-3 drop-shadow-[0_3px_12px_rgba(0,0,0,0.95)]">
                 {activeBeat.subtitle}
               </p>
             </motion.div>
@@ -294,18 +294,18 @@ export const FairwayFlyoverExperience: React.FC<FairwayFlyoverExperienceProps> =
           {/* Subtle Clean Scroll Prompt */}
           <button
             onClick={handleSkipToMagazine}
-            className="flex flex-col items-center space-y-1 text-white/85 hover:text-[#D4B568] transition-colors mb-3 group"
+            className="flex flex-col items-center space-y-1 text-white/85 hover:text-[#D8B045] transition-colors mb-3 group cursor-pointer"
           >
             <span className="text-[11px] font-mono tracking-widest uppercase opacity-80 group-hover:opacity-100 drop-shadow-md">
               Scroll Down to Fly
             </span>
-            <ChevronDown className="w-4 h-4 text-[#D4B568] animate-bounce" />
+            <ChevronDown className="w-4 h-4 text-[#D8B045] animate-bounce" />
           </button>
 
           {/* Minimalist Slim Gold Progress Bar */}
           <div className="w-full max-w-md h-1.5 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm shadow-lg">
             <div
-              className="h-full bg-gradient-to-r from-[#BFA054] to-[#E5C97A] transition-all duration-75"
+              className="h-full bg-gradient-to-r from-[#C59B27] to-[#D8B045] transition-all duration-75"
               style={{ width: `${Math.max(1, scrollProgress * 100)}%` }}
             />
           </div>

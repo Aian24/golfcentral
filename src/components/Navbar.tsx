@@ -39,10 +39,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 w-full transition-all duration-300">
-      {/* Main Clean Modern Navbar (No top telemetry strip) */}
+      {/* Main Clean Modern Navbar with Fairway Green & Champagne Gold Accent */}
       <nav
-        className={`w-full bg-[#0A251A] text-white transition-all duration-300 shadow-md ${
-          scrolled ? "py-2.5 shadow-xl" : "py-3 md:py-4"
+        className={`w-full bg-[#0F3D2A] text-white transition-all duration-300 shadow-md border-b border-[#176043] ${
+          scrolled ? "py-2.5 shadow-xl bg-[#0F3D2A]/95 backdrop-blur-md" : "py-3 md:py-4"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,6 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   alt="Golf Central Magazine"
                   fill
                   priority
+                  sizes="(max-width: 640px) 128px, 192px"
                   className="object-contain object-left group-hover:opacity-90 transition-opacity"
                 />
               </div>
@@ -69,12 +70,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                   src={SITE_INFO.official25YearsBadge}
                   alt="25th Anniversary"
                   fill
+                  sizes="40px"
                   className="object-contain"
                 />
               </div>
             </div>
 
-            {/* Center: Modern Navigation Links with Glowing Active Line */}
+            {/* Center: Modern Navigation Links with Glowing Champagne Active Line */}
             <div className="hidden lg:flex items-center space-x-1 sm:space-x-1.5">
               {navLinks.map((item) => {
                 const isActive = activeTab === item.value;
@@ -82,41 +84,41 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     key={item.value}
                     onClick={() => onNavigateTab(item.value)}
-                    className={`relative h-10 px-3 py-2 flex items-center justify-center text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-colors cursor-pointer ${
+                    className={`relative h-10 px-3.5 py-2 flex items-center justify-center text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-colors cursor-pointer rounded-lg hover:bg-white/5 ${
                       isActive
-                        ? "text-[#D4B568] font-bold"
+                        ? "text-[#D8B045] font-bold"
                         : "text-white/80 hover:text-white"
                     }`}
                   >
                     <span>{item.label}</span>
                     {isActive && (
-                      <span className="absolute bottom-0 left-1 right-1 h-[2.5px] bg-[#D4B568] rounded-full shadow-[0_0_10px_#D4B568,0_0_5px_#BFA054] animate-pulse" />
+                      <span className="absolute bottom-1 left-2 right-2 h-[2.5px] bg-[#D8B045] rounded-full shadow-[0_0_8px_#D8B045,0_0_4px_#C59B27]" />
                     )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Right: Search & Action Buttons with Identical Heights (h-10 / 40px) */}
+            {/* Right: Search & Action Buttons */}
             <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
               <button
                 onClick={onOpenSearch}
                 className="h-9 sm:h-10 px-2.5 sm:px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center space-x-2 transition-colors border border-white/15 whitespace-nowrap cursor-pointer"
                 title="Search stories and archives"
               >
-                <Search className="w-4 h-4 text-[#BFA054]" />
+                <Search className="w-4 h-4 text-[#D8B045]" />
                 <span className="hidden sm:inline">Search...</span>
               </button>
 
               <button
                 onClick={() => onOpenIssue(6)}
-                className="hidden sm:flex h-9 sm:h-10 px-4 rounded-xl bg-[#BFA054] hover:bg-[#9E7F3D] text-[#0A251A] font-bold text-xs uppercase tracking-wider items-center space-x-1.5 transition-all transform hover:-translate-y-0.5 shadow-md whitespace-nowrap cursor-pointer"
+                className="hidden sm:flex h-9 sm:h-10 px-4 rounded-xl bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider items-center space-x-1.5 transition-all transform hover:-translate-y-0.5 shadow-md whitespace-nowrap cursor-pointer"
               >
                 <span>Read Issue 6</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
 
-              {/* Mobile Menu Hamburger (Identical h-9/h-10) */}
+              {/* Mobile Menu Hamburger */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 className="lg:hidden h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white/10 text-white hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
@@ -132,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex justify-end animate-fadeIn">
-          <div className="w-full max-w-xs bg-[#0A251A] text-white h-full p-6 flex flex-col justify-between shadow-2xl overflow-y-auto border-l border-white/10">
+          <div className="w-full max-w-xs bg-[#0F3D2A] text-white h-full p-6 flex flex-col justify-between shadow-2xl overflow-y-auto border-l border-[#176043]">
             <div>
               <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
                 <div className="relative h-10 w-36">
@@ -161,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }}
                     className={`w-full text-left h-11 px-4 rounded-xl text-sm font-semibold transition-colors flex items-center ${
                       activeTab === item.value
-                        ? "bg-[#BFA054] text-[#0A251A]"
+                        ? "bg-[#C59B27] text-[#0B291D]"
                         : "text-white/80 hover:bg-white/10 hover:text-white"
                     }`}
                   >
@@ -176,7 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onOpenIssue(6);
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full h-11 bg-[#BFA054] text-[#0A251A] font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center space-x-2"
+                  className="w-full h-11 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center space-x-2 shadow"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Open Volume 27 Issue 6</span>
@@ -185,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="pt-6 border-t border-white/10 text-xs text-white/60 space-y-1.5">
-              <div className="font-semibold text-[#D4B568]">Lake Wales, FL Headquarters</div>
+              <div className="font-semibold text-[#D8B045]">Lake Wales, FL Headquarters</div>
               <div>Phone: {SITE_INFO.phone}</div>
               <div>Email: {SITE_INFO.email}</div>
             </div>

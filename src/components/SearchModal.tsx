@@ -59,14 +59,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-2 sm:p-4 md:p-6 animate-fadeIn font-sans">
-      {/* Same Modal Structure as Flipbook Edition */}
-      <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0A1F18] text-white shadow-2xl border border-[#BFA054]/40 flex flex-col justify-between overflow-hidden rounded-2xl font-sans">
-        {/* Top Control Bar (Identical to Flipbook Modal) */}
-        <div className="bg-[#06150F] border-b border-[#BFA054]/30 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between shrink-0 gap-2">
+      {/* Modal Structure */}
+      <div className="relative w-full max-w-5xl h-full sm:h-[92vh] bg-[#0F3D2A] text-white shadow-2xl border border-[#C59B27]/40 flex flex-col justify-between overflow-hidden rounded-2xl font-sans">
+        {/* Top Control Bar */}
+        <div className="bg-[#0A291C] border-b border-[#C59B27]/30 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between shrink-0 gap-2">
           <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden">
-            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#BFA054] shrink-0" />
+            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#C59B27] shrink-0" />
             <div className="overflow-hidden">
-              <div className="text-[9px] sm:text-[10px] text-[#D4B568] uppercase tracking-wider font-semibold truncate">
+              <div className="text-[9px] sm:text-[10px] text-[#D8B045] uppercase tracking-wider font-semibold truncate">
                 SEARCH GOLF CENTRAL ARCHIVES // DIGITAL INDEX
               </div>
               <h3 className="text-xs sm:text-base font-bold text-white leading-none truncate">
@@ -85,21 +85,21 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Input & Search Area */}
-        <div className="p-3 sm:p-6 space-y-3 sm:space-y-4 shrink-0 bg-[#0A1F18] border-b border-white/10">
+        <div className="p-3 sm:p-6 space-y-3 sm:space-y-4 shrink-0 bg-[#0F3D2A] border-b border-white/10">
           <div className="relative flex items-center">
-            <Search className="w-4 h-4 text-[#BFA054] absolute left-3.5 sm:left-4" />
+            <Search className="w-4 h-4 text-[#C59B27] absolute left-3.5 sm:left-4" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search stories, resorts, agronomy..."
-              className="w-full h-11 sm:h-12 pl-10 sm:pl-11 pr-16 sm:pr-20 rounded-xl bg-white border-2 border-[#BFA054]/50 hover:border-[#BFA054] focus:border-[#D4B568] focus:ring-2 focus:ring-[#BFA054]/30 text-[#111827] placeholder-gray-400 text-xs sm:text-sm outline-none transition-all font-medium shadow-xs"
+              className="w-full h-11 sm:h-12 pl-10 sm:pl-11 pr-16 sm:pr-20 rounded-xl bg-white border-2 border-[#C59B27]/50 hover:border-[#C59B27] focus:border-[#D8B045] focus:ring-2 focus:ring-[#C59B27]/30 text-[#111827] placeholder-gray-400 text-xs sm:text-sm outline-none transition-all font-medium shadow-xs"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="absolute right-3 text-xs font-semibold text-white/50 hover:text-white px-2 py-1 rounded bg-white/10"
+                className="absolute right-3 text-xs font-semibold text-gray-600 hover:text-gray-900 px-2 py-1 rounded bg-gray-100"
               >
                 Clear
               </button>
@@ -108,7 +108,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
           {/* Trending Pills */}
           <div className="flex items-center gap-2 overflow-x-auto text-xs scrollbar-none pt-1">
-            <span className="text-[#D4B568] text-[11px] font-semibold uppercase tracking-wider shrink-0 flex items-center space-x-1">
+            <span className="text-[#D8B045] text-[11px] font-semibold uppercase tracking-wider shrink-0 flex items-center space-x-1">
               <Tag className="w-3 h-3" />
               <span>Trending:</span>
             </span>
@@ -116,7 +116,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               <button
                 key={pill}
                 onClick={() => setQuery(pill)}
-                className="shrink-0 h-7 px-3 rounded-full bg-[#06150F] hover:bg-[#BFA054] hover:text-[#0A1F18] border border-white/10 text-white/80 text-xs font-medium transition-colors"
+                className="shrink-0 h-7 px-3 rounded-full bg-[#0A291C] hover:bg-[#C59B27] hover:text-[#0F3D2A] border border-white/10 text-white/80 text-xs font-medium transition-colors"
               >
                 {pill}
               </button>
@@ -126,7 +126,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
         {/* Search Results List Area */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3">
-          <div className="text-[11px] font-bold text-[#D4B568] uppercase tracking-wider px-1">
+          <div className="text-[11px] font-bold text-[#D8B045] uppercase tracking-wider px-1">
             {query.trim() ? `Search Results (${results.length})` : "Recommended Stories"}
           </div>
 
@@ -142,18 +142,18 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   onSelectArticle(art);
                   onClose();
                 }}
-                className="p-4 rounded-xl bg-[#06150F] border border-white/10 hover:border-[#BFA054] transition-all cursor-pointer group flex items-start justify-between gap-4"
+                className="p-4 rounded-xl bg-[#0A291C] border border-white/10 hover:border-[#C59B27] transition-all cursor-pointer group flex items-start justify-between gap-4 shadow-sm"
               >
                 <div className="space-y-1">
                   <div className="flex items-center space-x-2 text-xs">
-                    <span className="text-[#D4B568] font-bold text-[11px] uppercase">
+                    <span className="text-[#D8B045] font-bold text-[11px] uppercase">
                       {art.category}
                     </span>
                     <span className="text-white/30">•</span>
                     <span className="text-white/60 text-[11px]">{art.readTime}</span>
                   </div>
 
-                  <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-[#D4B568] transition-colors leading-snug">
+                  <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-[#D8B045] transition-colors leading-snug">
                     {art.title}
                   </h4>
 
@@ -162,7 +162,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   </p>
                 </div>
 
-                <div className="h-8 w-8 rounded-full bg-white/10 group-hover:bg-[#BFA054] group-hover:text-[#0A1F18] text-white flex items-center justify-center shrink-0 transition-colors mt-1">
+                <div className="h-8 w-8 rounded-full bg-white/10 group-hover:bg-[#C59B27] group-hover:text-[#0F3D2A] text-white flex items-center justify-center shrink-0 transition-colors mt-1">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -170,10 +170,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({
           )}
         </div>
 
-        {/* Bottom Control Bar (Identical to Flipbook Modal) */}
-        <div className="bg-[#06150F] border-t border-[#BFA054]/30 px-6 py-3 flex items-center justify-between text-xs text-white/60 shrink-0">
+        {/* Bottom Control Bar */}
+        <div className="bg-[#0A291C] border-t border-[#C59B27]/30 px-6 py-3 flex items-center justify-between text-xs text-white/60 shrink-0">
           <span>Golf Central Magazine • Volume 27 Archive Search</span>
-          <button onClick={onClose} className="hover:text-[#D4B568] font-semibold">
+          <button onClick={onClose} className="hover:text-[#D8B045] font-semibold">
             Close Search [Esc]
           </button>
         </div>
