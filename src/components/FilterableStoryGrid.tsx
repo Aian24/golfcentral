@@ -74,15 +74,15 @@ export const FilterableStoryGrid: React.FC<FilterableStoryGridProps> = ({
             </div>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {/* Filter Pills (Clean Wrapping) */}
+          <div className="flex flex-wrap items-center gap-2 pb-2">
             {categories.map((cat) => {
               const isActive = activeCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => onSelectCategory(cat)}
-                  className={`shrink-0 px-4 py-2 text-xs uppercase tracking-wider transition-all duration-200 rounded-lg font-semibold ${
+                  className={`px-4 py-2 text-xs uppercase tracking-wider transition-all duration-200 rounded-lg font-semibold ${
                     isActive
                       ? "bg-[#134E36] text-white shadow-sm font-bold"
                       : "bg-white text-[#475569] hover:text-[#134E36] hover:bg-[#EBF7EE] border border-[#EAE3D9]"

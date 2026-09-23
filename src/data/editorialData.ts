@@ -20,6 +20,7 @@ export interface MagazineIssue {
   pageCount: number;
   coverImage: string;
   issuuUrl: string;
+  issuuEmbedUrl: string;
   features: string[];
   editorNote?: string;
 }
@@ -239,6 +240,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 84,
     coverImage: "/images/cover_v27_i6.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_magazine_vol_27_issue_6_ezine?fr=sOGJhZjkzMjg3MDc",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_magazine_vol_27_issue_6_ezine&u=editorinchief",
     features: [
       "The Architecture of Whispering Pines: Designing Florida's Coastal Sanctuary",
       "Agronomy: The Masters Conditioning Protocol for Southern Turf",
@@ -255,6 +257,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 78,
     coverImage: "/images/cover_v27_i4.webp",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_magazine-_vol_27_issue_5_ezine?fr=sN2JmMjkzMTA3Mjc",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_magazine-_vol_27_issue_5_ezine&u=editorinchief",
     features: [
       "Florida Junior Amateur Spotlight: Rising Phenoms",
       "The Bear Trap to Copperhead: Surviving the Florida Swing",
@@ -271,6 +274,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 72,
     coverImage: "/images/cover_v27_i3.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_mag-_vol_27_issue_3-_plantation_bay",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_mag-_vol_27_issue_3-_plantation_bay&u=editorinchief",
     features: [
       "Plantation Bay's New Era: Inside the 45-Hole Masterpiece",
       "GCSAA Innovation Awards: Water Stewardship Pioneers",
@@ -287,6 +291,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 76,
     coverImage: "/images/cover_v27_i2.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_magazine-vol_27_issue_2-hammock_beach",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_magazine-vol_27_issue_2-hammock_beach&u=editorinchief",
     features: [
       "Hammock Beach Ocean Course: A Legendary Seaside Restoration",
       "The Caribbean Circuit: Nassau to Cable Beach",
@@ -303,6 +308,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 68,
     coverImage: "/images/cover_v27_i1.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_mag-vol_27_issue_1-rumbling_bald",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_mag-vol_27_issue_1-rumbling_bald&u=editorinchief",
     features: [
       "Rumbling Bald: Golf Among the Mountain Pines",
       "Jack Nicklaus Signature Architecture in the Bahamas",
@@ -319,6 +325,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 76,
     coverImage: "/images/cover_v26_i12.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_magazine-vol_26_issue_12_baha_mar",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_magazine-vol_26_issue_12_baha_mar&u=editorinchief",
     features: [
       "Baha Mar: Luxury, Golf & Island Vibes in Nassau",
       "Year in Review: Florida's Top 25 Courses to Play in 2024",
@@ -335,6 +342,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 64,
     coverImage: "/images/cover_v26_i11.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_mag-vol_26_issue_11_-_ezine",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_mag-vol_26_issue_11_-_ezine&u=editorinchief",
     features: [
       "Central Florida Golf Trail: Hidden Gems and Championship Tracks",
       "Military Veteran Golf: The Annual Florida Invitational",
@@ -351,6 +359,7 @@ export const EXACT_ISSUES: MagazineIssue[] = [
     pageCount: 68,
     coverImage: "/images/cover_v26_i8.jpg",
     issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_mag-vol_26_issue_8",
+    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_magazine_vol_26_issue_8&u=editorinchief",
     features: [
       "Shot Scope Laser & GPS: How Data Science Shapes Course Strategy",
       "Summer Resort Escapes: Florida's Best Stay & Play Packages",

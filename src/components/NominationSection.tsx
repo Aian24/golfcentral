@@ -251,7 +251,7 @@ export const NominationSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#EAE3D9] pb-4"
+            className="flex flex-col space-y-4 border-b border-[#EAE3D9] pb-4"
           >
             <div>
               <div className="flex items-center space-x-2">
@@ -265,13 +265,13 @@ export const NominationSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Category Filter Pills */}
-            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none w-full md:w-auto">
+            {/* Category Filter Pills (Full Width Responsive Wrap) */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
               {FILTER_TABS.map((tab) => (
                 <button
                   key={tab.value}
                   onClick={() => setSelectedFilter(tab.value)}
-                  className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
                     selectedFilter === tab.value
                       ? "bg-[#134E36] text-white shadow-sm font-bold"
                       : "bg-white text-[#475569] hover:text-[#134E36] hover:bg-[#EBF7EE] border border-[#EAE3D9]"
