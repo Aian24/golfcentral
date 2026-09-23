@@ -163,6 +163,7 @@ export const AdvertisingSection: React.FC = () => {
                   src="/images/ad_side_image.webp"
                   alt="Golf Central Magazine Advertising"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover"
                 />
               </div>
