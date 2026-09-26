@@ -47,7 +47,12 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { volume, issue, status, action } = body;
+    const { volume, issue, status, action, issueData } = body;
+
+    if (action === "updateDetails" && issueData) {
+      const result = await publishMonthlyIssue(issueData, issueData.isCurrent);
+      return NextResponse.json(result);
+    }
 
     if (!volume || !issue) {
       return NextResponse.json(
