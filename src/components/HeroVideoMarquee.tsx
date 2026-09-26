@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, ArrowRight, BookOpen, Clock, Film } from "lucide-react";
 import { Article, SITE_INFO } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
 
 interface HeroVideoMarqueeProps {
   leadArticle: Article;
@@ -21,6 +22,7 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
   onOpenIssue,
   onOpenVideoModal,
 }) => {
+  const { currentEdition, currentIssue, siteInfo } = useEditorialData();
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
@@ -39,18 +41,20 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
           className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 mb-5 sm:mb-6 p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 text-[11px] sm:text-xs"
         >
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-white/90">
-            <span className="font-bold text-[#D8B045]">Volume 27 • Issue 6</span>
+            <span className="font-bold text-[#D8B045]">
+              Volume {currentEdition.volume} • Issue {currentEdition.issue}
+            </span>
             <span className="text-white/30 hidden sm:inline">|</span>
-            <span className="text-white/80 hidden md:inline">{SITE_INFO.tagline}</span>
+            <span className="text-white/80 hidden md:inline">{siteInfo.tagline}</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
-            <a href={`tel:${SITE_INFO.phone}`} className="text-white/80 hover:text-white transition-colors">
-              {SITE_INFO.phone}
+            <a href={`tel:${siteInfo.phone}`} className="text-white/80 hover:text-white transition-colors">
+              {siteInfo.phone}
             </a>
             <span className="text-white/30">|</span>
             <button
-              onClick={() => onOpenIssue(6)}
+              onClick={() => onOpenIssue(currentEdition.issue)}
               className="text-[#D8B045] hover:text-white font-semibold flex items-center space-x-1 transition-colors"
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -279,8 +283,8 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
               <div className="mt-6 pt-4 border-t border-white/10 bg-[#0F3D2A]/60 -mx-6 -mb-6 p-5 rounded-b-2xl flex items-center space-x-4">
                 <div className="relative w-14 h-20 shrink-0 rounded-lg overflow-hidden border border-[#C59B27]/40 shadow-md">
                   <Image
-                    src="/images/cover_v27_i6.jpg"
-                    alt="Vol 27 cover"
+                    src={currentIssue?.coverImage || "/images/cover_v27_i6.jpg"}
+                    alt={`Vol ${currentEdition.volume} Issue ${currentEdition.issue} cover`}
                     fill
                     sizes="56px"
                     className="object-cover"
@@ -288,13 +292,13 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
                 </div>
                 <div>
                   <div className="text-[11px] font-semibold text-[#D8B045]">
-                    NEW VOLUME 27 ISSUE 6
+                    NEW VOLUME {currentEdition.volume} ISSUE {currentEdition.issue}
                   </div>
                   <div className="text-xs text-white font-medium">
                     Read the complete digital replica
                   </div>
                   <button
-                    onClick={() => onOpenIssue(6)}
+                    onClick={() => onOpenIssue(currentEdition.issue)}
                     className="mt-1 text-xs text-[#D8B045] hover:text-white font-semibold flex items-center space-x-1 transition-colors"
                   >
                     <span>Launch Flipbook</span>

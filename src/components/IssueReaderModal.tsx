@@ -17,6 +17,7 @@ import {
   Maximize2,
 } from "lucide-react";
 import { MAGAZINE_ISSUES, MagazineIssue } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
 
 interface IssueReaderModalProps {
   issueNumber: number | null;
@@ -29,6 +30,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
   onClose,
   onSelectIssue,
 }) => {
+  const { issues } = useEditorialData();
   const [activeTab, setActiveTab] = useState<"flipbook" | "features">("flipbook");
   const [iframeLoading, setIframeLoading] = useState<boolean>(true);
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
@@ -50,7 +52,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
   if (!issueNumber) return null;
 
   const currentIssue =
-    MAGAZINE_ISSUES.find((i) => i.issue === issueNumber) || MAGAZINE_ISSUES[0];
+    issues.find((i) => i.issue === issueNumber) || issues[0] || MAGAZINE_ISSUES[0];
 
   const handleShare = async () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -354,7 +356,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
                 <span>Issues:</span>
               </span>
 
-              {MAGAZINE_ISSUES.map((iss) => {
+              {issues.map((iss) => {
                 const isActive =
                   iss.issue === currentIssue.issue && iss.volume === currentIssue.volume;
                 return (

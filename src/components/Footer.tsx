@@ -18,6 +18,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { SITE_INFO } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
+import Link from "next/link";
 
 interface FooterProps {
   onNavigateTab: (tab: string) => void;
@@ -28,6 +30,7 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateTab,
   onOpenIssue,
 }) => {
+  const { siteInfo, currentEdition } = useEditorialData();
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -267,6 +270,14 @@ export const Footer: React.FC<FooterProps> = ({
             &copy; {new Date().getFullYear()} Golf Central Magazine. All rights reserved. 4313 Berwick Dr., Lake Wales, FL 33859.
           </div>
           <div className="flex items-center space-x-4">
+            <Link
+              href="/admin"
+              className="text-[#D8B045] hover:underline font-semibold flex items-center space-x-1"
+            >
+              <ShieldCheck className="w-3 h-3" />
+              <span>Admin Portal</span>
+            </Link>
+            <span>•</span>
             <a
               href="https://golfcentralmag.com"
               target="_blank"

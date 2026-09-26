@@ -5,15 +5,20 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { BookOpen, ExternalLink, Filter, Layers, ArrowRight } from "lucide-react";
 import { EXACT_ISSUES, MagazineIssue, SITE_INFO } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
 
 interface ArchiveSectionProps {
   onOpenIssue: (issueNum: number) => void;
 }
 
 export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenIssue }) => {
-  const [selectedVol, setSelectedVol] = useState<number>(27);
+  const { issues, availableVolumes, currentIssue } = useEditorialData();
+  const [selectedVol, setSelectedVol] = useState<number>(currentIssue?.volume || 27);
 
-  const filteredIssues = EXACT_ISSUES.filter((i) => i.volume === selectedVol);
+  const filteredIssues = issues.filter((i) => i.volume === selectedVol);
+  const activeVolumeToDisplay = availableVolumes.includes(selectedVol)
+    ? selectedVol
+    : availableVolumes[0] || 27;
 
   return (
     <section id="archive" className="w-full bg-[#0F3D2A] text-white py-16 md:py-24 border-b border-[#176043]">
@@ -39,28 +44,21 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenIssue }) =
             </p>
           </div>
 
-          {/* Volume Filter Selector */}
-          <div className="flex items-center space-x-2 bg-black/40 p-1.5 rounded-xl border border-white/10 shrink-0">
-            <button
-              onClick={() => setSelectedVol(27)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors ${
-                selectedVol === 27
-                  ? "bg-[#C59B27] text-[#0B291D] shadow"
-                  : "text-white/70 hover:text-white"
-              }`}
-            >
-              Volume 27 (2024)
-            </button>
-            <button
-              onClick={() => setSelectedVol(26)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors ${
-                selectedVol === 26
-                  ? "bg-[#C59B27] text-[#0B291D] shadow"
-                  : "text-white/70 hover:text-white"
-              }`}
-            >
-              Volume 26 (2023)
-            </button>
+          {/* Dynamic Volume Filter Selector */}
+          <div className="flex items-center space-x-2 bg-black/40 p-1.5 rounded-xl border border-white/10 shrink-0 overflow-x-auto max-w-full">
+            {availableVolumes.map((vol) => (
+              <button
+                key={vol}
+                onClick={() => setSelectedVol(vol)}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors whitespace-nowrap ${
+                  selectedVol === vol
+                    ? "bg-[#C59B27] text-[#0B291D] shadow"
+                    : "text-white/70 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Volume {vol}
+              </button>
+            ))}
           </div>
         </motion.div>
 
@@ -87,7 +85,7 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenIssue }) =
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
 
-                {issue.volume === 27 && issue.issue === 6 && (
+                {issue.isCurrent && (
                   <div className="absolute top-3 left-3 bg-[#C59B27] text-[#0B291D] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
                     Current Edition
                   </div>

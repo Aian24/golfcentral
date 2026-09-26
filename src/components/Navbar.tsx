@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Search, BookOpen, Menu, X, ArrowRight } from "lucide-react";
 import { SITE_INFO } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
+import Link from "next/link";
+import { ShieldCheck } from "lucide-react";
 
 interface NavbarProps {
   activeTab: string;
@@ -18,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenSearch,
   onOpenIssue,
 }) => {
+  const { currentEdition, siteInfo } = useEditorialData();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -55,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Crisp Official Logo Container */}
               <div className="relative h-9 sm:h-12 w-32 sm:w-48">
                 <Image
-                  src={SITE_INFO.officialLogo}
+                  src={siteInfo.officialLogo}
                   alt="Golf Central Magazine"
                   fill
                   priority
@@ -67,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Official 25th Anniversary Badge */}
               <div className="relative h-8 w-8 sm:h-10 sm:w-10 shrink-0">
                 <Image
-                  src={SITE_INFO.official25YearsBadge}
+                  src={siteInfo.official25YearsBadge}
                   alt="25th Anniversary"
                   fill
                   sizes="40px"
@@ -99,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
             </div>
 
-            {/* Right: Search & Action Buttons */}
+            {/* Right: Search, Admin & Action Buttons */}
             <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
               <button
                 onClick={onOpenSearch}
@@ -110,11 +114,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="hidden sm:inline">Search...</span>
               </button>
 
+              <Link
+                href="/admin"
+                className="hidden xl:flex h-9 sm:h-10 px-3 rounded-xl bg-white/5 hover:bg-white/15 text-white/80 hover:text-[#D8B045] text-xs font-semibold items-center space-x-1.5 border border-white/10 transition-colors"
+                title="Publisher Admin Portal"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-[#D8B045]" />
+                <span>Admin</span>
+              </Link>
+
               <button
-                onClick={() => onOpenIssue(6)}
+                onClick={() => onOpenIssue(currentEdition.issue)}
                 className="hidden sm:flex h-9 sm:h-10 px-4 rounded-xl bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider items-center space-x-1.5 transition-all transform hover:-translate-y-0.5 shadow-md whitespace-nowrap cursor-pointer"
               >
-                <span>Read Issue 6</span>
+                <span>Read Issue {currentEdition.issue}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
 

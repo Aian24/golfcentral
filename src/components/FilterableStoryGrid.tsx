@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Bookmark, Clock, Volume2, Share2, Check } from "lucide-react";
 import { Article, ARTICLES } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
 
 interface FilterableStoryGridProps {
   onReadArticle: (article: Article) => void;
@@ -17,6 +18,7 @@ export const FilterableStoryGrid: React.FC<FilterableStoryGridProps> = ({
   activeCategory,
   onSelectCategory,
 }) => {
+  const { articles, currentEdition } = useEditorialData();
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -30,8 +32,8 @@ export const FilterableStoryGrid: React.FC<FilterableStoryGridProps> = ({
   ];
 
   const filteredArticles = activeCategory === "All"
-    ? ARTICLES
-    : ARTICLES.filter((a) => a.category === activeCategory);
+    ? articles
+    : articles.filter((a) => a.category === activeCategory);
 
   const toggleBookmark = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -70,7 +72,7 @@ export const FilterableStoryGrid: React.FC<FilterableStoryGridProps> = ({
               </h2>
             </div>
             <div className="text-xs font-semibold text-[#64748B]">
-              SHOWING {filteredArticles.length} STORIES // ISSUE 6 ARCHIVE
+              SHOWING {filteredArticles.length} STORIES // VOLUME {currentEdition.volume} ARCHIVE
             </div>
           </div>
 

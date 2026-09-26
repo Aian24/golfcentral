@@ -23,9 +23,11 @@ import { SearchModal } from "@/components/SearchModal";
 import { VideoModal } from "@/components/VideoModal";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { AiChatAssistant } from "@/components/AiChatAssistant";
-import { ARTICLES, Article } from "@/data/editorialData";
+import { Article } from "@/data/editorialData";
+import { useEditorialData } from "@/context/EditorialDataContext";
 
 export default function Home() {
+  const { articles, currentEdition, currentIssue } = useEditorialData();
   const [activeTab, setActiveTab] = useState<string>("home");
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [selectedIssueNumber, setSelectedIssueNumber] = useState<number | null>(null);
@@ -33,11 +35,20 @@ export default function Home() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  const leadArticle = ARTICLES.find((a) => a.leadStory) || ARTICLES[0];
-  const trendingArticles = ARTICLES.filter((a) => a.trending && a.id !== leadArticle.id);
-  const agronomyArticle = ARTICLES.find((a) => a.id === "art-2") || ARTICLES[1];
-  const lifestyleArticle = ARTICLES.find((a) => a.id === "art-4") || ARTICLES[3];
-  const philanthropyArticle = ARTICLES.find((a) => a.id === "art-5") || ARTICLES[4];
+  const leadArticle = articles.find((a) => a.leadStory) || articles[0];
+  const trendingArticles = articles.filter((a) => a.trending && a.id !== leadArticle?.id);
+  const agronomyArticle =
+    articles.find((a) => a.id === "art-2" || a.category === "Course Architecture & Turf") ||
+    articles[1] ||
+    leadArticle;
+  const lifestyleArticle =
+    articles.find((a) => a.id === "art-4" || a.category === "Lifestyle & Gear") ||
+    articles[3] ||
+    leadArticle;
+  const philanthropyArticle =
+    articles.find((a) => a.id === "art-5" || a.category === "Philanthropy & Military") ||
+    articles[4] ||
+    leadArticle;
 
   const isScrollingRef = React.useRef(false);
 
@@ -122,7 +133,7 @@ export default function Home() {
   }, []);
 
   const handleReadArticleBySlug = (slug: string) => {
-    const art = ARTICLES.find((a) => a.slug === slug);
+    const art = articles.find((a: Article) => a.slug === slug);
     if (art) setSelectedArticle(art);
   };
 

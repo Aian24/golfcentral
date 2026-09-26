@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { EditorialDataProvider } from "@/context/EditorialDataContext";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -93,8 +94,9 @@ export default function RootLayout({
       className={`${playfair.variable} ${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} scroll-smooth antialiased selection:bg-[#C5A059] selection:text-white`}
     >
       <body className="min-h-screen bg-[#FBF9F5] text-[#121619] font-sans antialiased overflow-x-hidden">
-        {children}
+        <EditorialDataProvider>{children}</EditorialDataProvider>
       </body>
     </html>
   );
 }
+
