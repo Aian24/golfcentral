@@ -5,7 +5,6 @@ import {
   Palette,
   Type,
   Maximize2,
-  Sparkles,
   Save,
   RotateCcw,
   Sliders,
@@ -19,6 +18,27 @@ import {
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { ThemeSettingsData, DEFAULT_THEME_SETTINGS } from "@/lib/types";
+import { CustomDropdown } from "@/components/CustomDropdown";
+
+const HEADING_STYLE_OPTIONS = [
+  { value: "normal", label: "Standard Title Case" },
+  { value: "uppercase", label: "UPPERCASE (All Caps)" },
+  { value: "italic", label: "Italicized Luxury Editorial" },
+  { value: "serif", label: "Classic Regal Serif" },
+];
+
+const LETTER_SPACING_OPTIONS = [
+  { value: "tight", label: "Tight (Compact Impact)" },
+  { value: "normal", label: "Normal (Balanced)" },
+  { value: "wide", label: "Wide (Spacious Modern)" },
+  { value: "luxury", label: "Luxury Tracking (0.15em Spaced)" },
+];
+
+const HEADER_HEIGHT_OPTIONS = [
+  { value: "compact", label: "Compact (64px)" },
+  { value: "standard", label: "Standard (76px)" },
+  { value: "luxury", label: "Luxury Tall (88px)" },
+];
 
 interface ThemeCustomizerTabProps {
   onSuccess?: (msg: string) => void;
@@ -219,7 +239,7 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
               {/* Presets */}
               <div className="bg-[#0F3D2A] border border-white/10 rounded-2xl p-5 space-y-3">
                 <div className="text-xs font-bold text-[#D8B045] uppercase tracking-wider flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4" />
+                  <Palette className="w-4 h-4" />
                   <span>One-Click Curated Color Themes</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -433,17 +453,13 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
                   <label className="block text-xs font-semibold text-white/80 mb-1.5">
                     Heading Font Family
                   </label>
-                  <select
+                  <CustomDropdown
                     value={form.fontHeading}
-                    onChange={(e) => setForm({ ...form, fontHeading: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs font-medium focus:border-[#C59B27] focus:outline-none"
-                  >
-                    {FONT_HEADING_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) => setForm({ ...form, fontHeading: val })}
+                    options={FONT_HEADING_OPTIONS}
+                    variant="dark"
+                    size="sm"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -451,32 +467,26 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
                     <label className="block text-xs font-semibold text-white/80 mb-1.5">
                       Heading Style Variant
                     </label>
-                    <select
+                    <CustomDropdown
                       value={form.headingStyle}
-                      onChange={(e) => setForm({ ...form, headingStyle: e.target.value as any })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:border-[#C59B27] focus:outline-none"
-                    >
-                      <option value="normal">Standard Title Case</option>
-                      <option value="uppercase">UPPERCASE (All Caps)</option>
-                      <option value="italic">Italicized Luxury Editorial</option>
-                      <option value="serif">Classic Regal Serif</option>
-                    </select>
+                      onChange={(val) => setForm({ ...form, headingStyle: val as any })}
+                      options={HEADING_STYLE_OPTIONS}
+                      variant="dark"
+                      size="sm"
+                    />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-white/80 mb-1.5">
                       Letter Spacing (Tracking)
                     </label>
-                    <select
+                    <CustomDropdown
                       value={form.letterSpacing}
-                      onChange={(e) => setForm({ ...form, letterSpacing: e.target.value as any })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:border-[#C59B27] focus:outline-none"
-                    >
-                      <option value="tight">Tight (Compact Impact)</option>
-                      <option value="normal">Normal (Balanced)</option>
-                      <option value="wide">Wide (Spacious Modern)</option>
-                      <option value="luxury">Luxury Tracking (0.15em Spaced)</option>
-                    </select>
+                      onChange={(val) => setForm({ ...form, letterSpacing: val as any })}
+                      options={LETTER_SPACING_OPTIONS}
+                      variant="dark"
+                      size="sm"
+                    />
                   </div>
                 </div>
               </div>
@@ -490,17 +500,13 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
                   <label className="block text-xs font-semibold text-white/80 mb-1.5">
                     Body Font Family
                   </label>
-                  <select
+                  <CustomDropdown
                     value={form.fontBody}
-                    onChange={(e) => setForm({ ...form, fontBody: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs font-medium focus:border-[#C59B27] focus:outline-none"
-                  >
-                    {FONT_BODY_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) => setForm({ ...form, fontBody: val })}
+                    options={FONT_BODY_OPTIONS}
+                    variant="dark"
+                    size="sm"
+                  />
                 </div>
               </div>
             </div>
@@ -643,15 +649,13 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
                     <label className="block text-xs font-semibold text-white/80 mb-1.5">
                       Header Bar Height
                     </label>
-                    <select
+                    <CustomDropdown
                       value={form.headerHeight}
-                      onChange={(e) => setForm({ ...form, headerHeight: e.target.value as any })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:outline-none"
-                    >
-                      <option value="compact">Compact (64px)</option>
-                      <option value="standard">Standard (76px)</option>
-                      <option value="luxury">Luxury Tall (88px)</option>
-                    </select>
+                      onChange={(val) => setForm({ ...form, headerHeight: val as any })}
+                      options={HEADER_HEIGHT_OPTIONS}
+                      variant="dark"
+                      size="sm"
+                    />
                   </div>
 
                   <div className="flex flex-col justify-end space-y-2">

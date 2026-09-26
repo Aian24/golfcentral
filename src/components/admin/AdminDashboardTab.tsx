@@ -6,7 +6,6 @@ import {
   Send,
   BookOpen,
   Layers,
-  Sparkles,
   ArrowRight,
   Clock,
   CheckCircle2,
@@ -133,7 +132,7 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
           <div>
             <div className="flex items-center justify-between text-xs text-[#D8B045] font-bold uppercase tracking-wider mb-2">
               <span>Next Release</span>
-              <Sparkles className="w-4 h-4 text-[#D8B045]" />
+              <Calendar className="w-4 h-4 text-[#D8B045]" />
             </div>
             <h3 className="text-xl font-bold text-white tracking-tight">
               Vol {currentEdition.volume} Issue {currentEdition.issue + 1}

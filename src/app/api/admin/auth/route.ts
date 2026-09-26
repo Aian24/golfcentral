@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: "Invalid admin passkey. Hint: Use 'golfcentraladmin'",
+          error: "Invalid admin passkey. Access denied.",
         },
         { status: 401 }
       );
@@ -36,8 +36,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       user: {
-        username: username || "Executive Editor",
-        role: "Publisher & Superadmin",
+        username: username || "admin",
+        role: "Editorial Administrator",
         authenticatedAt: new Date().toISOString(),
       },
       token: `gcm_auth_${Date.now()}_secure`,

@@ -6,9 +6,8 @@ import {
   FileText,
   Plus,
   Search,
-  Star,
+  Award,
   Flame,
-  Sparkles,
   Edit,
   Trash2,
   Clock,
@@ -158,12 +157,12 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
               <div className="absolute top-2 left-2 flex flex-wrap gap-1.5">
                 {art.leadStory && (
                   <span className="px-2.5 py-0.5 rounded-full bg-[#C59B27] text-[#0B291D] font-black text-[10px] uppercase shadow flex items-center space-x-1">
-                    <Star className="w-3 h-3 fill-current" />
+                    <Award className="w-3 h-3 fill-current" />
                     <span>Hero Lead Story</span>
                   </span>
                 )}
                 {art.trending && (
-                  <span className="px-2 py-0.5 rounded-full bg-orange-600/90 text-white font-bold text-[10px] uppercase shadow flex items-center space-x-1">
+                  <span className="px-2.5 py-0.5 rounded-full bg-orange-600/90 text-white font-bold text-[10px] uppercase shadow flex items-center space-x-1">
                     <Flame className="w-3 h-3 fill-current" />
                     <span>Trending</span>
                   </span>
@@ -222,7 +221,7 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
                         : "bg-white/5 hover:bg-white/10 text-white/70"
                     }`}
                   >
-                    <Star className="w-3 h-3" />
+                    <Award className="w-3 h-3" />
                     <span>{art.leadStory ? "Active Lead" : "Make Lead"}</span>
                   </button>
 

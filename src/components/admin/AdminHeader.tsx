@@ -12,7 +12,6 @@ import {
   Settings,
   ExternalLink,
   LogOut,
-  Sparkles,
   PlusCircle,
   Radio,
 } from "lucide-react";

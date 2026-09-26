@@ -22,7 +22,6 @@ import { IssueReaderModal } from "@/components/IssueReaderModal";
 import { SearchModal } from "@/components/SearchModal";
 import { VideoModal } from "@/components/VideoModal";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { AiChatAssistant } from "@/components/AiChatAssistant";
 import { Article } from "@/data/editorialData";
 import { useEditorialData } from "@/context/EditorialDataContext";
 
@@ -331,13 +330,6 @@ export default function Home() {
 
       {/* Scroll to Top Floating Button */}
       <ScrollToTop />
-
-      {/* Modern AI Golf Concierge Assistant */}
-      <AiChatAssistant
-        onOpenIssue={(num) => setSelectedIssueNumber(num)}
-        onNavigateTab={handleNavigateTab}
-        onReadArticle={handleReadArticleBySlug}
-      />
 
       {/* Interactive Article Reading Modal */}
       <ArticleReaderModal

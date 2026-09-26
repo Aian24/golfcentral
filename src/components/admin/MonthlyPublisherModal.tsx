@@ -7,7 +7,6 @@ import {
   Send,
   Upload,
   BookOpen,
-  Sparkles,
   CheckCircle2,
   AlertCircle,
   FileText,
@@ -411,7 +410,7 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
           {/* Featured Stories Checklist */}
           <div className="space-y-3 pt-2">
             <div className="text-xs font-bold text-[#D8B045] uppercase tracking-wider flex items-center space-x-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
+              <FileText className="w-3.5 h-3.5" />
               <span>Cover &amp; Issue Story Highlights (Top 4 Features)</span>
             </div>
 

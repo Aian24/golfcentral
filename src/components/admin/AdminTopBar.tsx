@@ -8,7 +8,6 @@ import {
   PlusCircle,
   ExternalLink,
   Radio,
-  Sparkles,
   ChevronRight,
 } from "lucide-react";
 import { AdminTab } from "./AdminSidebar";
@@ -23,6 +22,7 @@ interface AdminTopBarProps {
 const TAB_TITLES: Record<AdminTab, { title: string; category: string }> = {
   publisher: { title: "Monthly Magazine Changes", category: "Active Monthly System" },
   issues: { title: "Volume Archives & Vault", category: "Active Monthly System" },
+  issues_dev: { title: "Volume Archives & 25-Yr Vault", category: "Phase 2 Preview" },
   dashboard_dev: { title: "Executive Analytics Dashboard", category: "Phase 2 Preview" },
   articles_dev: { title: "Articles & Editorial Story Desk", category: "Phase 2 Preview" },
   theme_dev: { title: "Theme & Visual Styling Customizer", category: "Phase 2 Preview" },
@@ -36,7 +36,6 @@ const TAB_TITLES: Record<AdminTab, { title: string; category: string }> = {
   lifestyle_dev: { title: "Clubhouse Lifestyle & Craft", category: "Phase 2 Preview" },
   philanthropy_dev: { title: "Military Honors & Philanthropy", category: "Phase 2 Preview" },
   newsletter_dev: { title: "VIP Newsletter Subscribers", category: "Phase 2 Preview" },
-  ai_dev: { title: "AI Concierge Assistant Settings", category: "Phase 2 Preview" },
 };
 
 export const AdminTopBar: React.FC<AdminTopBarProps> = ({

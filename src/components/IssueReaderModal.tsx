@@ -9,7 +9,6 @@ import {
   Layers,
   CheckCircle,
   List,
-  Sparkles,
   Loader2,
   Share2,
   ChevronLeft,
@@ -284,7 +283,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
                 <div className="md:col-span-7 space-y-4">
                   <div className="border-b border-[#C59B27]/30 pb-3">
                     <span className="text-[10px] font-semibold text-[#D8B045] uppercase tracking-widest flex items-center space-x-1.5">
-                      <Sparkles className="w-3 h-3 text-[#C59B27]" />
+                      <BookOpen className="w-3 h-3 text-[#C59B27]" />
                       <span>TABLE OF CONTENTS &amp; FEATURES</span>
                     </span>
                     <h4 className="text-xl sm:text-2xl font-bold text-white mt-1">

@@ -3,7 +3,6 @@
 import React from "react";
 import {
   Lock,
-  Sparkles,
   ShieldCheck,
   ArrowRight,
   Clock,
@@ -17,10 +16,10 @@ import {
   Compass,
   HeartHandshake,
   Mail,
-  Bot,
   CheckCircle2,
   Eye,
   LayoutDashboard,
+  BookOpen,
 } from "lucide-react";
 import { AdminTab } from "./AdminSidebar";
 
@@ -40,6 +39,21 @@ const MODULE_DETAILS: Record<
     upcomingFeatures: string[];
   }
 > = {
+  issues_dev: {
+    title: "Volume Archives & 25-Year Vault Repository",
+    description:
+      "Multi-decade digital archive shelf management, historical back-issue repository, volume categorization, and full-text search indexing across 25+ years of Golf Central Magazine editions.",
+    icon: BookOpen,
+    deliverables: [
+      "25-year historical magazine catalog and volume organization (Vol 1 to Vol 27)",
+      "Back-issue metadata indexer with high-resolution archive cover gallery",
+      "Issue search by volume, publication date, editorial theme, and department keywords",
+    ],
+    upcomingFeatures: [
+      "Batch PDF back-catalog uploader and automated OCR digitization",
+      "Subscriber-only vintage issue download gateway & high-res print export",
+    ],
+  },
   dashboard_dev: {
     title: "Executive Analytics & Publication Dashboard",
     description:
@@ -196,17 +210,6 @@ const MODULE_DETAILS: Record<
     ],
     upcomingFeatures: ["Mailchimp & Constant Contact API sync", "Open rate analytics"],
   },
-  ai_dev: {
-    title: "AI Golf Concierge Assistant Settings",
-    description:
-      "Configure the knowledge base, system prompt, and magazine issue index for the website's AI concierge.",
-    icon: Bot,
-    deliverables: [
-      "Update AI knowledge base with latest issue articles and resort recommendations",
-      "Test custom golf concierge responses before live deployment",
-    ],
-    upcomingFeatures: ["Course reservation routing", "Reader question analytics"],
-  },
 };
 
 export const UnderDevelopmentTab: React.FC<UnderDevelopmentTabProps> = ({
@@ -293,7 +296,7 @@ export const UnderDevelopmentTab: React.FC<UnderDevelopmentTabProps> = ({
         {/* Future Integrations */}
         <div className="bg-[#0F3D2A] border border-white/10 rounded-3xl p-6 shadow-xl space-y-4">
           <div className="text-xs font-bold text-[#D8B045] uppercase tracking-wider flex items-center space-x-2 border-b border-white/10 pb-3">
-            <Sparkles className="w-4 h-4" />
+            <Layers className="w-4 h-4" />
             <span>Upcoming Automations &amp; Integrations</span>
           </div>
 

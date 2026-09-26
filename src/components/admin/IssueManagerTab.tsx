@@ -8,17 +8,24 @@ import {
   Search,
   Filter,
   Layers,
-  Sparkles,
   CheckCircle2,
   ExternalLink,
   Edit,
   Trash2,
   Archive,
-  Star,
+  Radio,
   Send,
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { ExtendedMagazineIssue } from "@/lib/types";
+import { CustomDropdown } from "@/components/CustomDropdown";
+
+const STATUS_FILTER_OPTIONS = [
+  { value: "all", label: "All Statuses" },
+  { value: "current", label: "Current Live Issue" },
+  { value: "archived", label: "Archived Back Issues" },
+  { value: "draft", label: "Drafts" },
+];
 
 interface IssueManagerTabProps {
   onOpenPublisherModal: () => void;
@@ -142,17 +149,16 @@ export const IssueManagerTab: React.FC<IssueManagerTabProps> = ({
           </div>
 
           <div className="sm:col-span-4 flex items-center space-x-2">
-            <span className="text-xs text-white/60 shrink-0">Status:</span>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="w-full px-3 py-2 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:border-[#C59B27] focus:outline-none"
-            >
-              <option value="all">All Statuses</option>
-              <option value="current">Current Live Issue</option>
-              <option value="archived">Archived Back Issues</option>
-              <option value="draft">Drafts</option>
-            </select>
+            <span className="text-xs text-white/60 shrink-0 font-medium">Status:</span>
+            <div className="flex-1">
+              <CustomDropdown
+                value={statusFilter}
+                onChange={(val) => setStatusFilter(val as any)}
+                options={STATUS_FILTER_OPTIONS}
+                variant="dark"
+                size="sm"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -186,7 +192,7 @@ export const IssueManagerTab: React.FC<IssueManagerTabProps> = ({
               {/* Status Badge */}
               {issue.isCurrent ? (
                 <div className="absolute top-3 left-3 bg-[#C59B27] text-[#0B291D] font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider shadow-lg flex items-center space-x-1">
-                  <Star className="w-3 h-3 fill-current" />
+                  <CheckCircle2 className="w-3 h-3" />
                   <span>Live Current Issue</span>
                 </div>
               ) : (
@@ -245,7 +251,7 @@ export const IssueManagerTab: React.FC<IssueManagerTabProps> = ({
                     onClick={() => setIssueLive(issue.volume, issue.issue)}
                     className="w-full py-2 rounded-xl bg-[#C59B27]/20 hover:bg-[#C59B27] text-[#D8B045] hover:text-[#0B291D] border border-[#C59B27]/40 text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5"
                   >
-                    <Star className="w-3.5 h-3.5" />
+                    <Radio className="w-3.5 h-3.5" />
                     <span>Promote to Live Edition</span>
                   </button>
                 )}

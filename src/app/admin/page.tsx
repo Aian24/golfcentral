@@ -12,7 +12,7 @@ import { IssueEditModal } from "@/components/admin/IssueEditModal";
 import { ArticleEditModal } from "@/components/admin/ArticleEditModal";
 import { ExtendedMagazineIssue } from "@/lib/types";
 import { Article } from "@/data/editorialData";
-import { CheckCircle2, Sparkles, X } from "lucide-react";
+import { CheckCircle2, X } from "lucide-react";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -136,7 +136,7 @@ export default function AdminPage() {
                 setEditingIssue(iss);
                 setIsIssueModalOpen(true);
               }}
-              onNavigateToVault={() => setActiveTab("issues")}
+              onNavigateToVault={() => setActiveTab("issues_dev")}
             />
           )}
 

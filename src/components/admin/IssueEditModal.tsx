@@ -7,7 +7,7 @@ import {
   Save,
   Upload,
   BookOpen,
-  Sparkles,
+  FileText,
   AlertCircle,
   Layers,
   Image as ImageIcon,
@@ -383,7 +383,7 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between">
               <div className="text-xs font-bold text-[#D8B045] uppercase tracking-wider flex items-center space-x-1.5">
-                <Sparkles className="w-3.5 h-3.5" />
+                <FileText className="w-3.5 h-3.5" />
                 <span>Feature Story Highlights ({formData.features?.length || 0})</span>
               </div>
               <button

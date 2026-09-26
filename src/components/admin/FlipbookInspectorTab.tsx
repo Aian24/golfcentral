@@ -6,12 +6,12 @@ import {
   BookOpen,
   ExternalLink,
   Layers,
-  Sparkles,
   Maximize2,
   RefreshCw,
   AlertCircle,
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
+import { CustomDropdown } from "@/components/CustomDropdown";
 
 interface FlipbookInspectorTabProps {
   initialIssueNum?: number;
@@ -48,21 +48,22 @@ export const FlipbookInspectorTab: React.FC<FlipbookInspectorTabProps> = ({
 
         {/* Issue Selector Dropdown */}
         <div className="flex items-center space-x-3">
-          <label className="text-xs font-bold text-white/80 uppercase">Select Issue:</label>
-          <select
-            value={selectedIssueNumber}
-            onChange={(e) => {
-              setSelectedIssueNumber(Number(e.target.value));
-              setIframeKey((prev) => prev + 1);
-            }}
-            className="px-4 py-2.5 rounded-xl bg-[#0F3D2A] border border-[#C59B27]/50 text-white text-xs font-bold focus:outline-none"
-          >
-            {issues.map((iss) => (
-              <option key={`${iss.volume}-${iss.issue}`} value={iss.issue}>
-                {iss.isCurrent ? "★ LIVE: " : ""}Vol {iss.volume} Issue {iss.issue} ({iss.date})
-              </option>
-            ))}
-          </select>
+          <label className="text-xs font-bold text-white/80 uppercase shrink-0">Select Issue:</label>
+          <div className="w-64">
+            <CustomDropdown
+              value={selectedIssueNumber}
+              onChange={(val) => {
+                setSelectedIssueNumber(Number(val));
+                setIframeKey((prev) => prev + 1);
+              }}
+              options={issues.map((iss) => ({
+                value: iss.issue,
+                label: `${iss.isCurrent ? "★ LIVE: " : ""}Vol ${iss.volume} Issue ${iss.issue} (${iss.date})`,
+              }))}
+              variant="gold"
+              size="sm"
+            />
+          </div>
 
           <button
             onClick={() => setIframeKey((prev) => prev + 1)}

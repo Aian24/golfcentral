@@ -6,7 +6,6 @@ import {
   Send,
   BookOpen,
   Archive,
-  Sparkles,
   Radio,
   Layers,
   ArrowRight,
@@ -51,7 +50,7 @@ export const MonthlyPublisherTab: React.FC<MonthlyPublisherTabProps> = ({
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           <div className="lg:col-span-8 space-y-4">
             <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#C59B27]/20 border border-[#C59B27]/40 text-[#D8B045] text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
+              <BookOpen className="w-3.5 h-3.5" />
               <span>Active Monthly Magazine Publishing &amp; Archiving Desk</span>
             </div>
 
@@ -230,14 +229,14 @@ export const MonthlyPublisherTab: React.FC<MonthlyPublisherTabProps> = ({
         {/* Right: Next Month Publishing Roll-Over Guide (5 cols) */}
         <div className="lg:col-span-5 bg-[#0F3D2A] border border-white/15 rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div className="flex items-center space-x-2">
-                <Calendar className="w-4 h-4 text-[#D8B045]" />
-                <h3 className="text-base font-bold text-white uppercase tracking-wider">
-                  How Monthly Roll-Over Works
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 gap-2">
+              <div className="flex items-center space-x-2 min-w-0">
+                <Calendar className="w-4 h-4 text-[#D8B045] shrink-0" />
+                <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider whitespace-nowrap truncate">
+                  Monthly Roll-Over Guide
                 </h3>
               </div>
-              <span className="text-xs font-bold text-[#D8B045] bg-[#071F16] px-2.5 py-1 rounded-full border border-white/10">
+              <span className="text-[10px] sm:text-xs font-bold text-[#D8B045] bg-[#071F16] px-2.5 py-1 rounded-full border border-white/10 shrink-0 whitespace-nowrap">
                 1-Click Auto
               </span>
             </div>

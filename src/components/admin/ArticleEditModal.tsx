@@ -7,9 +7,9 @@ import {
   Save,
   Upload,
   FileText,
-  Sparkles,
   AlertCircle,
-  Star,
+  Award,
+  Layers,
   Flame,
   Image as ImageIcon,
   Loader2,
@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Article } from "@/data/editorialData";
 import { useEditorialData } from "@/context/EditorialDataContext";
+import { CustomDropdown } from "@/components/CustomDropdown";
 
 interface ArticleEditModalProps {
   article: Article | null;
@@ -242,7 +243,7 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
                 onChange={(e) => setFormData({ ...formData, leadStory: e.target.checked })}
                 className="w-4 h-4 rounded text-[#C59B27] focus:ring-[#C59B27]"
               />
-              <Star className="w-3.5 h-3.5 text-[#D8B045]" />
+              <Award className="w-3.5 h-3.5 text-[#D8B045]" />
               <span>Homepage Hero Lead Story</span>
             </label>
 
@@ -264,7 +265,7 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
                 onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
                 className="w-4 h-4 rounded text-[#C59B27] focus:ring-[#C59B27]"
               />
-              <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
+              <Layers className="w-3.5 h-3.5 text-yellow-300" />
               <span>Featured in Journal</span>
             </label>
           </div>
@@ -304,19 +305,15 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
                   <label className="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">
                     Category
                   </label>
-                  <select
+                  <CustomDropdown
                     value={formData.category}
-                    onChange={(e) =>
-                      setFormData({ ...formData, category: e.target.value as any })
+                    onChange={(val) =>
+                      setFormData({ ...formData, category: val as any })
                     }
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:border-[#C59B27] focus:outline-none"
-                  >
-                    {CATEGORIES.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
+                    options={CATEGORIES}
+                    variant="dark"
+                    size="sm"
+                  />
                 </div>
 
                 <div>

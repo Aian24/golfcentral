@@ -14,7 +14,7 @@ import {
   Phone,
   Mail,
   MapPin,
-  Sparkles,
+  Radio,
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { SiteInfoData, CurrentEditionData } from "@/lib/types";
@@ -140,7 +140,7 @@ export const SiteSettingsTab: React.FC<SiteSettingsTabProps> = ({ onSuccess }) =
         <div className="bg-[#0F3D2A] border border-white/15 rounded-3xl p-6 shadow-xl space-y-5">
           <div className="flex items-center justify-between border-b border-white/10 pb-3">
             <h3 className="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-[#D8B045]" />
+              <Radio className="w-4 h-4 text-[#D8B045]" />
               <span>Homepage Header &amp; Conditions Ticker</span>
             </h3>
             <span className="text-xs text-[#D8B045]">Live Frontend Elements</span>

@@ -19,21 +19,21 @@ import {
   Compass,
   HeartHandshake,
   Mail,
-  Bot,
   ExternalLink,
   LogOut,
-  Sparkles,
   ShieldCheck,
   Radio,
   X,
   ChevronRight,
   Lock,
+  Layers,
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 
 export type AdminTab =
   | "publisher"
   | "issues"
+  | "issues_dev"
   | "dashboard_dev"
   | "articles_dev"
   | "theme_dev"
@@ -46,8 +46,7 @@ export type AdminTab =
   | "agronomy_dev"
   | "lifestyle_dev"
   | "philanthropy_dev"
-  | "newsletter_dev"
-  | "ai_dev";
+  | "newsletter_dev";
 
 interface AdminSidebarProps {
   activeTab: AdminTab;
@@ -79,17 +78,11 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       badge: "Active",
       highlight: true,
     },
-    {
-      id: "issues",
-      label: "Volume Archives & Vault",
-      icon: BookOpen,
-      badge: "25+ Yrs",
-      highlight: true,
-    },
   ];
 
   // All Other Modules Marked as Under Development
   const underDevNav = [
+    { id: "issues_dev", label: "Volume Archives & Vault", icon: BookOpen, badge: "Under Dev" },
     { id: "dashboard_dev", label: "Executive Dashboard", icon: LayoutDashboard, badge: "Under Dev" },
     { id: "articles_dev", label: "Articles & Journal Desk", icon: FileText, badge: "Under Dev" },
     { id: "theme_dev", label: "Theme & Visual Styling", icon: Palette, badge: "Under Dev" },
@@ -103,7 +96,6 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     { id: "lifestyle_dev", label: "Lifestyle & Craft", icon: Compass, badge: "Under Dev" },
     { id: "philanthropy_dev", label: "Military Honors Desk", icon: HeartHandshake, badge: "Under Dev" },
     { id: "newsletter_dev", label: "VIP Newsletter Subscribers", icon: Mail, badge: "Under Dev" },
-    { id: "ai_dev", label: "AI Concierge Assistant", icon: Bot, badge: "Under Dev" },
   ];
 
   return (
@@ -125,18 +117,19 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         {/* Sidebar Header / Brand */}
         <div className="p-5 border-b border-white/10 shrink-0">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0F3D2A] border border-[#C59B27]/50 flex items-center justify-center shadow-inner shrink-0">
-                <ShieldCheck className="w-5 h-5 text-[#D8B045]" />
+            <div className="flex items-center space-x-2">
+              <div className="relative h-8 w-36 shrink-0">
+                <Image
+                  src={siteInfo.officialLogo || "/images/official_logo_white.png"}
+                  alt="Golf Central Magazine"
+                  fill
+                  priority
+                  className="object-contain object-left"
+                />
               </div>
-              <div>
-                <div className="text-sm font-extrabold tracking-wider text-white">
-                  GOLF CENTRAL
-                </div>
-                <div className="text-[10px] uppercase font-bold text-[#D8B045] tracking-widest">
-                  EDITORIAL SUITE
-                </div>
-              </div>
+              <span className="text-[9px] uppercase font-bold text-[#D8B045] tracking-widest px-1.5 py-0.5 rounded bg-[#071F16] border border-[#C59B27]/40 shrink-0">
+                ADMIN
+              </span>
             </div>
 
             <button
@@ -172,7 +165,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           {/* Section 1: Active Monthly Magazine Management */}
           <div className="space-y-1.5">
             <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-[#D8B045] flex items-center space-x-1.5 mb-2">
-              <Sparkles className="w-3 h-3" />
+              <Layers className="w-3 h-3" />
               <span>Active Monthly System</span>
             </div>
             {activeMonthlyNav.map((item) => {
@@ -256,14 +249,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         <div className="p-4 border-t border-white/10 bg-[#04120D] shrink-0 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-full bg-[#C59B27] text-[#0B291D] font-bold text-xs flex items-center justify-center">
-                TP
+              <div className="w-8 h-8 rounded-full bg-[#C59B27] text-[#0B291D] font-bold text-xs flex items-center justify-center tracking-wider">
+                AD
               </div>
               <div className="overflow-hidden">
                 <div className="text-xs font-bold text-white truncate">
-                  {user?.username || "Terrie Purdum"}
+                  {user?.username || "admin"}
                 </div>
-                <div className="text-[10px] text-[#D8B045] truncate">Publisher &amp; Superadmin</div>
+                <div className="text-[10px] text-[#D8B045] truncate">Editorial Administrator</div>
               </div>
             </div>
 
