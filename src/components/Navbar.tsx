@@ -5,8 +5,6 @@ import Image from "next/image";
 import { Search, BookOpen, Menu, X, ArrowRight } from "lucide-react";
 import { SITE_INFO } from "@/data/editorialData";
 import { useEditorialData } from "@/context/EditorialDataContext";
-import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
 
 interface NavbarProps {
   activeTab: string;
@@ -103,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
             </div>
 
-            {/* Right: Search, Admin & Action Buttons */}
+            {/* Right: Search & Action Buttons */}
             <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
               <button
                 onClick={onOpenSearch}
@@ -113,15 +111,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <Search className="w-4 h-4 text-[#D8B045]" />
                 <span className="hidden sm:inline">Search...</span>
               </button>
-
-              <Link
-                href="/admin"
-                className="hidden xl:flex h-9 sm:h-10 px-3 rounded-xl bg-white/5 hover:bg-white/15 text-white/80 hover:text-[#D8B045] text-xs font-semibold items-center space-x-1.5 border border-white/10 transition-colors"
-                title="Publisher Admin Portal"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#D8B045]" />
-                <span>Admin</span>
-              </Link>
 
               <button
                 onClick={() => onOpenIssue(currentEdition.issue)}
