@@ -40,7 +40,8 @@
       ],
       "isCurrent": true,
       "status": "current",
-      "createdAt": "2026-09-26T02:03:38.959Z"
+      "createdAt": "2026-09-26T02:03:38.959Z",
+      "archivedAt": "2026-09-27T01:03:57.099Z"
     },
     {
       "volume": 27,
@@ -321,5 +322,5 @@
       }
     }
   ],
-  "lastUpdated": "2026-09-26T02:03:38.959Z"
+  "lastUpdated": "2026-09-27T01:20:20.167Z"
 }

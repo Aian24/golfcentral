@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   LayoutDashboard,
   Send,
@@ -19,10 +18,8 @@ import {
   Compass,
   HeartHandshake,
   Mail,
-  ExternalLink,
   LogOut,
   ShieldCheck,
-  Radio,
   X,
   ChevronRight,
   Lock,
@@ -33,13 +30,13 @@ import { useEditorialData } from "@/context/EditorialDataContext";
 export type AdminTab =
   | "publisher"
   | "issues"
+  | "about_dev"
   | "issues_dev"
   | "dashboard_dev"
   | "articles_dev"
   | "theme_dev"
   | "inspector_dev"
   | "settings_dev"
-  | "staff_dev"
   | "advertising_dev"
   | "adspec_dev"
   | "nomination_dev"
@@ -73,7 +70,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   const activeMonthlyNav = [
     {
       id: "publisher",
-      label: "Monthly Magazine Changes",
+      label: "Monthly Issues",
       icon: Send,
       badge: "Active",
       highlight: true,
@@ -82,20 +79,20 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
   // All Other Modules Marked as Under Development
   const underDevNav = [
-    { id: "issues_dev", label: "Volume Archives & Vault", icon: BookOpen, badge: "Under Dev" },
-    { id: "dashboard_dev", label: "Executive Dashboard", icon: LayoutDashboard, badge: "Under Dev" },
-    { id: "articles_dev", label: "Articles & Journal Desk", icon: FileText, badge: "Under Dev" },
-    { id: "theme_dev", label: "Theme & Visual Styling", icon: Palette, badge: "Under Dev" },
-    { id: "inspector_dev", label: "Flipbook Simulator", icon: Eye, badge: "Under Dev" },
-    { id: "settings_dev", label: "Site Settings & Tickers", icon: Settings, badge: "Under Dev" },
-    { id: "staff_dev", label: "Editorial Staff & Masthead", icon: Users, badge: "Under Dev" },
-    { id: "advertising_dev", label: "Advertising Media Kit", icon: Megaphone, badge: "Under Dev" },
-    { id: "adspec_dev", label: "Ad Dimensions & Specs", icon: Ruler, badge: "Under Dev" },
-    { id: "nomination_dev", label: "Leader Nominations", icon: Award, badge: "Under Dev" },
-    { id: "agronomy_dev", label: "Turf Agronomy Feature", icon: Sprout, badge: "Under Dev" },
-    { id: "lifestyle_dev", label: "Lifestyle & Craft", icon: Compass, badge: "Under Dev" },
-    { id: "philanthropy_dev", label: "Military Honors Desk", icon: HeartHandshake, badge: "Under Dev" },
-    { id: "newsletter_dev", label: "VIP Newsletter Subscribers", icon: Mail, badge: "Under Dev" },
+    { id: "about_dev", label: "About Us", icon: Users, badge: "Under Dev" },
+    { id: "issues_dev", label: "Volume Archives", icon: BookOpen, badge: "Under Dev" },
+    { id: "dashboard_dev", label: "Dashboard", icon: LayoutDashboard, badge: "Under Dev" },
+    { id: "articles_dev", label: "Articles Desk", icon: FileText, badge: "Under Dev" },
+    { id: "theme_dev", label: "Theme Studio", icon: Palette, badge: "Under Dev" },
+    { id: "inspector_dev", label: "Flipbook Reader", icon: Eye, badge: "Under Dev" },
+    { id: "settings_dev", label: "Site Settings", icon: Settings, badge: "Under Dev" },
+    { id: "advertising_dev", label: "Media Kit", icon: Megaphone, badge: "Under Dev" },
+    { id: "adspec_dev", label: "Ad Specs", icon: Ruler, badge: "Under Dev" },
+    { id: "nomination_dev", label: "Nominations", icon: Award, badge: "Under Dev" },
+    { id: "agronomy_dev", label: "Turf Agronomy", icon: Sprout, badge: "Under Dev" },
+    { id: "lifestyle_dev", label: "Lifestyle", icon: Compass, badge: "Under Dev" },
+    { id: "philanthropy_dev", label: "Military Honors", icon: HeartHandshake, badge: "Under Dev" },
+    { id: "newsletter_dev", label: "Subscribers", icon: Mail, badge: "Under Dev" },
   ];
 
   return (
@@ -115,47 +112,23 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         }`}
       >
         {/* Sidebar Header / Brand */}
-        <div className="p-5 border-b border-white/10 shrink-0">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="relative h-8 w-36 shrink-0">
-                <Image
-                  src={siteInfo.officialLogo || "/images/official_logo_white.png"}
-                  alt="Golf Central Magazine"
-                  fill
-                  priority
-                  className="object-contain object-left"
-                />
-              </div>
-              <span className="text-[9px] uppercase font-bold text-[#D8B045] tracking-widest px-1.5 py-0.5 rounded bg-[#071F16] border border-[#C59B27]/40 shrink-0">
-                ADMIN
-              </span>
+        <div className="px-4 py-3 border-b border-white/10 shrink-0">
+          <div className="relative flex items-center justify-center">
+            <div className="relative h-20 w-64 mx-auto">
+              <Image
+                src={siteInfo.officialLogo || "/images/official_logo_white.png"}
+                alt="Golf Central Magazine"
+                fill
+                priority
+                className="object-contain object-center drop-shadow-lg"
+              />
             </div>
 
             <button
               onClick={onCloseMobile}
-              className="lg:hidden p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white"
+              className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white"
             >
               <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Current Live Edition Indicator */}
-          <div className="mt-4 p-2.5 rounded-xl bg-[#0F3D2A]/80 border border-[#C59B27]/30 flex items-center justify-between text-xs">
-            <div className="flex items-center space-x-2">
-              <Radio className="w-3 h-3 text-red-400 animate-pulse shrink-0" />
-              <div>
-                <div className="text-[10px] uppercase text-white/60 font-semibold">Current Live Issue</div>
-                <div className="font-bold text-[#D8B045]">
-                  Vol {currentEdition.volume} • Issue {currentEdition.issue}
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={onOpenPublisherModal}
-              className="px-2 py-1 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-[10px] uppercase rounded-lg shadow"
-            >
-              Publish
             </button>
           </div>
         </div>
@@ -246,7 +219,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         </div>
 
         {/* Sidebar Footer / User Profile & Logout */}
-        <div className="p-4 border-t border-white/10 bg-[#04120D] shrink-0 space-y-3">
+        <div className="p-4 border-t border-white/10 bg-[#04120D] shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="w-8 h-8 rounded-full bg-[#C59B27] text-[#0B291D] font-bold text-xs flex items-center justify-center tracking-wider">
@@ -267,19 +240,6 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             >
               <LogOut className="w-4 h-4" />
             </button>
-          </div>
-
-          <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
-            <Link
-              href="/"
-              target="_blank"
-              className="text-white/70 hover:text-white flex items-center space-x-1 transition-colors text-[11px]"
-            >
-              <span>View Live Website</span>
-              <ExternalLink className="w-3 h-3 text-[#D8B045]" />
-            </Link>
-
-            <span className="text-[10px] text-white/40">v2.4.0</span>
           </div>
         </div>
       </aside>

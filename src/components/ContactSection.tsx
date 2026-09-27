@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, CheckCircle, Send, Clock, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, CheckCircle, Send, Clock, ArrowRight, Loader2 } from "lucide-react";
 import { SITE_INFO } from "@/data/editorialData";
 import { CustomDropdown } from "@/components/CustomDropdown";
 
@@ -23,10 +23,15 @@ export const ContactSection: React.FC = () => {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSending) return;
+    setIsSending(true);
+    await new Promise((res) => setTimeout(res, 600));
     setSubmitted(true);
+    setIsSending(false);
   };
 
   return (
@@ -218,10 +223,20 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-[#134E36] hover:bg-[#176043] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center space-x-2"
+                  disabled={isSending}
+                  className="w-full py-3.5 bg-[#134E36] hover:bg-[#176043] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 disabled:opacity-60"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Transmit Message</span>
+                  {isSending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#D8B045]" />
+                      <span>Transmitting Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Transmit Message</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

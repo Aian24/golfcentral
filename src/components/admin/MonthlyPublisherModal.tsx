@@ -17,6 +17,7 @@ import {
   Archive,
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
+import { formatIssuuEmbedUrl, formatIssuuPublicUrl } from "@/lib/issuu";
 
 interface MonthlyPublisherModalProps {
   isOpen: boolean;
@@ -73,8 +74,8 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
       const year = now.getFullYear();
       setDate(`${nextMonthName} ${year}`);
       setTheme(`${nextMonthName} Championship & Luxury Showcase`);
-      setIssuuUrl("https://issuu.com/editorinchief");
-      setIssuuEmbedUrl("");
+      setIssuuUrl("https://issuu.com/editorinchief/docs/golf_central_magazine_vol_27_issue_6_ezine");
+      setIssuuEmbedUrl("https://e.issuu.com/embed.html?d=golf_central_magazine_vol_27_issue_6_ezine&u=editorinchief");
     }
   }, [isOpen, currentIssue]);
 
@@ -84,6 +85,14 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
     const updated = [...features];
     updated[index] = val;
     setFeatures(updated);
+  };
+
+  const handleIssuuUrlChange = (val: string) => {
+    setIssuuUrl(val);
+    const converted = formatIssuuEmbedUrl(val);
+    if (converted) {
+      setIssuuEmbedUrl(converted);
+    }
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,6 +130,9 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
     setIsSubmitting(true);
 
     try {
+      const finalEmbedUrl = formatIssuuEmbedUrl(issuuEmbedUrl, issuuUrl);
+      const finalPublicUrl = formatIssuuPublicUrl(issuuUrl, issuuEmbedUrl);
+
       const res = await publishMonthlyIssue(
         {
           volume: Number(volume),
@@ -130,8 +142,8 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
           date,
           pageCount: Number(pageCount),
           coverImage,
-          issuuUrl,
-          issuuEmbedUrl: issuuEmbedUrl || issuuUrl,
+          issuuUrl: finalPublicUrl,
+          issuuEmbedUrl: finalEmbedUrl,
           features: features.filter((f) => f.trim() !== ""),
           editorNote,
           isCurrent: true,
@@ -156,6 +168,23 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-6 overflow-y-auto font-sans animate-fadeIn">
       <div className="relative w-full max-w-4xl bg-[#0B291D] border border-[#C59B27]/40 text-white rounded-3xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col justify-between">
+        {/* Full Modal Submitting Loading Overlay */}
+        {isSubmitting && (
+          <div className="absolute inset-0 z-50 bg-[#071F16]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 space-y-4 animate-fadeIn">
+            <div className="w-16 h-16 rounded-2xl bg-[#134E36] border border-[#C59B27] flex items-center justify-center shadow-2xl">
+              <Loader2 className="w-8 h-8 text-[#D8B045] animate-spin" />
+            </div>
+            <div className="text-center space-y-1">
+              <h3 className="text-lg font-bold text-white">
+                Publishing Volume {volume} Issue {issue}...
+              </h3>
+              <p className="text-xs text-[#D8B045]">
+                Updating digital flipbook replica and archiving previous issue...
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Modal Header */}
         <div className="bg-[#071F16] border-b border-[#C59B27]/30 px-6 py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center space-x-3">
@@ -327,7 +356,7 @@ export const MonthlyPublisherModal: React.FC<MonthlyPublisherModalProps> = ({
                   <input
                     type="url"
                     value={issuuUrl}
-                    onChange={(e) => setIssuuUrl(e.target.value)}
+                    onChange={(e) => handleIssuuUrlChange(e.target.value)}
                     placeholder="https://issuu.com/editorinchief/docs/golf_central_mag_..."
                     className="w-full px-3.5 py-2 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:border-[#C59B27] focus:outline-none"
                   />

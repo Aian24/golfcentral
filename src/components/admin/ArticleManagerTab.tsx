@@ -13,9 +13,11 @@ import {
   Clock,
   User,
   Check,
+  Loader2,
 } from "lucide-react";
 import { Article } from "@/data/editorialData";
 import { useEditorialData } from "@/context/EditorialDataContext";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 interface ArticleManagerTabProps {
   onAddNewArticle: () => void;
@@ -39,6 +41,7 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
 
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const filteredArticles = articles.filter((art) => {
     const matchesCat = selectedCategory === "All" || art.category === selectedCategory;
@@ -54,16 +57,34 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
   });
 
   const handleToggleLeadStory = async (art: Article) => {
-    await saveArticle({ ...art, leadStory: !art.leadStory });
+    setLoadingId(`lead-${art.id}`);
+    try {
+      await saveArticle({ ...art, leadStory: !art.leadStory });
+    } finally {
+      setLoadingId(null);
+    }
   };
 
   const handleToggleTrending = async (art: Article) => {
-    await saveArticle({ ...art, trending: !art.trending });
+    setLoadingId(`trend-${art.id}`);
+    try {
+      await saveArticle({ ...art, trending: !art.trending });
+    } finally {
+      setLoadingId(null);
+    }
   };
 
-  const handleDelete = async (art: Article) => {
-    if (window.confirm(`Are you sure you want to delete "${art.title}"?`)) {
-      await deleteArticle(art.id);
+  const [articleToDelete, setArticleToDelete] = useState<Article | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleConfirmDelete = async () => {
+    if (!articleToDelete) return;
+    setIsDeleting(true);
+    try {
+      await deleteArticle(articleToDelete.id);
+      setArticleToDelete(null);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -204,7 +225,7 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
                   </button>
 
                   <button
-                    onClick={() => handleDelete(art)}
+                    onClick={() => setArticleToDelete(art)}
                     className="py-2 px-3 rounded-xl bg-red-900/30 hover:bg-red-900 text-red-200 text-xs font-semibold flex items-center justify-center space-x-1 transition-colors"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -215,25 +236,35 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => handleToggleLeadStory(art)}
-                    className={`w-1/2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors flex items-center justify-center space-x-1 ${
+                    disabled={loadingId === `lead-${art.id}`}
+                    className={`w-1/2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors flex items-center justify-center space-x-1 disabled:opacity-50 ${
                       art.leadStory
                         ? "bg-[#C59B27] text-[#0B291D]"
                         : "bg-white/5 hover:bg-white/10 text-white/70"
                     }`}
                   >
-                    <Award className="w-3 h-3" />
+                    {loadingId === `lead-${art.id}` ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Award className="w-3 h-3" />
+                    )}
                     <span>{art.leadStory ? "Active Lead" : "Make Lead"}</span>
                   </button>
 
                   <button
                     onClick={() => handleToggleTrending(art)}
-                    className={`w-1/2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors flex items-center justify-center space-x-1 ${
+                    disabled={loadingId === `trend-${art.id}`}
+                    className={`w-1/2 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors flex items-center justify-center space-x-1 disabled:opacity-50 ${
                       art.trending
                         ? "bg-orange-600 text-white"
                         : "bg-white/5 hover:bg-white/10 text-white/70"
                     }`}
                   >
-                    <Flame className="w-3 h-3" />
+                    {loadingId === `trend-${art.id}` ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Flame className="w-3 h-3" />
+                    )}
                     <span>{art.trending ? "Trending" : "Set Trending"}</span>
                   </button>
                 </div>
@@ -242,6 +273,22 @@ export const ArticleManagerTab: React.FC<ArticleManagerTabProps> = ({
           </div>
         ))}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {articleToDelete && (
+        <ConfirmActionModal
+          isOpen={Boolean(articleToDelete)}
+          title={`Delete "${articleToDelete.title}"?`}
+          message="Are you sure you want to permanently delete this article? This action cannot be undone."
+          confirmText="Delete Story"
+          cancelText="Cancel"
+          isDestructive={true}
+          isLoading={isDeleting}
+          iconType="delete"
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setArticleToDelete(null)}
+        />
+      )}
     </div>
   );
 };

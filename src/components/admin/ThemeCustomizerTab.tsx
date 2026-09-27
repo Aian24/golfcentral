@@ -19,6 +19,7 @@ import {
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { ThemeSettingsData, DEFAULT_THEME_SETTINGS } from "@/lib/types";
 import { CustomDropdown } from "@/components/CustomDropdown";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 const HEADING_STYLE_OPTIONS = [
   { value: "normal", label: "Standard Title Case" },
@@ -140,27 +141,29 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
     }));
   };
 
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
     try {
       const res = await updateThemeSettings(form);
       if (res.success) {
-        if (onSuccess) onSuccess(res.message);
+        if (onSuccess) onSuccess("Theme settings saved.");
       } else {
-        alert(res.message);
+        if (onSuccess) onSuccess(res.message || "Failed to save theme settings.");
       }
     } catch {
-      alert("Failed to save theme settings.");
+      if (onSuccess) onSuccess("Failed to save theme settings.");
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleResetDefaults = () => {
-    if (window.confirm("Reset all theme customizations back to default Golf Central Magazine branding?")) {
-      setForm({ ...DEFAULT_THEME_SETTINGS });
-    }
+  const handleConfirmReset = () => {
+    setForm({ ...DEFAULT_THEME_SETTINGS });
+    setShowResetConfirm(false);
+    if (onSuccess) onSuccess("Theme reset to defaults.");
   };
 
   return (
@@ -183,7 +186,7 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
         <div className="flex items-center space-x-3">
           <button
             type="button"
-            onClick={handleResetDefaults}
+            onClick={() => setShowResetConfirm(true)}
             className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -835,6 +838,19 @@ export const ThemeCustomizerTab: React.FC<ThemeCustomizerTabProps> = ({ onSucces
           </div>
         </div>
       </div>
+
+      {/* Reset Confirmation Modal */}
+      <ConfirmActionModal
+        isOpen={showResetConfirm}
+        title="Reset Theme Defaults?"
+        message="Reset all theme customizations back to default Golf Central Magazine branding? Any unsaved color or font changes will be cleared."
+        confirmText="Reset Theme"
+        cancelText="Cancel"
+        isDestructive={true}
+        iconType="reset"
+        onConfirm={handleConfirmReset}
+        onCancel={() => setShowResetConfirm(false)}
+      />
     </div>
   );
 };

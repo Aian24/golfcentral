@@ -19,6 +19,7 @@ import {
 import { Article } from "@/data/editorialData";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { CustomDropdown } from "@/components/CustomDropdown";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 interface ArticleEditModalProps {
   article: Article | null;
@@ -68,8 +69,10 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
   });
 
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (article) {
@@ -175,7 +178,7 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
     try {
       const res = await saveArticle(formData);
       if (res.success) {
-        if (onSuccess) onSuccess(`Article "${formData.title}" saved successfully!`);
+        if (onSuccess) onSuccess("Article saved.");
         onClose();
       } else {
         setError(res.message || "Failed to save article.");
@@ -187,20 +190,42 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
     }
   };
 
-  const handleDelete = async () => {
-    if (
-      article &&
-      window.confirm(`Are you sure you want to delete article "${formData.title}"?`)
-    ) {
+  const handleConfirmDelete = async () => {
+    if (!article) return;
+    setIsDeleting(true);
+    try {
       await deleteArticle(article.id);
-      if (onSuccess) onSuccess(`Deleted article "${formData.title}"`);
+      if (onSuccess) onSuccess("Article deleted.");
+      setShowDeleteConfirm(false);
       onClose();
+    } catch (err: any) {
+      setError(err.message || "Failed to delete article.");
+      setShowDeleteConfirm(false);
+    } finally {
+      setIsDeleting(false);
     }
   };
+
+  const isBusy = isSaving || isDeleting;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-6 overflow-y-auto font-sans animate-fadeIn">
       <div className="relative w-full max-w-4xl bg-[#0B291D] border border-[#C59B27]/40 text-white rounded-3xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col justify-between">
+        {/* Busy / Loading Overlay */}
+        {isBusy && (
+          <div className="absolute inset-0 z-50 bg-[#071F16]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 space-y-4 animate-fadeIn">
+            <div className="w-16 h-16 rounded-2xl bg-[#134E36] border border-[#C59B27] flex items-center justify-center shadow-2xl">
+              <Loader2 className="w-8 h-8 text-[#D8B045] animate-spin" />
+            </div>
+            <div className="text-center space-y-1">
+              <h3 className="text-lg font-bold text-white">
+                {isDeleting ? `Deleting "${formData.title}"...` : `Saving "${formData.title}"...`}
+              </h3>
+              <p className="text-xs text-[#D8B045]">Updating editorial database...</p>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="bg-[#071F16] border-b border-[#C59B27]/30 px-6 py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center space-x-3">
@@ -565,11 +590,21 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
           {article ? (
             <button
               type="button"
-              onClick={handleDelete}
-              className="px-4 py-2 rounded-xl bg-red-900/40 hover:bg-red-900 text-red-200 border border-red-500/40 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+              onClick={() => setShowDeleteConfirm(true)}
+              disabled={isBusy}
+              className="px-4 py-2 rounded-xl bg-red-900/40 hover:bg-red-900 text-red-200 border border-red-500/40 text-xs font-semibold flex items-center space-x-1.5 transition-colors disabled:opacity-50"
             >
-              <Trash2 className="w-3.5 h-3.5" />
-              <span>Delete Story</span>
+              {isDeleting ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-red-300" />
+                  <span>Deleting Story...</span>
+                </>
+              ) : (
+                <>
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete Story</span>
+                </>
+              )}
             </button>
           ) : (
             <div />
@@ -579,7 +614,8 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors"
+              disabled={isBusy}
+              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
@@ -587,7 +623,7 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={isSaving}
+              disabled={isBusy}
               className="px-6 py-2.5 rounded-xl bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider flex items-center space-x-2 transition-all shadow-lg disabled:opacity-50"
             >
               {isSaving ? (
@@ -605,6 +641,22 @@ export const ArticleEditModal: React.FC<ArticleEditModalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {article && (
+        <ConfirmActionModal
+          isOpen={showDeleteConfirm}
+          title={`Delete "${formData.title}"?`}
+          message="Are you sure you want to delete this article? This action cannot be undone."
+          confirmText="Delete Story"
+          cancelText="Cancel"
+          isDestructive={true}
+          isLoading={isDeleting}
+          iconType="delete"
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setShowDeleteConfirm(false)}
+        />
+      )}
     </div>
   );
 };

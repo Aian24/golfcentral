@@ -65,7 +65,7 @@ export async function PUT(request: Request) {
       const data = await setIssueStatus(volume, issue, status);
       return NextResponse.json({
         success: true,
-        message: `Updated Volume ${volume} Issue ${issue} status to ${status}`,
+        message: `Volume ${volume} Issue ${issue} updated to ${status}.`,
         data,
       });
     }
@@ -74,7 +74,7 @@ export async function PUT(request: Request) {
       const data = await setIssueStatus(volume, issue, "current");
       return NextResponse.json({
         success: true,
-        message: `Volume ${volume} Issue ${issue} is now the Live Current Edition`,
+        message: `Volume ${volume} Issue ${issue} is now live.`,
         data,
       });
     }
@@ -83,7 +83,7 @@ export async function PUT(request: Request) {
       const data = await setIssueStatus(volume, issue, "archived");
       return NextResponse.json({
         success: true,
-        message: `Volume ${volume} Issue ${issue} has been moved to Archive`,
+        message: `Volume ${volume} Issue ${issue} archived.`,
         data,
       });
     }
@@ -113,7 +113,7 @@ export async function DELETE(request: Request) {
     const data = await deleteIssue(volume, issue);
     return NextResponse.json({
       success: true,
-      message: `Deleted Volume ${volume} Issue ${issue}`,
+      message: `Volume ${volume} Issue ${issue} deleted.`,
       data,
     });
   } catch (error: any) {

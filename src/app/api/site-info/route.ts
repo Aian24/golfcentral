@@ -25,7 +25,7 @@ export async function PUT(request: Request) {
     const data = await updateSiteSettings(siteInfo, currentEdition);
     return NextResponse.json({
       success: true,
-      message: "Site settings and edition info updated successfully",
+      message: "Site settings updated.",
       data,
     });
   } catch (error: any) {

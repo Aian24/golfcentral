@@ -165,13 +165,13 @@ export default function AdminPage() {
 
       {/* Global Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
-          <div className="bg-[#134E36] border border-[#C59B27] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 text-xs font-semibold">
-            <CheckCircle2 className="w-5 h-5 text-[#D8B045] shrink-0" />
+        <div className="fixed bottom-6 right-6 z-50 animate-fadeIn">
+          <div className="bg-[#0B291D] border border-[#C59B27]/60 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2.5 text-xs font-semibold">
+            <CheckCircle2 className="w-4 h-4 text-[#D8B045] shrink-0" />
             <span>{toastMessage}</span>
             <button
               onClick={() => setToastMessage(null)}
-              className="p-1 hover:bg-white/10 rounded-lg text-white/60 hover:text-white"
+              className="p-1 hover:bg-white/10 rounded-lg text-white/60 hover:text-white ml-1"
             >
               <X className="w-3.5 h-3.5" />
             </button>

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       const data = await resetToDefaults();
       return NextResponse.json({
         success: true,
-        message: "Successfully reset to default editorial archive data",
+        message: "Data reset to defaults.",
         data,
       });
     }
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       const data = await importData(body.importData);
       return NextResponse.json({
         success: true,
-        message: "Successfully imported magazine data",
+        message: "Magazine data imported.",
         data,
       });
     }

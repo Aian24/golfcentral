@@ -24,7 +24,7 @@ export async function PUT(request: Request) {
     const data = await updateThemeSettings(theme);
     return NextResponse.json({
       success: true,
-      message: "Theme and visual customizations applied successfully",
+      message: "Theme customizations saved.",
       theme: data.themeSettings,
       data,
     });

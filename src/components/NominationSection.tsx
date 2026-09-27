@@ -15,6 +15,7 @@ import {
   X,
   Flame,
   HelpCircle,
+  Loader2,
 } from "lucide-react";
 import { SITE_INFO } from "@/data/editorialData";
 import { CustomDropdown } from "@/components/CustomDropdown";
@@ -147,6 +148,7 @@ export const NominationSection: React.FC = () => {
     reason: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Filter nominees
   const filteredNominees =
@@ -208,8 +210,11 @@ export const NominationSection: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    await new Promise((res) => setTimeout(res, 600));
     try {
       confetti({
         particleCount: 90,
@@ -219,6 +224,7 @@ export const NominationSection: React.FC = () => {
       });
     } catch {}
     setSubmitted(true);
+    setIsSubmitting(false);
   };
 
   return (
@@ -600,14 +606,24 @@ export const NominationSection: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-[#134E36] hover:bg-[#176043] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center space-x-2"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 bg-[#134E36] hover:bg-[#176043] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 disabled:opacity-60"
                 >
-                  <span>
-                    {selectedNominee
-                      ? `Cast Official Vote for ${selectedNominee.name}`
-                      : "Submit Nomination to Editorial Board"}
-                  </span>
-                  <ArrowRight className="w-4 h-4" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#D8B045]" />
+                      <span>Transmitting Official Ballot...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        {selectedNominee
+                          ? `Cast Official Vote for ${selectedNominee.name}`
+                          : "Submit Nomination to Editorial Board"}
+                      </span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
             )}

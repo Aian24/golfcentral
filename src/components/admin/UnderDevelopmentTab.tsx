@@ -39,6 +39,23 @@ const MODULE_DETAILS: Record<
     upcomingFeatures: string[];
   }
 > = {
+  about_dev: {
+    title: "About Us & Editorial Masthead Studio",
+    description:
+      "Full administrative customizer for company history, founder spotlight, mission pillars, milestone metrics, and interactive staff flip-cards.",
+    icon: Users,
+    deliverables: [
+      "Company Heritage & Tagline Editor (1999 founding, 25-year badge, regional scope)",
+      "Founder & Publisher Spotlight Customizer (Terrie L. Purdum bio, quote, direct email, photo)",
+      "25-Year Milestone Statistics Counter (27 Volumes, 25+ Years, 200+ Issues, 100k+ Readers)",
+      "Core Mission & 4 Pillar Customizer (Junior Comfort, Charity & Sponsors, Military Honors, Agronomy)",
+      "Interactive Masthead Roster & Staff Flip-Card Studio (Add, edit, reorder 11+ team members)",
+    ],
+    upcomingFeatures: [
+      "Live Public Viewport Preview with real-time typography styling",
+      "Instant synchronization with homepage About Us section and PDF media kit",
+    ],
+  },
   issues_dev: {
     title: "Volume Archives & 25-Year Vault Repository",
     description:

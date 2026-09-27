@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Phone, Mail, CheckCircle, ArrowRight, Download, Send, BookOpen } from "lucide-react";
+import { Phone, Mail, CheckCircle, ArrowRight, Download, Send, BookOpen, Loader2 } from "lucide-react";
 import { ADVERTISING_PACKAGES, SITE_INFO } from "@/data/editorialData";
 import { CustomDropdown } from "@/components/CustomDropdown";
 
@@ -24,10 +24,15 @@ export const AdvertisingSection: React.FC = () => {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    await new Promise((res) => setTimeout(res, 600));
     setSubmitted(true);
+    setIsSubmitting(false);
   };
 
   return (
@@ -237,10 +242,20 @@ export const AdvertisingSection: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center space-x-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 disabled:opacity-60"
                   >
-                    <span>Submit Advertising Request</span>
-                    <ArrowRight className="w-4 h-4" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-[#0B291D]" />
+                        <span>Transmitting Advertising Request...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Advertising Request</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}

@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { ExtendedMagazineIssue } from "@/lib/types";
 import { useEditorialData } from "@/context/EditorialDataContext";
+import { formatIssuuEmbedUrl, formatIssuuPublicUrl } from "@/lib/issuu";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 interface IssueEditModalProps {
   issue: ExtendedMagazineIssue | null;
@@ -34,8 +36,11 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
 
   const [formData, setFormData] = useState<ExtendedMagazineIssue | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isSettingLive, setIsSettingLive] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (issue) {
@@ -100,9 +105,16 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
     setError(null);
 
     try {
-      const res = await updateIssue(formData);
+      const finalEmbedUrl = formatIssuuEmbedUrl(formData.issuuEmbedUrl, formData.issuuUrl);
+      const finalPublicUrl = formatIssuuPublicUrl(formData.issuuUrl, formData.issuuEmbedUrl);
+
+      const res = await updateIssue({
+        ...formData,
+        issuuEmbedUrl: finalEmbedUrl,
+        issuuUrl: finalPublicUrl,
+      });
       if (res.success) {
-        if (onSuccess) onSuccess(`Saved changes to ${formData.title}`);
+        if (onSuccess) onSuccess(`Volume ${formData.volume} Issue ${formData.issue} updated.`);
         onClose();
       } else {
         setError(res.message || "Failed to save changes.");
@@ -114,32 +126,61 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
     }
   };
 
-  const handleDelete = async () => {
+  const handleConfirmDelete = async () => {
     if (!formData) return;
-    if (
-      window.confirm(
-        `Are you sure you want to permanently delete Volume ${formData.volume} Issue ${formData.issue}?`
-      )
-    ) {
+    setIsDeleting(true);
+    try {
       await deleteIssue(formData.volume, formData.issue);
-      if (onSuccess) onSuccess(`Deleted Volume ${formData.volume} Issue ${formData.issue}`);
+      if (onSuccess) onSuccess(`Volume ${formData.volume} Issue ${formData.issue} deleted.`);
+      setShowDeleteConfirm(false);
       onClose();
+    } catch (err: any) {
+      setError(err.message || "Failed to delete issue.");
+      setShowDeleteConfirm(false);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
   const handleMakeLive = async () => {
     if (!formData) return;
-    await setIssueLive(formData.volume, formData.issue);
-    if (onSuccess)
-      onSuccess(
-        `Volume ${formData.volume} Issue ${formData.issue} is now the Live Current Edition!`
-      );
-    onClose();
+    setIsSettingLive(true);
+    try {
+      await setIssueLive(formData.volume, formData.issue);
+      if (onSuccess)
+        onSuccess(`Volume ${formData.volume} Issue ${formData.issue} is now live.`);
+      onClose();
+    } catch (err: any) {
+      setError(err.message || "Failed to promote issue to live.");
+    } finally {
+      setIsSettingLive(false);
+    }
   };
+
+  const isBusy = isSaving || isDeleting || isSettingLive;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-6 overflow-y-auto font-sans animate-fadeIn">
       <div className="relative w-full max-w-4xl bg-[#0B291D] border border-[#C59B27]/40 text-white rounded-3xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col justify-between">
+        {/* Busy / Loading Overlay */}
+        {isBusy && (
+          <div className="absolute inset-0 z-50 bg-[#071F16]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 space-y-4 animate-fadeIn">
+            <div className="w-16 h-16 rounded-2xl bg-[#134E36] border border-[#C59B27] flex items-center justify-center shadow-2xl">
+              <Loader2 className="w-8 h-8 text-[#D8B045] animate-spin" />
+            </div>
+            <div className="text-center space-y-1">
+              <h3 className="text-lg font-bold text-white">
+                {isDeleting
+                  ? `Deleting Volume ${formData.volume} Issue ${formData.issue}...`
+                  : isSettingLive
+                  ? `Promoting Volume ${formData.volume} Issue ${formData.issue} to Live...`
+                  : `Saving changes to ${formData.title}...`}
+              </h3>
+              <p className="text-xs text-[#D8B045]">Updating database and magazine store...</p>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="bg-[#071F16] border-b border-[#C59B27]/30 px-6 py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center space-x-3">
@@ -313,7 +354,15 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
                   <input
                     type="url"
                     value={formData.issuuUrl}
-                    onChange={(e) => setFormData({ ...formData, issuuUrl: e.target.value })}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const converted = formatIssuuEmbedUrl(val);
+                      setFormData({
+                        ...formData,
+                        issuuUrl: val,
+                        issuuEmbedUrl: converted || formData.issuuEmbedUrl,
+                      });
+                    }}
                     className="w-full px-3.5 py-2 rounded-xl bg-[#071F16] border border-white/20 text-white text-xs focus:border-[#C59B27] focus:outline-none"
                   />
                 </div>
@@ -424,18 +473,29 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
         <div className="bg-[#071F16] border-t border-[#C59B27]/30 px-6 py-4 flex items-center justify-between shrink-0">
           <button
             type="button"
-            onClick={handleDelete}
-            className="px-4 py-2 rounded-xl bg-red-900/40 hover:bg-red-900 text-red-200 border border-red-500/40 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+            onClick={() => setShowDeleteConfirm(true)}
+            disabled={isBusy}
+            className="px-4 py-2 rounded-xl bg-red-900/40 hover:bg-red-900 text-red-200 border border-red-500/40 text-xs font-semibold flex items-center space-x-1.5 transition-colors disabled:opacity-50"
           >
-            <Trash2 className="w-3.5 h-3.5" />
-            <span>Delete Issue</span>
+            {isDeleting ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-red-300" />
+                <span>Deleting Issue...</span>
+              </>
+            ) : (
+              <>
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete Issue</span>
+              </>
+            )}
           </button>
 
           <div className="flex items-center space-x-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors"
+              disabled={isBusy}
+              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
@@ -443,7 +503,7 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={isSaving}
+              disabled={isBusy}
               className="px-6 py-2.5 rounded-xl bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-wider flex items-center space-x-2 transition-all shadow-lg disabled:opacity-50"
             >
               {isSaving ? (
@@ -461,6 +521,20 @@ export const IssueEditModal: React.FC<IssueEditModalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmActionModal
+        isOpen={showDeleteConfirm}
+        title={`Delete ${formData.title}?`}
+        message={`Are you sure you want to permanently delete Volume ${formData.volume} Issue ${formData.issue}? This action cannot be undone.`}
+        confirmText="Delete Issue"
+        cancelText="Cancel"
+        isDestructive={true}
+        isLoading={isDeleting}
+        iconType="delete"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteConfirm(false)}
+      />
     </div>
   );
 };

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { CustomDropdown } from "@/components/CustomDropdown";
+import { formatIssuuEmbedUrl, formatIssuuPublicUrl } from "@/lib/issuu";
 
 interface FlipbookInspectorTabProps {
   initialIssueNum?: number;
@@ -28,6 +29,8 @@ export const FlipbookInspectorTab: React.FC<FlipbookInspectorTabProps> = ({
   const [iframeKey, setIframeKey] = useState<number>(0);
 
   const active = issues.find((i) => i.issue === selectedIssueNumber) || issues[0];
+  const embedUrl = formatIssuuEmbedUrl(active?.issuuEmbedUrl, active?.issuuUrl);
+  const publicUrl = formatIssuuPublicUrl(active?.issuuUrl, active?.issuuEmbedUrl);
 
   return (
     <div className="space-y-6 font-sans animate-fadeIn">
@@ -58,7 +61,7 @@ export const FlipbookInspectorTab: React.FC<FlipbookInspectorTabProps> = ({
               }}
               options={issues.map((iss) => ({
                 value: iss.issue,
-                label: `${iss.isCurrent ? "★ LIVE: " : ""}Vol ${iss.volume} Issue ${iss.issue} (${iss.date})`,
+                label: `${iss.isCurrent ? "LIVE: " : ""}Vol ${iss.volume} Issue ${iss.issue} (${iss.date})`,
               }))}
               variant="gold"
               size="sm"
@@ -88,53 +91,28 @@ export const FlipbookInspectorTab: React.FC<FlipbookInspectorTabProps> = ({
           </div>
 
           <div className="flex items-center space-x-3">
-            {active.issuuUrl && (
-              <a
-                href={active.issuuUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center space-x-1.5 transition-colors"
-              >
-                <span>Issuu Direct View</span>
-                <ExternalLink className="w-3 h-3 text-[#D8B045]" />
-              </a>
-            )}
+            <a
+              href={publicUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center space-x-1.5 transition-colors"
+            >
+              <span>Issuu Direct View</span>
+              <ExternalLink className="w-3 h-3 text-[#D8B045]" />
+            </a>
           </div>
         </div>
 
         {/* Embedded Iframe Container */}
         <div className="relative w-full h-[620px] bg-black">
-          {active.issuuEmbedUrl ? (
-            <iframe
-              key={iframeKey}
-              src={active.issuuEmbedUrl}
-              title={`${active.title} Flipbook`}
-              className="w-full h-full border-0"
-              allowFullScreen
-              allow="clipboard-write"
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-white/70 space-y-4">
-              <BookOpen className="w-16 h-16 text-[#D8B045]/60" />
-              <div>
-                <h3 className="text-lg font-bold text-white">No Direct Embed URL Configured</h3>
-                <p className="text-xs max-w-md mt-1">
-                  You can provide an Issuu embed URL in the issue editor (e.g.{" "}
-                  <code>https://e.issuu.com/embed.html?d=...</code>) or readers will be directed to the official Issuu publication.
-                </p>
-              </div>
-              {active.issuuUrl && (
-                <a
-                  href={active.issuuUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-[#C59B27] text-[#0B291D] font-bold text-xs uppercase tracking-wider flex items-center space-x-2"
-                >
-                  <span>Open Issuu Publication &rarr;</span>
-                </a>
-              )}
-            </div>
-          )}
+          <iframe
+            key={iframeKey}
+            src={embedUrl}
+            title={`${active.title} Flipbook`}
+            className="w-full h-full border-0"
+            allowFullScreen
+            allow="fullscreen; clipboard-write; encrypted-media; picture-in-picture"
+          />
         </div>
       </div>
     </div>

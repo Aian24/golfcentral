@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     const result = await publishMonthlyIssue(newIssue, autoArchivePrevious);
     return NextResponse.json({
       success: true,
-      message: `🎉 Published Volume ${volume} Issue ${issue} (${newIssue.date}) as the New Active Edition! Previous edition was safely archived.`,
+      message: `Volume ${volume} Issue ${issue} published.`,
       issue: newIssue,
       data: result.data,
     });

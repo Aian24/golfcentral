@@ -18,6 +18,7 @@ import {
   MagazineStoreData,
 } from "./types";
 import { getNeonSql, isNeonConfigured, initNeonTables } from "./neonDb";
+import { formatIssuuEmbedUrl, formatIssuuPublicUrl } from "./issuu";
 
 export * from "./types";
 
@@ -96,7 +97,11 @@ export async function getStoreData(): Promise<MagazineStoreData> {
               location: dbSiteInfo[0]?.weather_location || fileFallback.currentEdition.location,
             },
             themeSettings: (dbTheme[0]?.settings as ThemeSettingsData) || fileFallback.themeSettings || DEFAULT_THEME_SETTINGS,
-            issues: dbIssues as unknown as ExtendedMagazineIssue[],
+            issues: (dbIssues as unknown as ExtendedMagazineIssue[]).map((iss) => ({
+              ...iss,
+              issuuEmbedUrl: formatIssuuEmbedUrl(iss.issuuEmbedUrl, iss.issuuUrl),
+              issuuUrl: formatIssuuPublicUrl(iss.issuuUrl, iss.issuuEmbedUrl),
+            })),
             articles: fileFallback.articles,
             staff: fileFallback.staff,
             advertisingPackages: fileFallback.advertisingPackages,
@@ -116,8 +121,15 @@ export async function getStoreData(): Promise<MagazineStoreData> {
 async function getFileStoreData(): Promise<MagazineStoreData> {
   try {
     const fileContent = await fs.readFile(DATA_FILE_PATH, "utf-8");
-    const data = JSON.parse(fileContent);
-    return data as MagazineStoreData;
+    const data = JSON.parse(fileContent) as MagazineStoreData;
+    if (data.issues && Array.isArray(data.issues)) {
+      data.issues = data.issues.map((iss) => ({
+        ...iss,
+        issuuEmbedUrl: formatIssuuEmbedUrl(iss.issuuEmbedUrl, iss.issuuUrl),
+        issuuUrl: formatIssuuPublicUrl(iss.issuuUrl, iss.issuuEmbedUrl),
+      }));
+    }
+    return data;
   } catch {
     const defaultData = getDefaultData();
     await saveFileStoreData(defaultData);
@@ -139,6 +151,10 @@ export async function publishMonthlyIssue(
   newIssue: ExtendedMagazineIssue,
   autoArchivePrevious: boolean = true
 ): Promise<{ success: boolean; data: MagazineStoreData; message: string }> {
+  // Format / sanitize Issuu URLs before saving
+  newIssue.issuuEmbedUrl = formatIssuuEmbedUrl(newIssue.issuuEmbedUrl, newIssue.issuuUrl);
+  newIssue.issuuUrl = formatIssuuPublicUrl(newIssue.issuuUrl, newIssue.issuuEmbedUrl);
+
   // 1. If Neon is connected, execute SQL update
   if (isNeonConfigured()) {
     const sql = getNeonSql();
@@ -243,7 +259,7 @@ export async function publishMonthlyIssue(
   return {
     success: true,
     data: finalStore,
-    message: `Successfully published Volume ${newIssue.volume} Issue ${newIssue.issue} (${newIssue.title})!`,
+    message: `Volume ${newIssue.volume} Issue ${newIssue.issue} published.`,
   };
 }
 

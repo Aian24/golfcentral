@@ -15,6 +15,7 @@ import {
   Archive,
   Radio,
   Send,
+  Loader2,
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { ExtendedMagazineIssue } from "@/lib/types";
@@ -46,6 +47,7 @@ export const IssueManagerTab: React.FC<IssueManagerTabProps> = ({
   const [selectedVol, setSelectedVol] = useState<number | "all">("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<"all" | "current" | "archived" | "draft">("all");
+  const [loadingIssueKey, setLoadingIssueKey] = useState<string | null>(null);
 
   const filteredIssues = issues.filter((issue) => {
     const matchesVol = selectedVol === "all" || issue.volume === selectedVol;
@@ -248,11 +250,29 @@ export const IssueManagerTab: React.FC<IssueManagerTabProps> = ({
 
                 {!issue.isCurrent && (
                   <button
-                    onClick={() => setIssueLive(issue.volume, issue.issue)}
-                    className="w-full py-2 rounded-xl bg-[#C59B27]/20 hover:bg-[#C59B27] text-[#D8B045] hover:text-[#0B291D] border border-[#C59B27]/40 text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5"
+                    disabled={loadingIssueKey === `${issue.volume}-${issue.issue}`}
+                    onClick={async () => {
+                      const key = `${issue.volume}-${issue.issue}`;
+                      setLoadingIssueKey(key);
+                      try {
+                        await setIssueLive(issue.volume, issue.issue);
+                      } finally {
+                        setLoadingIssueKey(null);
+                      }
+                    }}
+                    className="w-full py-2 rounded-xl bg-[#C59B27]/20 hover:bg-[#C59B27] text-[#D8B045] hover:text-[#0B291D] border border-[#C59B27]/40 text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 disabled:opacity-50"
                   >
-                    <Radio className="w-3.5 h-3.5" />
-                    <span>Promote to Live Edition</span>
+                    {loadingIssueKey === `${issue.volume}-${issue.issue}` ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Promoting to Live...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Radio className="w-3.5 h-3.5" />
+                        <span>Promote to Live Edition</span>
+                      </>
+                    )}
                   </button>
                 )}
               </div>

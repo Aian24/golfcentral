@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const data = await saveArticle(article);
     return NextResponse.json({
       success: true,
-      message: `Article "${article.title}" saved successfully`,
+      message: "Article saved.",
       data,
       article,
     });
@@ -61,7 +61,7 @@ export async function DELETE(request: Request) {
     const data = await deleteArticle(id);
     return NextResponse.json({
       success: true,
-      message: `Article deleted successfully`,
+      message: "Article deleted.",
       data,
     });
   } catch (error: any) {

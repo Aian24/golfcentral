@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { MAGAZINE_ISSUES, MagazineIssue } from "@/data/editorialData";
 import { useEditorialData } from "@/context/EditorialDataContext";
+import { formatIssuuEmbedUrl, formatIssuuPublicUrl } from "@/lib/issuu";
 
 interface IssueReaderModalProps {
   issueNumber: number | null;
@@ -53,9 +54,12 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
   const currentIssue =
     issues.find((i) => i.issue === issueNumber) || issues[0] || MAGAZINE_ISSUES[0];
 
+  const embedUrl = formatIssuuEmbedUrl(currentIssue.issuuEmbedUrl, currentIssue.issuuUrl);
+  const publicUrl = formatIssuuPublicUrl(currentIssue.issuuUrl, currentIssue.issuuEmbedUrl);
+
   const handleShare = async () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(currentIssue.issuuUrl);
+      await navigator.clipboard.writeText(publicUrl);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2000);
     }
@@ -131,7 +135,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
           {/* Right: Direct Actions */}
           <div className="flex items-center space-x-2 shrink-0">
             <a
-              href={currentIssue.issuuUrl}
+              href={publicUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-[#C59B27] to-[#D8B045] hover:from-[#B38A20] hover:to-[#C59B27] text-[#0B291D] text-xs font-extrabold uppercase tracking-wider transition-all duration-200 rounded-xl shadow-md transform hover:scale-105"
@@ -201,7 +205,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
                     {currentIssue.pageCount} Pages Total
                   </span>
                   <a
-                    href={currentIssue.issuuUrl}
+                    href={publicUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hidden sm:inline-flex items-center space-x-1 text-[#D8B045] hover:underline font-semibold"
@@ -221,7 +225,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
                       Loading Interactive Issuu Reader...
                     </p>
                     <a
-                      href={currentIssue.issuuUrl}
+                      href={publicUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-white/70 hover:text-white underline pt-2"
@@ -232,7 +236,7 @@ export const IssueReaderModal: React.FC<IssueReaderModalProps> = ({
                 )}
 
                 <iframe
-                  src={currentIssue.issuuEmbedUrl}
+                  src={embedUrl}
                   title={`${currentIssue.title} - Digital Flipbook`}
                   className="w-full h-full border-0 absolute inset-0"
                   allow="fullscreen; clipboard-write; encrypted-media; picture-in-picture"

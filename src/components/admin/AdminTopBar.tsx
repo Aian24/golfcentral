@@ -20,22 +20,22 @@ interface AdminTopBarProps {
 }
 
 const TAB_TITLES: Record<AdminTab, { title: string; category: string }> = {
-  publisher: { title: "Monthly Magazine Changes", category: "Active Monthly System" },
-  issues: { title: "Volume Archives & Vault", category: "Active Monthly System" },
-  issues_dev: { title: "Volume Archives & 25-Yr Vault", category: "Phase 2 Preview" },
-  dashboard_dev: { title: "Executive Analytics Dashboard", category: "Phase 2 Preview" },
-  articles_dev: { title: "Articles & Editorial Story Desk", category: "Phase 2 Preview" },
-  theme_dev: { title: "Theme & Visual Styling Customizer", category: "Phase 2 Preview" },
-  inspector_dev: { title: "Digital Flipbook Simulator", category: "Phase 2 Preview" },
-  settings_dev: { title: "Site Settings & Backups", category: "Phase 2 Preview" },
-  staff_dev: { title: "Editorial Staff & Masthead", category: "Phase 2 Preview" },
-  advertising_dev: { title: "Advertising Media Kit Desk", category: "Phase 2 Preview" },
-  adspec_dev: { title: "Ad Dimensions & Specifications", category: "Phase 2 Preview" },
-  nomination_dev: { title: "Golf Leader Nominations", category: "Phase 2 Preview" },
-  agronomy_dev: { title: "Turf Agronomy Showcase", category: "Phase 2 Preview" },
-  lifestyle_dev: { title: "Clubhouse Lifestyle & Craft", category: "Phase 2 Preview" },
-  philanthropy_dev: { title: "Military Honors & Philanthropy", category: "Phase 2 Preview" },
-  newsletter_dev: { title: "VIP Newsletter Subscribers", category: "Phase 2 Preview" },
+  publisher: { title: "Monthly Issues", category: "Active Workspace" },
+  issues: { title: "Volume Archives", category: "Active Workspace" },
+  about_dev: { title: "About Us", category: "Phase 2 Preview" },
+  issues_dev: { title: "Volume Archives", category: "Phase 2 Preview" },
+  dashboard_dev: { title: "Dashboard", category: "Phase 2 Preview" },
+  articles_dev: { title: "Articles Desk", category: "Phase 2 Preview" },
+  theme_dev: { title: "Theme Studio", category: "Phase 2 Preview" },
+  inspector_dev: { title: "Flipbook Reader", category: "Phase 2 Preview" },
+  settings_dev: { title: "Site Settings", category: "Phase 2 Preview" },
+  advertising_dev: { title: "Media Kit", category: "Phase 2 Preview" },
+  adspec_dev: { title: "Ad Specs", category: "Phase 2 Preview" },
+  nomination_dev: { title: "Nominations", category: "Phase 2 Preview" },
+  agronomy_dev: { title: "Turf Agronomy", category: "Phase 2 Preview" },
+  lifestyle_dev: { title: "Lifestyle", category: "Phase 2 Preview" },
+  philanthropy_dev: { title: "Military Honors", category: "Phase 2 Preview" },
+  newsletter_dev: { title: "Subscribers", category: "Phase 2 Preview" },
 };
 
 export const AdminTopBar: React.FC<AdminTopBarProps> = ({
@@ -44,14 +44,6 @@ export const AdminTopBar: React.FC<AdminTopBarProps> = ({
   onToggleMobileSidebar,
 }) => {
   const { currentEdition } = useEditorialData();
-  const [dbStatus, setDbStatus] = React.useState<{ connected: boolean; provider: string } | null>(null);
-
-  React.useEffect(() => {
-    fetch("/api/db/status")
-      .then((res) => res.json())
-      .then((data) => setDbStatus(data))
-      .catch(() => setDbStatus({ connected: false, provider: "local_json" }));
-  }, []);
 
   const info = TAB_TITLES[activeTab] || { title: "Dashboard", category: "Admin" };
 
@@ -69,40 +61,20 @@ export const AdminTopBar: React.FC<AdminTopBarProps> = ({
           </button>
 
           <div className="overflow-hidden">
-            <div className="flex items-center space-x-1.5 text-[10px] sm:text-xs text-white/50 uppercase tracking-wider font-semibold truncate">
-              <span>EDITORIAL SUITE</span>
-              <ChevronRight className="w-3 h-3 text-[#D8B045]" />
-              <span className="text-[#D8B045]">{info.category}</span>
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm font-bold tracking-tight truncate">
+              <span className="text-white/50 text-[10px] sm:text-xs font-semibold uppercase tracking-wider shrink-0">
+                EDITORIAL SUITE
+              </span>
+              <ChevronRight className="w-3.5 h-3.5 text-[#D8B045] shrink-0" />
+              <h1 className="text-xs sm:text-sm font-bold text-[#D8B045] uppercase tracking-wider truncate">
+                {info.title}
+              </h1>
             </div>
-            <h1 className="text-sm sm:text-lg font-bold text-white tracking-tight truncate">
-              {info.title}
-            </h1>
           </div>
         </div>
 
-        {/* Right: Live Edition Pill, DB Status, & Primary Action */}
+        {/* Right: Live Edition Pill & Primary Action */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-          {/* DB Indicator */}
-          <div
-            title={
-              dbStatus?.connected
-                ? "Connected to Neon Serverless PostgreSQL"
-                : "Using Local File Store. Add DATABASE_URL to .env.local to activate Neon Postgres."
-            }
-            className={`hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border ${
-              dbStatus?.connected
-                ? "bg-emerald-950/60 border-emerald-500/50 text-emerald-300"
-                : "bg-[#0F3D2A] border-white/20 text-white/70"
-            }`}
-          >
-            <span
-              className={`w-2 h-2 rounded-full ${
-                dbStatus?.connected ? "bg-emerald-400 animate-pulse" : "bg-[#D8B045]"
-              }`}
-            />
-            <span>{dbStatus?.connected ? "Neon Postgres" : "Local Store (Neon Ready)"}</span>
-          </div>
-
           <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[#0F3D2A] border border-[#C59B27]/40 text-xs">
             <Radio className="w-3 h-3 text-red-400 animate-pulse shrink-0" />
             <span className="font-bold text-[#D8B045]">

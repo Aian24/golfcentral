@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
-import { Mail, Check, FileText, ArrowRight } from "lucide-react";
+import { Mail, Check, FileText, ArrowRight, Loader2 } from "lucide-react";
 import { SITE_INFO } from "@/data/editorialData";
 
 export const NewsletterDispatch: React.FC = () => {
@@ -13,6 +13,7 @@ export const NewsletterDispatch: React.FC = () => {
     "Course Architecture",
   ]);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const topics = [
     "Digital Issue Alerts",
@@ -30,9 +31,12 @@ export const NewsletterDispatch: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || isSubmitting) return;
+
+    setIsSubmitting(true);
+    await new Promise((res) => setTimeout(res, 600));
 
     try {
       confetti({
@@ -46,6 +50,7 @@ export const NewsletterDispatch: React.FC = () => {
     }
 
     setSubmitted(true);
+    setIsSubmitting(false);
   };
 
   return (
@@ -129,9 +134,17 @@ export const NewsletterDispatch: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-widest transition-colors shrink-0 shadow-lg rounded-xl"
+                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-[#C59B27] hover:bg-[#D8B045] text-[#0B291D] font-bold text-xs uppercase tracking-widest transition-colors shrink-0 shadow-lg rounded-xl flex items-center justify-center space-x-2 disabled:opacity-60"
                 >
-                  Subscribe
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Subscribing...</span>
+                    </>
+                  ) : (
+                    <span>Subscribe</span>
+                  )}
                 </button>
               </form>
             )}

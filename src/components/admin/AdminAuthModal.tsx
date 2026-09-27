@@ -52,23 +52,23 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ onLoginSuccess }
         {/* Header Official Branding */}
         <div className="text-center space-y-4 mb-8">
           {/* Real Company Logo */}
-          <div className="relative h-12 w-56 mx-auto">
+          <div className="relative h-16 w-64 sm:h-20 sm:w-72 mx-auto">
             <Image
               src="/images/official_logo_white.png"
               alt="Golf Central Magazine"
               fill
               priority
-              className="object-contain"
+              className="object-contain object-center drop-shadow-md"
             />
           </div>
 
           <div>
             <div className="inline-flex items-center space-x-1.5 px-3 py-0.5 rounded-full bg-[#C59B27]/20 border border-[#C59B27]/40 text-[#D8B045] text-[10px] font-bold uppercase tracking-widest mb-1.5">
               <ShieldCheck className="w-3 h-3 text-[#D8B045]" />
-              <span>Publisher Portal</span>
+              <span>Editorial Suite</span>
             </div>
             <p className="text-xs text-white/70">
-              Monthly Edition Publishing &amp; Archive Management
+              Digital Publication &amp; Editorial Management Suite
             </p>
           </div>
         </div>

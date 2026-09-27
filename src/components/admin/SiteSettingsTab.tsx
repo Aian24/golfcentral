@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useEditorialData } from "@/context/EditorialDataContext";
 import { SiteInfoData, CurrentEditionData } from "@/lib/types";
+import { ConfirmActionModal } from "./ConfirmActionModal";
 
 interface SiteSettingsTabProps {
   onSuccess?: (msg: string) => void;
@@ -38,17 +39,21 @@ export const SiteSettingsTab: React.FC<SiteSettingsTabProps> = ({ onSuccess }) =
   const [editionForm, setEditionForm] = useState<CurrentEditionData>({ ...currentEdition });
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
+    setErrorMessage(null);
     try {
       await updateSiteSettings(siteForm, editionForm);
       setSaveSuccess(true);
-      if (onSuccess) onSuccess("Site settings & live edition banner updated successfully!");
+      if (onSuccess) onSuccess("Site settings updated.");
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch {
-      alert("Failed to update site settings.");
+      setErrorMessage("Failed to update site settings.");
     } finally {
       setIsSaving(false);
     }
@@ -76,38 +81,42 @@ export const SiteSettingsTab: React.FC<SiteSettingsTabProps> = ({ onSuccess }) =
     downloadAnchor.click();
     downloadAnchor.remove();
 
-    if (onSuccess) onSuccess("JSON Data Backup downloaded successfully!");
+    if (onSuccess) onSuccess("Backup file downloaded.");
   };
 
   const handleImportBackup = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setErrorMessage(null);
     const reader = new FileReader();
     reader.onload = async (event) => {
       try {
         const parsed = JSON.parse(event.target?.result as string);
         if (parsed.issues && Array.isArray(parsed.issues)) {
           await importStoreData(parsed);
-          if (onSuccess) onSuccess("Successfully restored magazine data from backup JSON!");
+          if (onSuccess) onSuccess("Magazine data restored from backup.");
         } else {
-          alert("Invalid backup JSON format: Missing issues array.");
+          setErrorMessage("Invalid backup JSON format: Missing issues array.");
         }
       } catch (err) {
-        alert("Failed to parse JSON file.");
+        setErrorMessage("Failed to parse JSON file.");
       }
     };
     reader.readAsText(file);
   };
 
-  const handleResetDefaults = async () => {
-    if (
-      window.confirm(
-        "Are you sure you want to reset all data back to original factory defaults? All custom changes will be replaced."
-      )
-    ) {
+  const handleConfirmReset = async () => {
+    setIsResetting(true);
+    try {
       await resetToDefaults();
-      if (onSuccess) onSuccess("Successfully reset data to factory defaults.");
+      setShowResetConfirm(false);
+      if (onSuccess) onSuccess("Data reset to factory defaults.");
+    } catch {
+      setErrorMessage("Failed to reset defaults.");
+      setShowResetConfirm(false);
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -130,7 +139,14 @@ export const SiteSettingsTab: React.FC<SiteSettingsTabProps> = ({ onSuccess }) =
       {saveSuccess && (
         <div className="p-4 rounded-xl bg-emerald-900/60 border border-emerald-500/50 flex items-center space-x-3 text-xs text-emerald-200">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>Settings saved and synchronized with live website!</span>
+          <span>Settings saved.</span>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="p-4 rounded-xl bg-red-900/60 border border-red-500/50 flex items-center space-x-3 text-xs text-red-200">
+          <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+          <span>{errorMessage}</span>
         </div>
       )}
 
@@ -324,7 +340,7 @@ export const SiteSettingsTab: React.FC<SiteSettingsTabProps> = ({ onSuccess }) =
               </p>
             </div>
             <button
-              onClick={handleResetDefaults}
+              onClick={() => setShowResetConfirm(true)}
               className="w-full py-2.5 bg-red-900/40 hover:bg-red-900 text-red-200 border border-red-500/40 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center space-x-2"
             >
               <RefreshCw className="w-4 h-4" />
@@ -333,6 +349,20 @@ export const SiteSettingsTab: React.FC<SiteSettingsTabProps> = ({ onSuccess }) =
           </div>
         </div>
       </div>
+
+      {/* Reset Confirmation Modal */}
+      <ConfirmActionModal
+        isOpen={showResetConfirm}
+        title="Reset All Data to Defaults?"
+        message="Are you sure you want to reset all data back to original factory defaults? All custom changes will be replaced."
+        confirmText="Reset to Defaults"
+        cancelText="Cancel"
+        isDestructive={true}
+        isLoading={isResetting}
+        iconType="reset"
+        onConfirm={handleConfirmReset}
+        onCancel={() => setShowResetConfirm(false)}
+      />
     </div>
   );
 };
