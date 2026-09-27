@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import os from "os";
 import {
   SITE_INFO,
   CURRENT_EDITION,
@@ -19,10 +20,26 @@ import {
 } from "./types";
 import { getNeonSql, isNeonConfigured, initNeonTables } from "./neonDb";
 import { formatIssuuEmbedUrl, formatIssuuPublicUrl } from "./issuu";
+import initialSeedJson from "../data/magazine-data.json";
 
 export * from "./types";
 
-const DATA_FILE_PATH = path.join(process.cwd(), "src", "data", "magazine-data.json");
+const LOCAL_DATA_FILE_PATH = path.join(process.cwd(), "src", "data", "magazine-data.json");
+const TMP_DATA_FILE_PATH = path.join(os.tmpdir(), "golf_central_magazine_data.json");
+
+// In-memory cache for serverless environments (Vercel / AWS Lambda)
+let memoryStoreCache: MagazineStoreData | null = null;
+
+function sanitizeStore(store: MagazineStoreData): MagazineStoreData {
+  if (store.issues && Array.isArray(store.issues)) {
+    store.issues = store.issues.map((iss) => ({
+      ...iss,
+      issuuEmbedUrl: formatIssuuEmbedUrl(iss.issuuEmbedUrl, iss.issuuUrl),
+      issuuUrl: formatIssuuPublicUrl(iss.issuuUrl, iss.issuuEmbedUrl),
+    }));
+  }
+  return store;
+}
 
 export function getDefaultData(): MagazineStoreData {
   const issuesWithStatus: ExtendedMagazineIssue[] = EXACT_ISSUES.map((issue, index) => ({
@@ -114,36 +131,74 @@ export async function getStoreData(): Promise<MagazineStoreData> {
     }
   }
 
-  // 2. Fallback to Local JSON store
+  // 2. Fallback to Local/Memory/Tmp JSON store
   return getFileStoreData();
 }
 
 async function getFileStoreData(): Promise<MagazineStoreData> {
-  try {
-    const fileContent = await fs.readFile(DATA_FILE_PATH, "utf-8");
-    const data = JSON.parse(fileContent) as MagazineStoreData;
-    if (data.issues && Array.isArray(data.issues)) {
-      data.issues = data.issues.map((iss) => ({
-        ...iss,
-        issuuEmbedUrl: formatIssuuEmbedUrl(iss.issuuEmbedUrl, iss.issuuUrl),
-        issuuUrl: formatIssuuPublicUrl(iss.issuuUrl, iss.issuuEmbedUrl),
-      }));
-    }
-    return data;
-  } catch {
-    const defaultData = getDefaultData();
-    await saveFileStoreData(defaultData);
-    return defaultData;
+  // If we already have a memory cache, return it
+  if (memoryStoreCache) {
+    return memoryStoreCache;
   }
+
+  // 1. Try reading from /tmp/ (populated from a previous write in this serverless container)
+  try {
+    const tmpContent = await fs.readFile(TMP_DATA_FILE_PATH, "utf-8");
+    const parsed = JSON.parse(tmpContent) as MagazineStoreData;
+    if (parsed.issues && Array.isArray(parsed.issues)) {
+      memoryStoreCache = sanitizeStore(parsed);
+      return memoryStoreCache;
+    }
+  } catch {
+    // /tmp/ doesn't exist yet
+  }
+
+  // 2. Try reading from repo file path
+  try {
+    const fileContent = await fs.readFile(LOCAL_DATA_FILE_PATH, "utf-8");
+    const parsed = JSON.parse(fileContent) as MagazineStoreData;
+    if (parsed.issues && Array.isArray(parsed.issues)) {
+      memoryStoreCache = sanitizeStore(parsed);
+      return memoryStoreCache;
+    }
+  } catch {
+    // Read-only filesystem or bundled file
+  }
+
+  // 3. Fallback to bundled static JSON
+  try {
+    if (initialSeedJson && Array.isArray((initialSeedJson as any).issues)) {
+      memoryStoreCache = sanitizeStore(JSON.parse(JSON.stringify(initialSeedJson)) as MagazineStoreData);
+      return memoryStoreCache;
+    }
+  } catch {
+    // Fallback to default data
+  }
+
+  memoryStoreCache = sanitizeStore(getDefaultData());
+  return memoryStoreCache;
 }
 
 async function saveFileStoreData(data: MagazineStoreData): Promise<void> {
   data.lastUpdated = new Date().toISOString();
-  await fs.writeFile(DATA_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
+  memoryStoreCache = sanitizeStore(data);
+
+  // 1. Try saving to local repo file (works on local machine, will throw EROFS on Vercel)
+  try {
+    await fs.writeFile(LOCAL_DATA_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
+  } catch {
+    // Expected on Vercel / serverless read-only filesystem
+  }
+
+  // 2. Also save to /tmp/ for serverless container persistence
+  try {
+    await fs.writeFile(TMP_DATA_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
+  } catch {
+    // Ignore tmp write errors
+  }
 }
 
 export async function saveStoreData(data: MagazineStoreData): Promise<void> {
-  // Always update local file
   await saveFileStoreData(data);
 }
 

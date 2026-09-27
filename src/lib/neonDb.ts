@@ -2,6 +2,7 @@ import { neon } from "@neondatabase/serverless";
 import { MagazineStoreData, ExtendedMagazineIssue } from "./types";
 import fs from "fs/promises";
 import path from "path";
+import initialSeedJson from "../data/magazine-data.json";
 
 const DATA_FILE_PATH = path.join(process.cwd(), "src", "data", "magazine-data.json");
 
@@ -78,8 +79,13 @@ export async function initNeonTables(): Promise<{ success: boolean; message: str
     const existingIssues = await sql`SELECT count(*)::int as count FROM magazine_issues;`;
     if (existingIssues[0]?.count === 0) {
       try {
-        const raw = await fs.readFile(DATA_FILE_PATH, "utf-8");
-        const json: MagazineStoreData = JSON.parse(raw);
+        let json: MagazineStoreData = initialSeedJson as unknown as MagazineStoreData;
+        try {
+          const raw = await fs.readFile(DATA_FILE_PATH, "utf-8");
+          json = JSON.parse(raw);
+        } catch {
+          // Use bundled initialSeedJson on serverless read-only filesystem
+        }
 
         for (const iss of json.issues) {
           await sql`
