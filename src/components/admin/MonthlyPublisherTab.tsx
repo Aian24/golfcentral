@@ -58,7 +58,7 @@ export const MonthlyPublisherTab: React.FC<MonthlyPublisherTabProps> = ({
               Monthly Magazine Management
             </h2>
 
-            <p className="text-sm sm:text-base text-white/80 max-w-2xl leading-relaxed">
+            <p className="text-sm sm:text-base text-white/80 max-w-3xl lg:max-w-4xl leading-relaxed">
               Golf Central Magazine updates every month with new digital flipbooks, cover art, and featured stories.
               When you publish a new issue, the currently live edition is automatically archived and preserved in the searchable digital vault.
             </p>
@@ -313,8 +313,8 @@ export const MonthlyPublisherTab: React.FC<MonthlyPublisherTabProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {issues.slice(0, 4).map((issue) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-5">
+          {issues.slice(0, 6).map((issue) => (
             <div
               key={`${issue.volume}-${issue.issue}`}
               className="bg-[#071F16] border border-white/10 hover:border-[#C59B27] rounded-2xl overflow-hidden transition-all flex flex-col justify-between group"

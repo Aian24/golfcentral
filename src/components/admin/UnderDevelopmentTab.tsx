@@ -250,7 +250,7 @@ export const UnderDevelopmentTab: React.FC<UnderDevelopmentTabProps> = ({
       <div className="bg-gradient-to-r from-[#0F3D2A] via-[#134E36] to-[#0F3D2A] border border-[#C59B27]/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#C59B27]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 space-y-4 max-w-3xl">
+        <div className="relative z-10 space-y-4 max-w-4xl">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#C59B27]/20 border border-[#C59B27]/40 text-[#D8B045] text-xs font-bold uppercase tracking-wider">
             <Lock className="w-3.5 h-3.5" />
             <span>Phase 2 Editorial Module • Staged for Next Sprint</span>
