@@ -5,16 +5,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { BookOpen, ExternalLink, Layers, ChevronRight } from "lucide-react";
 import { MAGAZINE_ISSUES, MagazineIssue } from "@/data/editorialData";
-import { useEditorialData } from "@/context/EditorialDataContext";
 
 interface IssueShelfProps {
   onOpenIssue: (issueNumber: number) => void;
 }
 
 export const IssueShelf: React.FC<IssueShelfProps> = ({ onOpenIssue }) => {
-  const { issues, currentIssue } = useEditorialData();
-  const displayIssues = issues && issues.length > 0 ? issues : MAGAZINE_ISSUES;
-  const [selectedIssue, setSelectedIssue] = useState<MagazineIssue>(displayIssues[0]);
+  const [selectedIssue, setSelectedIssue] = useState<MagazineIssue>(MAGAZINE_ISSUES[0]);
 
   return (
     <section id="issues-archive" className="w-full bg-[#0F3D2A] text-white py-16 md:py-24 border-y border-[#C59B27]/30 relative overflow-hidden">
@@ -46,8 +43,8 @@ export const IssueShelf: React.FC<IssueShelfProps> = ({ onOpenIssue }) => {
 
         {/* 3D Magazine Cover Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {displayIssues.map((issue, idx) => {
-            const isCurrent = issue.volume === (currentIssue?.volume || 27) && issue.issue === (currentIssue?.issue || 6);
+          {MAGAZINE_ISSUES.map((issue, idx) => {
+            const isCurrent = issue.volume === 27 && issue.issue === 6;
             return (
               <motion.div
                 key={`${issue.volume}-${issue.issue}`}

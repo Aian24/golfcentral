@@ -248,7 +248,7 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
                   <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                     Editor&apos;s Dispatches
                   </h3>
-                  <span className="text-xs text-[#D8B045] font-medium">Issue {currentEdition.issue}</span>
+                  <span className="text-xs text-[#D8B045] font-medium">Issue 6</span>
                 </div>
 
                 <div className="space-y-4 divide-y divide-white/10">
@@ -283,7 +283,7 @@ export const HeroVideoMarquee: React.FC<HeroVideoMarqueeProps> = ({
               <div className="mt-6 pt-4 border-t border-white/10 bg-[#0F3D2A]/60 -mx-6 -mb-6 p-5 rounded-b-2xl flex items-center space-x-4">
                 <div className="relative w-14 h-20 shrink-0 rounded-lg overflow-hidden border border-[#C59B27]/40 shadow-md">
                   <Image
-                    src={currentIssue?.coverImage || "/images/cover_v27_i5.jpg"}
+                    src={currentIssue?.coverImage || "/images/cover_v27_i6.jpg"}
                     alt={`Vol ${currentEdition.volume} Issue ${currentEdition.issue} cover`}
                     fill
                     sizes="56px"

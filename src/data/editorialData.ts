@@ -61,8 +61,8 @@ export const SITE_INFO = {
   name: "Golf Central Magazine",
   established: 1999,
   volume: 27,
-  activeIssue: 5,
-  season: "Festivals of Speed & Mission Resort + Club",
+  activeIssue: 6,
+  season: "Summer Luxury Edition",
   location: "4313 Berwick Dr. Lake Wales, FL 33859",
   phone: "863-875-6863",
   email: "info@golfcentralmag.com",
@@ -73,8 +73,8 @@ export const SITE_INFO = {
 
 export const CURRENT_EDITION = {
   volume: 27,
-  issue: 5,
-  season: "Festivals of Speed & Mission Resort + Club",
+  issue: 6,
+  season: "Summer Luxury Edition",
   tagline: SITE_INFO.tagline,
   location: "Lake Wales, FL",
   temperature: "78°F",
@@ -231,25 +231,6 @@ export const STAFF_MEMBERS: StaffMember[] = [
 ];
 
 export const EXACT_ISSUES: MagazineIssue[] = [
-  {
-    volume: 27,
-    issue: 5,
-    title: "Volume 27 Issue 5",
-    theme: "Festivals of Speed & Mission Resort + Club",
-    date: "May 2024",
-    pageCount: 64,
-    coverImage: "/images/cover_v27_i5.jpg",
-    issuuUrl: "https://issuu.com/editorinchief/docs/golf_central_magazine-_vol_27_issue_5_ezine?fr=sNWNjNDkzNDYzNzY",
-    issuuEmbedUrl: "https://e.issuu.com/embed.html?d=golf_central_magazine-_vol_27_issue_5_ezine&u=editorinchief",
-    features: [
-      "Festivals of Speed: Exotic Supercars & Luxury Lifestyle",
-      "Mission Resort + Club: Championship Golf & Historic Hospitality",
-      "Stay & Play: Reynolds Lake Oconee & Trump National Doral",
-      "Turf Life: NorthBridge Bermudagrass & Turf Pirate's Journal",
-      "Building the Game: Tripp Davis & Associates Architecture",
-    ],
-    editorNote: "Festivals of Speed on the cover with exotic supercars, luxury lifestyle, and Mission Resort + Club championship golf.",
-  },
   {
     volume: 27,
     issue: 6,
